@@ -15,15 +15,14 @@
     grid-auto-rows: 140px;
     grid-template-areas:
       "name       name"
-      "work       work"
+      "work       profile"
       "linkedin   email"
-      "github     profile"
-      "projects   design"
-      "backend    frontend"
-      "ai         voice"
-      "yourloc    yourip"
-      "yourdev    myloc"
-      "ascii      ascii";
+      "github     projects"
+      "design     backend"
+      "frontend   ai"
+      "voice      yourloc"
+      "yourip     yourdev"
+      "myloc      ascii";
     justify-content: center;
     max-width: 300px;
   }
@@ -36,11 +35,10 @@
     grid-auto-rows: 140px;
     grid-template-areas:
       "name       name       linkedin   email"
-      "work       profile    profile    github"
-      "backend    profile    profile    projects"
-      "frontend   ai         voice      design"
-      "yourloc    yourip     yourdev    myloc"
-      "ascii      ascii      .          .";
+      "work       github     profile    projects"
+      "backend    frontend   ai         design"
+      "voice      yourloc    yourip     yourdev"
+      "myloc      ascii      ascii      .";
     justify-content: center;
   }
 }
@@ -52,11 +50,10 @@
     grid-auto-rows: 180px;
     grid-template-areas:
       "name       name       linkedin   email"
-      "work       profile    profile    github"
-      "backend    profile    profile    projects"
-      "frontend   ai         voice      design"
-      "yourloc    yourip     yourdev    myloc"
-      "ascii      ascii      .          .";
+      "work       github     profile    projects"
+      "backend    frontend   ai         design"
+      "voice      yourloc    yourip     yourdev"
+      "myloc      ascii      ascii      .";
     justify-content: center;
   }
 }
