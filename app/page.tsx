@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import dynamic from "next/dynamic"
-import { MoveUpRight, Blocks, FolderCode, LayoutTemplate, AudioWaveform, LocateFixed, Globe, Monitor, ArrowRightFromLine, Wifi, Cpu, HardDrive } from "lucide-react"
+import { MoveUpRight, Blocks, FolderCode, LayoutTemplate, AudioWaveform, LocateFixed, Globe, Monitor, ArrowRightFromLine, Wifi, Cpu, HardDrive, BrainCircuit } from "lucide-react"
 import { MetroTile, METRO } from "../components/MetroTile"
 import { useBrowserInfo } from "../components/useBrowserInfo"
 import "../components/MetroGrid.css"
@@ -129,7 +129,7 @@ export default function ResumePage() {
 
           {/* AI */}
           <MetroTile color={METRO.darkGreen} area="ai" className="relative">
-            <LayoutTemplate className="absolute top-3 right-3 w-6 h-6 opacity-60" />
+            <BrainCircuit className="absolute top-3 right-3 w-6 h-6 opacity-60" />
             <div className="flex flex-wrap gap-1">
               <span className="metro-badge">LangChain</span>
               <span className="metro-badge">OpenAI</span>
