@@ -3,6 +3,7 @@
 import { useRef } from "react"
 import Image from "next/image"
 import { ParticleCard, GlobalSpotlight, useMobileDetection } from "./MagicBento"
+import PageNavigation from "./PageNavigation"
 import "./MagicBento.css"
 
 const GLOW_COLOR = "132, 0, 255"
@@ -61,10 +62,10 @@ const DesignCard = ({ design, isMobile }: { design: Design; isMobile: boolean })
 )
 
 interface DesignSectionProps {
-  onBack?: () => void
+  onNavigate?: (page: "home" | "projects" | "design") => void
 }
 
-const DesignSection = ({ onBack }: DesignSectionProps) => {
+const DesignSection = ({ onNavigate }: DesignSectionProps) => {
   const gridRef = useRef<HTMLDivElement>(null)
   const isMobile = useMobileDetection()
 
@@ -80,19 +81,10 @@ const DesignSection = ({ onBack }: DesignSectionProps) => {
 
       <div className="w-full max-w-6xl mx-auto px-4 md:px-6 py-4 md:py-6">
         {/* Header */}
-        <div className="mb-8 flex items-center gap-4">
-          {onBack && (
-            <button
-              onClick={onBack}
-              className="flex items-center space-x-2 px-4 py-2 bg-black/80 text-white border border-white/20 rounded-none backdrop-blur-sm transition-all duration-300 hover:opacity-70 hover:scale-105"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M19 12H5M12 19l-7-7 7-7" />
-              </svg>
-              <span>back</span>
-            </button>
+        <div className="mb-8 flex items-center justify-end">
+          {onNavigate && (
+            <PageNavigation currentPage="design" onNavigate={onNavigate} />
           )}
-          <h1 className="text-lg font-normal text-white">DESIGN</h1>
         </div>
 
         {/* Logo Design Section */}

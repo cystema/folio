@@ -56,8 +56,8 @@ export default function ResumePage() {
     return (
       <div className="min-h-screen bg-[#141210] text-white">
         <div className={`min-h-screen overflow-y-auto bg-[#141210] transition-opacity duration-300 ease-in-out ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
-          {currentView === "projects" && <ProjectsSection onBack={() => handleViewChange("home")} />}
-          {currentView === "design" && <DesignSection onBack={() => handleViewChange("home")} />}
+          {currentView === "projects" && <ProjectsSection onNavigate={handleViewChange} />}
+          {currentView === "design" && <DesignSection onNavigate={handleViewChange} />}
         </div>
       </div>
     )
