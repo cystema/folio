@@ -2,13 +2,16 @@
 
 import { useRef, useState } from "react"
 import LetterGlitch from "../components/LetterGlitch"
+import dynamic from "next/dynamic"
+
+const ASCIIText = dynamic(() => import("../components/ASCIIText"), { ssr: false })
 import ProjectsSection from "../components/ProjectsSection"
 import DesignSection from "../components/DesignSection"
 import FaceTracker from "../components/FaceTracker"
-import { ParticleCard, GlobalSpotlight, BentoCardGrid, useMobileDetection } from "../components/MagicBento"
+import { ParticleCard, GlobalSpotlight, BentoCardGrid, BentoSlot, useMobileDetection } from "../components/MagicBento"
 import "../components/MagicBento.css"
 
-const GLOW_COLOR = "132, 0, 255"
+const GLOW_COLOR = "23, 86, 232" // Imperial Blue
 
 export default function ResumePage() {
   const [currentView, setCurrentView] = useState<"home" | "projects" | "design">("home")
@@ -17,7 +20,7 @@ export default function ResumePage() {
 
   if (currentView !== "home") {
     return (
-      <div className="min-h-screen bg-[#060010] text-white">
+      <div className="min-h-screen bg-[#141210] text-white">
         <div className="flex h-screen">
           {/* Left side - LetterGlitch */}
           <div className="w-1/2 h-full relative">
@@ -31,7 +34,7 @@ export default function ResumePage() {
           </div>
           
           {/* Right side - Content */}
-          <div className="w-1/2 h-full overflow-y-auto bg-[#060010]">
+          <div className="w-1/2 h-full overflow-y-auto bg-[#141210]">
             {currentView === "projects" && <ProjectsSection />}
             {currentView === "design" && <DesignSection />}
           </div>
@@ -51,7 +54,7 @@ export default function ResumePage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#060010] text-white p-4 md:p-6">
+    <div className="min-h-screen bg-[#141210] text-white p-4 md:p-6">
       <GlobalSpotlight
         gridRef={gridRef}
         disableAnimations={isMobile}
@@ -60,30 +63,19 @@ export default function ResumePage() {
         glowColor={GLOW_COLOR}
       />
 
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto relative">
         <BentoCardGrid gridRef={gridRef}>
-          {/* Card 1: Face Tracker */}
-          <ParticleCard
-            className="magic-bento-card magic-bento-card--border-glow"
-            style={{ backgroundColor: '#060010', '--glow-color': GLOW_COLOR } as React.CSSProperties}
-            disableAnimations={isMobile}
-            particleCount={8}
-            glowColor={GLOW_COLOR}
-            enableTilt={!isMobile}
-            clickEffect={true}
-            enableMagnetism={false}
-          >
-            <div className="flex-1 flex items-center justify-center">
-              <div className="w-32 h-32 overflow-hidden">
-                <FaceTracker basePath="/faces/" />
-              </div>
+          {/* Profile Image - using BentoSlot (no card border) */}
+          <BentoSlot area="profile">
+            <div className="bento-slot__image">
+              <FaceTracker basePath="/faces/" />
             </div>
-          </ParticleCard>
+          </BentoSlot>
 
-          {/* Card 2: Name & Title */}
+          {/* Name & Title */}
           <ParticleCard
             className="magic-bento-card magic-bento-card--border-glow"
-            style={{ backgroundColor: '#060010', '--glow-color': GLOW_COLOR } as React.CSSProperties}
+            style={{ backgroundColor: '#1c1a17', '--glow-color': GLOW_COLOR, gridArea: 'name' } as React.CSSProperties}
             disableAnimations={isMobile}
             particleCount={6}
             glowColor={GLOW_COLOR}
@@ -97,58 +89,12 @@ export default function ResumePage() {
             </div>
           </ParticleCard>
 
-          {/* Card 3: Experience (Large) */}
+          {/* LinkedIn */}
           <ParticleCard
-            className="magic-bento-card magic-bento-card--border-glow"
-            style={{ backgroundColor: '#060010', '--glow-color': GLOW_COLOR } as React.CSSProperties}
+            className="magic-bento-card magic-bento-card--border-glow cursor-pointer bento-link-card"
+            style={{ backgroundColor: '#1c1a17', '--glow-color': GLOW_COLOR, gridArea: 'linkedin' } as React.CSSProperties}
             disableAnimations={isMobile}
-            particleCount={12}
-            glowColor={GLOW_COLOR}
-            enableTilt={!isMobile}
-            clickEffect={true}
-            enableMagnetism={false}
-          >
-            <div className="magic-bento-card__header">
-              <div className="magic-bento-card__label">experience</div>
-            </div>
-            <div className="magic-bento-card__content space-y-3 text-sm">
-              <div className="flex justify-between items-baseline border-b border-white/10 pb-2">
-                <div>
-                  <span className="block">Sameday AI (YC '23)</span>
-                  <span className="text-xs opacity-50">product engineer</span>
-                </div>
-                <span className="text-xs opacity-50">2025 →</span>
-              </div>
-              <div className="flex justify-between items-baseline border-b border-white/10 pb-2">
-                <div>
-                  <span className="block">BulkMagic</span>
-                  <span className="text-xs opacity-50">intern</span>
-                </div>
-                <span className="text-xs opacity-50">2024</span>
-              </div>
-              <div className="flex justify-between items-baseline border-b border-white/10 pb-2">
-                <div>
-                  <span className="block">University of Utah</span>
-                  <span className="text-xs opacity-50">research assistant</span>
-                </div>
-                <span className="text-xs opacity-50">2021-24</span>
-              </div>
-              <div className="flex justify-between items-baseline">
-                <div>
-                  <span className="block">Cognizant</span>
-                  <span className="text-xs opacity-50">software engineer</span>
-                </div>
-                <span className="text-xs opacity-50">2016-19</span>
-              </div>
-            </div>
-          </ParticleCard>
-
-          {/* Card 4: LinkedIn */}
-          <ParticleCard
-            className="magic-bento-card magic-bento-card--border-glow cursor-pointer"
-            style={{ backgroundColor: '#060010', '--glow-color': GLOW_COLOR } as React.CSSProperties}
-            disableAnimations={isMobile}
-            particleCount={6}
+            particleCount={4}
             glowColor={GLOW_COLOR}
             enableTilt={!isMobile}
             clickEffect={true}
@@ -158,18 +104,18 @@ export default function ResumePage() {
               href="https://www.linkedin.com/in/mazumders/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex-1 flex items-center justify-center text-xl hover:text-purple-400 transition-colors"
+              className="flex-1 flex items-center justify-center text-lg hover:text-blue-400 transition-colors"
             >
-              linkedin ↗
+              in ↗
             </a>
           </ParticleCard>
 
-          {/* Card 5: Email */}
+          {/* Email */}
           <ParticleCard
-            className="magic-bento-card magic-bento-card--border-glow cursor-pointer"
-            style={{ backgroundColor: '#060010', '--glow-color': GLOW_COLOR } as React.CSSProperties}
+            className="magic-bento-card magic-bento-card--border-glow cursor-pointer bento-link-card"
+            style={{ backgroundColor: '#1c1a17', '--glow-color': GLOW_COLOR, gridArea: 'email' } as React.CSSProperties}
             disableAnimations={isMobile}
-            particleCount={6}
+            particleCount={4}
             glowColor={GLOW_COLOR}
             enableTilt={!isMobile}
             clickEffect={true}
@@ -177,16 +123,37 @@ export default function ResumePage() {
           >
             <a 
               href="mailto:shubham.mazumder@gmail.com" 
-              className="flex-1 flex items-center justify-center text-xl hover:text-purple-400 transition-colors"
+              className="flex-1 flex items-center justify-center text-lg hover:text-blue-400 transition-colors"
             >
-              email ↗
+              @ ↗
             </a>
           </ParticleCard>
 
-          {/* Card 6: Projects */}
+          {/* GitHub */}
           <ParticleCard
-            className="magic-bento-card magic-bento-card--border-glow cursor-pointer"
-            style={{ backgroundColor: '#060010', '--glow-color': GLOW_COLOR } as React.CSSProperties}
+            className="magic-bento-card magic-bento-card--border-glow cursor-pointer bento-link-card"
+            style={{ backgroundColor: '#1c1a17', '--glow-color': GLOW_COLOR, gridArea: 'github' } as React.CSSProperties}
+            disableAnimations={isMobile}
+            particleCount={4}
+            glowColor={GLOW_COLOR}
+            enableTilt={!isMobile}
+            clickEffect={true}
+            enableMagnetism={true}
+          >
+            <a 
+              href="https://github.com/cystema" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex-1 flex items-center justify-center text-lg hover:text-blue-400 transition-colors"
+            >
+              gh ↗
+            </a>
+          </ParticleCard>
+
+          {/* Projects */}
+          <ParticleCard
+            className="magic-bento-card magic-bento-card--border-glow cursor-pointer bento-nav-card"
+            style={{ backgroundColor: '#1c1a17', '--glow-color': GLOW_COLOR, gridArea: 'projects' } as React.CSSProperties}
             disableAnimations={isMobile}
             particleCount={6}
             glowColor={GLOW_COLOR}
@@ -196,35 +163,16 @@ export default function ResumePage() {
           >
             <button 
               onClick={() => setCurrentView("projects")}
-              className="flex-1 flex items-center justify-center text-xl hover:text-purple-400 transition-colors w-full"
+              className="flex-1 flex items-center justify-center text-xl hover:text-blue-400 transition-colors w-full"
             >
               projects →
             </button>
           </ParticleCard>
 
-          {/* Card 7: Design */}
-          <ParticleCard
-            className="magic-bento-card magic-bento-card--border-glow cursor-pointer"
-            style={{ backgroundColor: '#060010', '--glow-color': GLOW_COLOR } as React.CSSProperties}
-            disableAnimations={isMobile}
-            particleCount={6}
-            glowColor={GLOW_COLOR}
-            enableTilt={!isMobile}
-            clickEffect={true}
-            enableMagnetism={true}
-          >
-            <button 
-              onClick={() => setCurrentView("design")}
-              className="flex-1 flex items-center justify-center text-xl hover:text-purple-400 transition-colors w-full"
-            >
-              design →
-            </button>
-          </ParticleCard>
-
-          {/* Card 8: Currently */}
+          {/* Currently (Left side - spans 2 rows) */}
           <ParticleCard
             className="magic-bento-card magic-bento-card--border-glow"
-            style={{ backgroundColor: '#060010', '--glow-color': GLOW_COLOR } as React.CSSProperties}
+            style={{ backgroundColor: '#1c1a17', '--glow-color': GLOW_COLOR, gridArea: 'currently' } as React.CSSProperties}
             disableAnimations={isMobile}
             particleCount={6}
             glowColor={GLOW_COLOR}
@@ -246,10 +194,92 @@ export default function ResumePage() {
             </div>
           </ParticleCard>
 
-          {/* Card 9: LetterGlitch Background */}
+          {/* Tech Stack */}
           <ParticleCard
             className="magic-bento-card magic-bento-card--border-glow"
-            style={{ backgroundColor: '#060010', '--glow-color': GLOW_COLOR, padding: 0 } as React.CSSProperties}
+            style={{ backgroundColor: '#1c1a17', '--glow-color': GLOW_COLOR, gridArea: 'techstack' } as React.CSSProperties}
+            disableAnimations={isMobile}
+            particleCount={4}
+            glowColor={GLOW_COLOR}
+            enableTilt={!isMobile}
+            clickEffect={true}
+            enableMagnetism={true}
+          >
+            <div className="flex-1 flex flex-col justify-center">
+              <div className="text-xs opacity-50 mb-2">tech stack</div>
+              <div className="flex flex-wrap gap-1.5 text-xs">
+                <span className="px-2 py-0.5 bg-white/5 rounded">React</span>
+                <span className="px-2 py-0.5 bg-white/5 rounded">TypeScript</span>
+                <span className="px-2 py-0.5 bg-white/5 rounded">Python</span>
+                <span className="px-2 py-0.5 bg-white/5 rounded">Node</span>
+                <span className="px-2 py-0.5 bg-white/5 rounded">AI/ML</span>
+              </div>
+            </div>
+          </ParticleCard>
+
+          {/* Location */}
+          <ParticleCard
+            className="magic-bento-card magic-bento-card--border-glow"
+            style={{ backgroundColor: '#1c1a17', '--glow-color': GLOW_COLOR, gridArea: 'location' } as React.CSSProperties}
+            disableAnimations={isMobile}
+            particleCount={4}
+            glowColor={GLOW_COLOR}
+            enableTilt={!isMobile}
+            clickEffect={true}
+            enableMagnetism={true}
+          >
+            <div className="flex-1 flex flex-col justify-center items-center text-center">
+              <span className="text-2xl mb-1">📍</span>
+              <span className="text-sm">San Francisco</span>
+              <span className="text-xs opacity-50">PST</span>
+            </div>
+          </ParticleCard>
+
+          {/* Book a Call */}
+          <ParticleCard
+            className="magic-bento-card magic-bento-card--border-glow cursor-pointer"
+            style={{ backgroundColor: '#1c1a17', '--glow-color': GLOW_COLOR, gridArea: 'call' } as React.CSSProperties}
+            disableAnimations={isMobile}
+            particleCount={4}
+            glowColor={GLOW_COLOR}
+            enableTilt={!isMobile}
+            clickEffect={true}
+            enableMagnetism={true}
+          >
+            <a 
+              href="https://cal.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex-1 flex flex-col justify-center items-center text-center hover:text-blue-400 transition-colors"
+            >
+              <span className="text-2xl mb-1">📞</span>
+              <span className="text-sm">book a call</span>
+            </a>
+          </ParticleCard>
+
+          {/* Design */}
+          <ParticleCard
+            className="magic-bento-card magic-bento-card--border-glow cursor-pointer bento-nav-card"
+            style={{ backgroundColor: '#1c1a17', '--glow-color': GLOW_COLOR, gridArea: 'design' } as React.CSSProperties}
+            disableAnimations={isMobile}
+            particleCount={6}
+            glowColor={GLOW_COLOR}
+            enableTilt={!isMobile}
+            clickEffect={true}
+            enableMagnetism={true}
+          >
+            <button 
+              onClick={() => setCurrentView("design")}
+              className="flex-1 flex items-center justify-center text-xl hover:text-blue-400 transition-colors w-full"
+            >
+              design →
+            </button>
+          </ParticleCard>
+
+          {/* LetterGlitch Background */}
+          <ParticleCard
+            className="magic-bento-card magic-bento-card--border-glow"
+            style={{ backgroundColor: '#1c1a17', '--glow-color': GLOW_COLOR, padding: 0, gridArea: 'glitch' } as React.CSSProperties}
             disableAnimations={isMobile}
             particleCount={4}
             glowColor={GLOW_COLOR}
@@ -263,6 +293,27 @@ export default function ResumePage() {
                 centerVignette={true}
                 outerVignette={false}
                 smooth={true}
+              />
+            </div>
+          </ParticleCard>
+
+          {/* ASCII Text Effect */}
+          <ParticleCard
+            className="magic-bento-card magic-bento-card--border-glow"
+            style={{ backgroundColor: '#1c1a17', '--glow-color': GLOW_COLOR, padding: 0, gridArea: 'ascii', minHeight: '150px' } as React.CSSProperties}
+            disableAnimations={isMobile}
+            particleCount={4}
+            glowColor={GLOW_COLOR}
+            enableTilt={false}
+            clickEffect={false}
+            enableMagnetism={false}
+          >
+            <div className="w-full h-full relative" style={{ minHeight: '150px' }}>
+              <ASCIIText
+                text="Hello!"
+                enableWaves={true}
+                asciiFontSize={8}
+                textFontSize={150}
               />
             </div>
           </ParticleCard>

@@ -455,6 +455,29 @@ const BentoCardGrid = ({ children, gridRef }) => (
   </div>
 );
 
+// BentoSlot - A grid item without card styling, for embedding content like images
+const BentoSlot = ({
+  children,
+  className = '',
+  style = {},
+  colSpan = 1,
+  rowSpan = 1,
+  area = ''
+}) => {
+  const slotStyle = {
+    ...style,
+    ...(area ? { gridArea: area } : {}),
+    ...(colSpan > 1 ? { gridColumn: `span ${colSpan}` } : {}),
+    ...(rowSpan > 1 ? { gridRow: `span ${rowSpan}` } : {})
+  };
+
+  return (
+    <div className={`bento-slot ${className}`} style={slotStyle}>
+      {children}
+    </div>
+  );
+};
+
 const useMobileDetection = () => {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -661,4 +684,4 @@ const MagicBento = ({
 };
 
 export default MagicBento;
-export { ParticleCard, GlobalSpotlight, BentoCardGrid, useMobileDetection };
+export { ParticleCard, GlobalSpotlight, BentoCardGrid, BentoSlot, useMobileDetection };

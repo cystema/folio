@@ -1,13 +1,45 @@
 :root {
-  --hue: 27;
-  --sat: 69%;
+  --hue: 220;
+  --sat: 85%;
   --white: hsl(0, 0%, 100%);
-  --purple-primary: rgba(132, 0, 255, 1);
-  --purple-glow: rgba(132, 0, 255, 0.2);
-  --purple-border: rgba(132, 0, 255, 0.8);
-  --border-color: #392e4e;
-  --background-dark: #060010;
+  
+  /* Imperial Blue - Primary */
+  --primary: #1756e8;
+  --primary-glow: rgba(23, 86, 232, 0.2);
+  --primary-border: rgba(23, 86, 232, 0.8);
+  --primary-subtle: rgba(23, 86, 232, 0.1);
+  
+  /* Magenta Bloom - Accent */
+  --accent: #d62954;
+  --accent-glow: rgba(214, 41, 84, 0.2);
+  
+  /* Blue Bell - Secondary */
+  --secondary: #368cc9;
+  
+  /* Carbon Black - Backgrounds */
+  --background-dark: #141210;
+  --background-card: #1c1a17;
+  --border-color: #39332d;
+  
   color-scheme: light dark;
+}
+
+/* BentoSlot - grid item without card styling */
+.bento-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.bento-slot__image {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  background: var(--background-card);
 }
 
 .card-grid {
@@ -16,6 +48,7 @@
   padding: 0.75em;
   max-width: 54em;
   font-size: clamp(1rem, 0.9rem + 0.5vw, 1.5rem);
+  position: relative;
 }
 
 .magic-bento-card {
@@ -30,7 +63,7 @@
   padding: 1.25em;
   border-radius: 20px;
   border: 1px solid var(--border-color);
-  background: var(--background-dark);
+  background: var(--background-card);
   font-weight: 300;
   overflow: hidden;
   transition: all 0.3s ease;
@@ -105,6 +138,20 @@
 @media (max-width: 599px) {
   .card-grid {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "profile"
+      "name"
+      "linkedin"
+      "email"
+      "github"
+      "currently"
+      "techstack"
+      "projects"
+      "design"
+      "location"
+      "call"
+      "glitch"
+      "ascii";
     width: 90%;
     margin: 0 auto;
     padding: 0.5em;
@@ -112,35 +159,163 @@
 
   .magic-bento-card {
     width: 100%;
-    min-height: 180px;
+    min-height: 120px;
+  }
+
+  .bento-slot {
+    padding: 1em 0;
+  }
+
+  .bento-slot__image {
+    width: 160px;
+    height: 160px;
   }
 }
 
-@media (min-width: 600px) {
+@media (min-width: 600px) and (max-width: 1023px) {
   .card-grid {
     grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      "name       linkedin"
+      "email      github"
+      "profile    profile"
+      "currently  techstack"
+      "projects   design"
+      "location   call"
+      "glitch     glitch"
+      "ascii      ascii";
+  }
+
+  .bento-slot {
+    padding: 1em 0;
+  }
+
+  .bento-slot__image {
+    width: 200px;
+    height: 200px;
   }
 }
 
 @media (min-width: 1024px) {
   .card-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: minmax(80px, auto) minmax(140px, auto) minmax(100px, auto) minmax(80px, auto) minmax(120px, auto);
+    grid-template-areas:
+      "name       linkedin   email      github"
+      "currently  profile    profile    techstack"
+      "currently  projects   design     techstack"
+      "location   call       glitch     glitch"
+      "ascii      ascii      ascii      ascii";
+    gap: 0.5em;
+  }
+  
+  /* Override default aspect-ratio for desktop */
+  .magic-bento-card {
+    aspect-ratio: auto;
+    min-height: 80px;
   }
 
-  .magic-bento-card:nth-child(3) {
-    grid-column: span 2;
-    grid-row: span 2;
+  /* Small link cards - top row */
+  .bento-link-card {
+    min-height: 80px !important;
   }
 
-  .magic-bento-card:nth-child(4) {
-    grid-column: 1 / span 2;
-    grid-row: 2 / span 2;
+  .bento-slot {
+    padding: 0;
   }
 
-  .magic-bento-card:nth-child(6) {
-    grid-column: 4;
-    grid-row: 3;
+  .bento-slot__image {
+    width: auto;
+    height: 100%;
+    max-height: 180px;
+    aspect-ratio: 1;
+    margin: 0 auto;
   }
+}
+
+/* External Link Cards - distinct style */
+.bento-link-card {
+  background: #0A2463 !important;
+  border: 1px solid rgba(10, 36, 99, 0.6) !important;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.bento-link-card:hover {
+  border-color: rgba(10, 36, 99, 0.9) !important;
+  background: #0d2d7a !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(10, 36, 99, 0.3);
+}
+
+.bento-link-card a {
+  font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+  position: relative;
+  z-index: 2;
+  color: white;
+}
+
+.bento-link-card::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: white;
+  animation: linkPulse 2s ease-in-out infinite;
+  z-index: 2;
+}
+
+@keyframes linkPulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
+/* Navigation Cards - Rose style (projects, design) */
+.bento-nav-card {
+  background: #D8315B !important;
+  border: 1px solid rgba(216, 49, 91, 0.6) !important;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.bento-nav-card:hover {
+  border-color: rgba(216, 49, 91, 0.9) !important;
+  background: #e04468 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(216, 49, 91, 0.3);
+}
+
+.bento-nav-card button,
+.bento-nav-card a {
+  position: relative;
+  z-index: 2;
+  color: white;
+  font-weight: 500;
+}
+
+.bento-nav-card::before {
+  content: '→';
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  font-size: 14px;
+  opacity: 0.5;
+  color: white;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.bento-nav-card:hover::before {
+  opacity: 1;
+  transform: translateX(3px);
 }
 
 /* Border glow effect */
@@ -151,8 +326,8 @@
   padding: 6px;
   background: radial-gradient(
     var(--glow-radius) circle at var(--glow-x) var(--glow-y),
-    rgba(132, 0, 255, calc(var(--glow-intensity) * 0.8)) 0%,
-    rgba(132, 0, 255, calc(var(--glow-intensity) * 0.4)) 30%,
+    rgba(23, 86, 232, calc(var(--glow-intensity) * 0.8)) 0%,
+    rgba(23, 86, 232, calc(var(--glow-intensity) * 0.4)) 30%,
     transparent 60%
   );
   border-radius: inherit;
@@ -175,8 +350,8 @@
 
 .magic-bento-card--border-glow:hover {
   box-shadow:
-    0 4px 20px rgba(46, 24, 78, 0.4),
-    0 0 30px var(--purple-glow);
+    0 4px 20px rgba(20, 18, 16, 0.6),
+    0 0 30px var(--primary-glow);
 }
 
 .particle-container {
@@ -191,15 +366,15 @@
   left: -2px;
   right: -2px;
   bottom: -2px;
-  background: rgba(132, 0, 255, 0.2);
+  background: rgba(23, 86, 232, 0.2);
   border-radius: 50%;
   z-index: -1;
 }
 
 .particle-container:hover {
   box-shadow:
-    0 4px 20px rgba(46, 24, 78, 0.2),
-    0 0 30px var(--purple-glow);
+    0 4px 20px rgba(20, 18, 16, 0.3),
+    0 0 30px var(--primary-glow);
 }
 
 /* Global spotlight styles */
