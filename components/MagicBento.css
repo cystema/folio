@@ -148,10 +148,10 @@
       "techstack"
       "projects"
       "design"
-      "location"
       "call"
-      "glitch"
-      "ascii";
+      "ascii"
+      "location"
+      "glitch";
     width: 90%;
     margin: 0 auto;
     padding: 0.5em;
@@ -181,9 +181,9 @@
       "profile    profile"
       "currently  techstack"
       "projects   design"
-      "location   call"
-      "glitch     glitch"
-      "ascii      ascii";
+      "call       call"
+      "ascii      ascii"
+      "location   glitch";
   }
 
   .bento-slot {
@@ -204,9 +204,14 @@
       "name       linkedin   email      github"
       "currently  profile    profile    techstack"
       "currently  projects   design     techstack"
-      "location   call       glitch     glitch"
-      "ascii      ascii      ascii      ascii";
+      "call       call       call       call"
+      "ascii      ascii      location   glitch";
     gap: 0.5em;
+  }
+  
+  /* Make location and glitch cards square */
+  .bento-square-card {
+    aspect-ratio: 1;
   }
   
   /* Override default aspect-ratio for desktop */

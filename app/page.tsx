@@ -75,7 +75,7 @@ export default function ResumePage() {
           {/* Name & Title */}
           <ParticleCard
             className="magic-bento-card magic-bento-card--border-glow"
-            style={{ backgroundColor: '#1c1a17', '--glow-color': GLOW_COLOR, gridArea: 'name' } as React.CSSProperties}
+            style={{ backgroundColor: '#ffe5ff', '--glow-color': GLOW_COLOR, gridArea: 'name' } as React.CSSProperties}
             disableAnimations={isMobile}
             particleCount={6}
             glowColor={GLOW_COLOR}
@@ -83,9 +83,12 @@ export default function ResumePage() {
             clickEffect={true}
             enableMagnetism={true}
           >
-            <div className="flex-1 flex flex-col justify-center">
-              <h2 className="text-2xl font-normal mb-1">SHUBHAM MAZUMDER</h2>
-              <p className="text-sm opacity-70">product engineer</p>
+            <div className="flex-1 flex flex-col justify-center" style={{ color: '#141210' }}>
+              <h2 className="text-2xl font-normal mb-1" style={{ color: '#141210' }}>SHUBHAM MAZUMDER</h2>
+              <p className="text-sm opacity-90 mb-2" style={{ color: '#141210' }}>Product Engineer</p>
+              <p className="text-xs opacity-70" style={{ color: '#141210' }}>
+                currently building AI CSRs and agentic workflows for the trades at Sameday AI.
+              </p>
             </div>
           </ParticleCard>
 
@@ -169,26 +172,6 @@ export default function ResumePage() {
             </button>
           </ParticleCard>
 
-          {/* Currently (Left side - spans 2 rows) */}
-          <ParticleCard
-            className="magic-bento-card"
-            style={{ backgroundColor: '#1c1a17', '--glow-color': GLOW_COLOR, gridArea: 'currently' } as React.CSSProperties}
-            disableAnimations={isMobile}
-            particleCount={6}
-            glowColor={GLOW_COLOR}
-            enableTilt={!isMobile}
-            clickEffect={true}
-            enableMagnetism={true}
-          >
-
-            <div className="magic-bento-card__content">
-              <p className="text-sm leading-relaxed">
-                currently building AI-powered CSRs at Sameday.
-              </p>
-
-            </div>
-          </ParticleCard>
-
           {/* Tech Stack */}
           <ParticleCard
             className="magic-bento-card magic-bento-card--border-glow"
@@ -214,7 +197,7 @@ export default function ResumePage() {
 
           {/* Location */}
           <ParticleCard
-            className="magic-bento-card magic-bento-card--border-glow"
+            className="magic-bento-card magic-bento-card--border-glow bento-square-card"
             style={{ backgroundColor: '#1c1a17', '--glow-color': GLOW_COLOR, gridArea: 'location' } as React.CSSProperties}
             disableAnimations={isMobile}
             particleCount={4}
@@ -251,7 +234,7 @@ export default function ResumePage() {
 
           {/* LetterGlitch Background */}
           <ParticleCard
-            className="magic-bento-card magic-bento-card--border-glow"
+            className="magic-bento-card magic-bento-card--border-glow bento-square-card"
             style={{ backgroundColor: '#1c1a17', '--glow-color': GLOW_COLOR, padding: 0, gridArea: 'glitch' } as React.CSSProperties}
             disableAnimations={isMobile}
             particleCount={4}
