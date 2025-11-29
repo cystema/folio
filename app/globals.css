@@ -114,5 +114,6 @@
   html, body {
     font-family: "Google Sans Mono", monospace;
     @apply bg-background text-foreground;
+    background-color: #141210;
   }
 }

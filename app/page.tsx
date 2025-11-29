@@ -29,8 +29,8 @@ export default function ResumePage() {
       setCurrentView(newView)
       setTimeout(() => {
         setIsTransitioning(false)
-      }, 50)
-    }, 150)
+      }, 100)
+    }, 300)
   }
 
   useEffect(() => {
@@ -54,17 +54,17 @@ export default function ResumePage() {
 
   if (currentView !== "home") {
     return (
-      <div className={`min-h-screen bg-[#141210] text-white transition-opacity duration-200 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
-        <div className={`min-h-screen overflow-y-auto bg-[#141210] transition-opacity duration-200 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+      <div className="min-h-screen bg-[#141210] text-white">
+        <div className={`min-h-screen overflow-y-auto bg-[#141210] transition-opacity duration-300 ease-in-out ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
           {currentView === "projects" && <ProjectsSection onBack={() => handleViewChange("home")} />}
-          {currentView === "design" && <DesignSection />}
+          {currentView === "design" && <DesignSection onBack={() => handleViewChange("home")} />}
         </div>
       </div>
     )
   }
 
   return (
-    <div className={`min-h-screen bg-[#141210] text-white p-4 md:p-6 transition-opacity duration-200 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+    <div className="min-h-screen bg-[#141210] text-white p-4 md:p-6">
       <GlobalSpotlight
         gridRef={gridRef}
         disableAnimations={isMobile}
@@ -73,7 +73,7 @@ export default function ResumePage() {
         glowColor={GLOW_COLOR}
       />
 
-      <div className="max-w-6xl mx-auto relative">
+      <div className={`max-w-6xl mx-auto relative transition-opacity duration-300 ease-in-out ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
         <BentoCardGrid gridRef={gridRef}>
           {/* Profile Image - using BentoSlot (no card border) */}
           <BentoSlot area="profile">
