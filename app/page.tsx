@@ -74,7 +74,7 @@ export default function ResumePage() {
 
           {/* Name & Title */}
           <ParticleCard
-            className="magic-bento-card magic-bento-card--border-glow"
+            className="magic-bento-card"
             style={{ backgroundColor: '#ffe5ff', '--glow-color': GLOW_COLOR, gridArea: 'name' } as React.CSSProperties}
             disableAnimations={isMobile}
             particleCount={6}
