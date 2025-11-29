@@ -91,9 +91,9 @@ export function useGazeTracking(containerRef, basePath = '/faces/') {
     const container = containerRef.current;
     if (!container) return;
 
-    // Add event listeners
-    container.addEventListener('mousemove', handleMouseMove);
-    container.addEventListener('touchmove', handleTouchMove, { passive: true });
+    // Listen globally on window so face follows cursor everywhere on the page
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
 
     // Set initial center gaze
     const rect = container.getBoundingClientRect();
@@ -102,8 +102,8 @@ export function useGazeTracking(containerRef, basePath = '/faces/') {
     updateGaze(centerX, centerY);
 
     return () => {
-      container.removeEventListener('mousemove', handleMouseMove);
-      container.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('touchmove', handleTouchMove);
     };
   }, [handleMouseMove, handleTouchMove, updateGaze]);
 

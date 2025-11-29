@@ -62,7 +62,7 @@ export default function ResumePage() {
                 <h2 className="text-lg font-normal">SHUBHAM MAZUMDER</h2>
                 <h3 className="text-lg font-normal opacity-70">Product Engineer</h3>
               </div>
-              <div className="h-12 w-12 min-h-12 min-w-12 max-h-12 max-w-12 rounded-full overflow-hidden flex-shrink-0 border border-current/20">
+              <div className="h-12 w-12 min-h-12 min-w-12 max-h-12 max-w-12 rounded-md overflow-hidden flex-shrink-0 border border-current/20">
                 <FaceTracker basePath="/faces/" />
               </div>
             </div>
