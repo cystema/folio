@@ -17,8 +17,21 @@ const GLOW_COLOR = "23, 86, 232" // Imperial Blue
 export default function ResumePage() {
   const [currentView, setCurrentView] = useState<"home" | "projects" | "design">("home")
   const [currentTime, setCurrentTime] = useState<string>("")
+  const [isTransitioning, setIsTransitioning] = useState(false)
   const gridRef = useRef<HTMLDivElement>(null)
   const isMobile = useMobileDetection()
+
+  const handleViewChange = (newView: "home" | "projects" | "design") => {
+    if (newView === currentView) return
+    
+    setIsTransitioning(true)
+    setTimeout(() => {
+      setCurrentView(newView)
+      setTimeout(() => {
+        setIsTransitioning(false)
+      }, 50)
+    }, 200)
+  }
 
   useEffect(() => {
     const updateTime = () => {
@@ -41,10 +54,10 @@ export default function ResumePage() {
 
   if (currentView !== "home") {
     return (
-      <div className="min-h-screen bg-[#141210] text-white">
-        <div className="flex h-screen">
+      <div className={`min-h-screen bg-[#141210] text-white transition-opacity duration-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+        <div className="flex flex-col md:flex-row h-screen">
           {/* Left side - LetterGlitch */}
-          <div className="w-1/2 h-full relative">
+          <div className="w-full md:w-1/2 h-1/2 md:h-full relative transition-transform duration-500 ease-in-out">
             <LetterGlitch
               glitchSpeed={50}
               centerVignette={true}
@@ -55,15 +68,17 @@ export default function ResumePage() {
           </div>
           
           {/* Right side - Content */}
-          <div className="w-1/2 h-full overflow-y-auto bg-[#141210]">
-            {currentView === "projects" && <ProjectsSection />}
-            {currentView === "design" && <DesignSection />}
+          <div className={`w-full md:w-1/2 h-1/2 md:h-full overflow-y-auto bg-[#141210] transition-transform duration-500 ease-in-out ${isTransitioning ? 'translate-x-4 opacity-0' : 'translate-x-0 opacity-100'}`}>
+            <div className="transition-all duration-300">
+              {currentView === "projects" && <ProjectsSection />}
+              {currentView === "design" && <DesignSection />}
+            </div>
           </div>
         </div>
         
         <button
-          onClick={() => setCurrentView("home")}
-          className="fixed bottom-6 left-6 z-30 flex items-center space-x-2 px-4 py-2 bg-black/80 text-white border border-white/20 rounded-none backdrop-blur-sm transition-all duration-300 hover:opacity-70"
+          onClick={() => handleViewChange("home")}
+          className="fixed bottom-6 left-6 z-30 flex items-center space-x-2 px-4 py-2 bg-black/80 text-white border border-white/20 rounded-none backdrop-blur-sm transition-all duration-300 hover:opacity-70 hover:scale-105"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M19 12H5M12 19l-7-7 7-7" />
@@ -75,7 +90,7 @@ export default function ResumePage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#141210] text-white p-4 md:p-6">
+    <div className={`min-h-screen bg-[#141210] text-white p-4 md:p-6 transition-opacity duration-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
       <GlobalSpotlight
         gridRef={gridRef}
         disableAnimations={isMobile}
@@ -84,7 +99,7 @@ export default function ResumePage() {
         glowColor={GLOW_COLOR}
       />
 
-      <div className="max-w-6xl mx-auto relative">
+      <div className={`max-w-6xl mx-auto relative transition-transform duration-500 ease-in-out ${isTransitioning ? 'scale-95 opacity-0' : 'scale-100 opacity-100'}`}>
         <BentoCardGrid gridRef={gridRef}>
           {/* Profile Image - using BentoSlot (no card border) */}
           <BentoSlot area="profile">
@@ -186,8 +201,8 @@ export default function ResumePage() {
             enableMagnetism={true}
           >
             <button 
-              onClick={() => setCurrentView("projects")}
-              className="flex-1 flex items-center justify-center text-xl hover:text-blue-400 transition-colors w-full"
+              onClick={() => handleViewChange("projects")}
+              className="flex-1 flex items-center justify-center text-xl hover:text-blue-400 transition-all duration-300 w-full hover:scale-105"
             >
               projects
             </button>
@@ -195,7 +210,7 @@ export default function ResumePage() {
 
           {/* Tech Stack */}
           <ParticleCard
-            className="magic-bento-card"
+            className="magic-bento-card bento-techstack-card"
             style={{ backgroundColor: '#1c1a17', gridArea: 'techstack' } as React.CSSProperties}
             disableAnimations={isMobile}
             particleCount={0}
@@ -278,8 +293,8 @@ export default function ResumePage() {
             enableMagnetism={true}
           >
             <button 
-              onClick={() => setCurrentView("design")}
-              className="flex-1 flex items-center justify-center text-xl hover:text-blue-400 transition-colors w-full"
+              onClick={() => handleViewChange("design")}
+              className="flex-1 flex items-center justify-center text-xl hover:text-blue-400 transition-all duration-300 w-full hover:scale-105"
             >
               design
             </button>
@@ -308,7 +323,7 @@ export default function ResumePage() {
 
           {/* Browser Info */}
           <ParticleCard
-            className="magic-bento-card"
+            className="magic-bento-card bento-browser-card"
             style={{ backgroundColor: '#1c1a17', gridArea: 'browser' } as React.CSSProperties}
             disableAnimations={isMobile}
             particleCount={0}

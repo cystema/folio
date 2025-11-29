@@ -6,6 +6,31 @@
   .text-balance {
     text-wrap: balance;
   }
+  
+  /* Smooth page transitions */
+  .page-transition {
+    transition: opacity 0.3s ease-in-out, transform 0.5s ease-in-out;
+  }
+  
+  .page-transition-enter {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  
+  .page-transition-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .page-transition-exit {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .page-transition-exit-active {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
 }
 
 @layer base {
