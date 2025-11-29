@@ -2,15 +2,9 @@
 
 import { useRef } from "react"
 import Image from "next/image"
-import { ParticleCard, useMobileDetection } from "./MagicBento"
 import PageNavigation from "./PageNavigation"
-import "./MagicBento.css"
-
-// Metro UI Colors
-const METRO = {
-  teal: '#008272',
-  purple: '#5C2D91',
-}
+import { METRO } from "./MetroTile"
+import "./DesignGrid.css"
 
 const logo_designs = [
   {
@@ -34,36 +28,27 @@ interface Design {
   color: string
 }
 
-const DesignCard = ({ design }: { design: Design }) => (
-  <ParticleCard
-    className="magic-bento-card"
-    style={{ 
-      backgroundColor: design.color, 
-      aspectRatio: 'auto',
-      minHeight: '280px'
-    } as React.CSSProperties}
-    disableAnimations={true}
-    particleCount={0}
-    enableTilt={false}
-    clickEffect={false}
-    enableMagnetism={false}
+const DesignTile = ({ design }: { design: Design }) => (
+  <div
+    className="design-tile transition-opacity hover:opacity-90 active:opacity-80"
+    style={{ backgroundColor: design.color }}
   >
-    <div className="flex-1 flex flex-col justify-end">
-      <div className="flex-1 mb-3 overflow-hidden flex items-center justify-center bg-black/20">
-        <Image
-          src={design.image || "/placeholder.svg"}
-          alt={design.name}
-          width={400}
-          height={300}
-          className="w-full h-full object-contain"
-        />
-      </div>
-      <div className="magic-bento-card__content">
-        <h3 className="text-base font-semibold mb-1">{design.name}</h3>
-        <p className="text-xs opacity-75 leading-relaxed">{design.description}</p>
-      </div>
+    {/* Image takes up most of the tile */}
+    <div className="design-tile__image">
+      <Image
+        src={design.image}
+        alt={design.name}
+        fill
+        className="object-contain p-4"
+        sizes="(max-width: 599px) 280px, (max-width: 1023px) 320px, 380px"
+      />
     </div>
-  </ParticleCard>
+    {/* Text overlay at the bottom */}
+    <div className="design-tile__info">
+      <h3 className="text-white text-base font-bold">{design.name}</h3>
+      <p className="text-white text-xs opacity-70 leading-snug">{design.description}</p>
+    </div>
+  </div>
 )
 
 interface DesignSectionProps {
@@ -75,9 +60,7 @@ const DesignSection = ({ onNavigate }: DesignSectionProps) => {
 
   return (
     <div className="min-h-screen bg-black flex flex-col items-center">
-      {/* Spotlight disabled for Metro style */}
-
-      <div className="w-full max-w-6xl mx-auto px-0 py-0">
+      <div className="w-full max-w-4xl mx-auto px-0 py-0">
         {/* Header */}
         <div className="mb-1 px-4 py-4 flex items-center justify-end">
           {onNavigate && (
@@ -85,13 +68,11 @@ const DesignSection = ({ onNavigate }: DesignSectionProps) => {
           )}
         </div>
 
-        {/* Logo Design Section */}
-        <div>
-          <div className="card-grid bento-section" ref={gridRef} style={{ maxWidth: '100%', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-            {logo_designs.map((design, idx) => (
-              <DesignCard key={idx} design={design} />
-            ))}
-          </div>
+        {/* Design Grid */}
+        <div className="design-grid" ref={gridRef}>
+          {logo_designs.map((design, idx) => (
+            <DesignTile key={idx} design={design} />
+          ))}
         </div>
       </div>
     </div>

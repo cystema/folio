@@ -1,0 +1,57 @@
+/* Design Grid - Metro UI style with image focus */
+
+.design-grid {
+  display: grid;
+  gap: 4px;
+  margin: 0 auto;
+  padding: 8px;
+  background: #000;
+}
+
+/* Mobile: 1 column */
+@media (max-width: 599px) {
+  .design-grid {
+    grid-template-columns: 1fr;
+    max-width: 300px;
+  }
+}
+
+/* Tablet and up: 2 columns */
+@media (min-width: 600px) {
+  .design-grid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 700px;
+    justify-content: center;
+  }
+}
+
+/* Desktop: larger tiles */
+@media (min-width: 1024px) {
+  .design-grid {
+    max-width: 800px;
+  }
+}
+
+/* Design tile - image focused */
+.design-tile {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Image area - takes most of the tile */
+.design-tile__image {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Text info at the bottom */
+.design-tile__info {
+  padding: 12px 14px;
+  background: rgba(0, 0, 0, 0.3);
+}
+
