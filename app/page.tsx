@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import dynamic from "next/dynamic"
-import { MoveUpRight, Blocks, FolderCode, LayoutTemplate, AudioWaveform, LocateFixed, Globe, Monitor, ArrowRightFromLine } from "lucide-react"
+import { MoveUpRight, Blocks, FolderCode, LayoutTemplate, AudioWaveform, LocateFixed, Globe, Monitor, ArrowRightFromLine, Wifi, Cpu, HardDrive } from "lucide-react"
 import { MetroTile, METRO } from "../components/MetroTile"
 import { useBrowserInfo } from "../components/useBrowserInfo"
 import "../components/MetroGrid.css"
@@ -186,9 +186,42 @@ export default function ResumePage() {
             )}
           </MetroTile>
 
+          {/* Network Speed */}
+          <MetroTile color={METRO.yellow} area="networkspeed" className="metro-browser relative">
+            <Wifi className="absolute top-3 right-3 w-6 h-6 opacity-60" />
+            <div className="text-[10px] font-semibold opacity-60 mb-1">Your Network Speed</div>
+            {browserLoading ? (
+              <span className="text-xs opacity-50">loading...</span>
+            ) : (
+              <span className="text-xs font-semibold">{browserData?.networkSpeed || 'N/A'}</span>
+            )}
+          </MetroTile>
+
+          {/* CPU Cores */}
+          <MetroTile color={METRO.yellow} area="cpucores" className="metro-browser relative">
+            <Cpu className="absolute top-3 right-3 w-6 h-6 opacity-60" />
+            <div className="text-[10px] font-semibold opacity-60 mb-1">Your CPU Cores</div>
+            {browserLoading ? (
+              <span className="text-xs opacity-50">loading...</span>
+            ) : (
+              <span className="text-xs font-semibold">{browserData?.cpuCores ? `${browserData.cpuCores} cores` : 'N/A'}</span>
+            )}
+          </MetroTile>
+
+          {/* Device Memory */}
+          <MetroTile color={METRO.yellow} area="devicememory" className="metro-browser relative">
+            <HardDrive className="absolute top-3 right-3 w-6 h-6 opacity-60" />
+            <div className="text-[10px] font-semibold opacity-60 mb-1">Your Device Memory</div>
+            {browserLoading ? (
+              <span className="text-xs opacity-50">loading...</span>
+            ) : (
+              <span className="text-xs font-semibold">{browserData?.deviceMemory ? `${browserData.deviceMemory} GB` : 'N/A'}</span>
+            )}
+          </MetroTile>
+
           {/* ASCII */}
           <div style={{ gridArea: 'ascii', backgroundColor: '#92140C', padding: 0 }} className="relative">
-            <ASCIIText text="Hi!" enableWaves={true} asciiFontSize={6} textFontSize={80} />
+            <ASCIIText text="Hello World!" enableWaves={true} asciiFontSize={6} textFontSize={80} />
           </div>
 
           {/* Shubham's Location */}

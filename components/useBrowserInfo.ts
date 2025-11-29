@@ -12,6 +12,9 @@ export interface BrowserData {
   os: string
   screen: string
   language: string
+  networkSpeed: string | null
+  cpuCores: number | null
+  deviceMemory: number | null
 }
 
 export function useBrowserInfo() {
@@ -45,6 +48,16 @@ export function useBrowserInfo() {
         const screen = `${window.screen.width}×${window.screen.height}`
         const language = navigator.language
 
+        // Network speed (downlink in Mbps)
+        const connection = (navigator as any).connection || (navigator as any).mozConnection || (navigator as any).webkitConnection
+        const networkSpeed = connection?.downlink ? `${connection.downlink} Mbps` : null
+
+        // CPU cores
+        const cpuCores = navigator.hardwareConcurrency || null
+
+        // Device memory (Chrome only, in GB)
+        const deviceMemory = (navigator as any).deviceMemory || null
+
         const ipResponse = await fetch('https://api.ipify.org?format=json')
         const ipData = await ipResponse.json()
         const ip = ipData.ip
@@ -61,10 +74,18 @@ export function useBrowserInfo() {
           browser: browser,
           os: os,
           screen: screen,
-          language: language.split('-')[0].toUpperCase()
+          language: language.split('-')[0].toUpperCase(),
+          networkSpeed: networkSpeed,
+          cpuCores: cpuCores,
+          deviceMemory: deviceMemory
         })
       } catch {
         const userAgent = navigator.userAgent
+        const connection = (navigator as any).connection || (navigator as any).mozConnection || (navigator as any).webkitConnection
+        const networkSpeed = connection?.downlink ? `${connection.downlink} Mbps` : null
+        const cpuCores = navigator.hardwareConcurrency || null
+        const deviceMemory = (navigator as any).deviceMemory || null
+
         setData({
           ip: 'Unknown',
           city: 'Unknown',
@@ -74,7 +95,10 @@ export function useBrowserInfo() {
           browser: getBrowserName(userAgent),
           os: getOSName(userAgent),
           screen: `${window.screen.width}×${window.screen.height}`,
-          language: navigator.language.split('-')[0].toUpperCase()
+          language: navigator.language.split('-')[0].toUpperCase(),
+          networkSpeed: networkSpeed,
+          cpuCores: cpuCores,
+          deviceMemory: deviceMemory
         })
       } finally {
         setLoading(false)

@@ -22,7 +22,9 @@
       "frontend   ai"
       "voice      yourloc"
       "yourip     yourdev"
-      "myloc      ascii";
+      "networkspeed cpucores"
+      "devicememory myloc"
+      "ascii      ascii";
     justify-content: center;
     max-width: 300px;
   }
@@ -38,7 +40,8 @@
       "work       github     profile    projects"
       "backend    frontend   ai         design"
       "voice      yourloc    yourip     yourdev"
-      "myloc      ascii      ascii      .";
+      "networkspeed cpucores devicememory myloc"
+      "ascii      ascii      ascii      ascii";
     justify-content: center;
   }
 }
@@ -53,7 +56,8 @@
       "work       github     profile    projects"
       "backend    frontend   ai         design"
       "voice      yourloc    yourip     yourdev"
-      "myloc      ascii      ascii      .";
+      "networkspeed cpucores devicememory myloc"
+      "ascii      ascii      ascii      ascii";
     justify-content: center;
   }
 }
