@@ -12,7 +12,7 @@ import BrowserInfo from "../components/BrowserInfo"
 import { ParticleCard, GlobalSpotlight, BentoCardGrid, BentoSlot, useMobileDetection } from "../components/MagicBento"
 import "../components/MagicBento.css"
 
-const GLOW_COLOR = "23, 86, 232" // Imperial Blue
+const GLOW_COLOR = "11, 155, 244" // Deep Space Blue
 
 export default function ResumePage() {
   const [currentView, setCurrentView] = useState<"home" | "projects" | "design">("home")
@@ -185,7 +185,7 @@ export default function ResumePage() {
           {/* Tech Stack */}
           <ParticleCard
             className="magic-bento-card bento-techstack-card"
-            style={{ backgroundColor: '#1c1a17', gridArea: 'techstack' } as React.CSSProperties}
+            style={{ gridArea: 'techstack' } as React.CSSProperties}
             disableAnimations={isMobile}
             particleCount={0}
             glowColor={GLOW_COLOR}
@@ -197,41 +197,41 @@ export default function ResumePage() {
               <div className="text-xs opacity-50 mb-1">tech stack</div>
               <div className="text-xs opacity-40 mt-1 mb-0.5">backend</div>
               <div className="flex flex-wrap gap-1.5 text-xs">
-                <span className="px-2 py-0.5 bg-white/5 rounded">Python</span>
-                <span className="px-2 py-0.5 bg-white/5 rounded">Pydantic</span>
-                <span className="px-2 py-0.5 bg-white/5 rounded">FastAPI</span>
-                <span className="px-2 py-0.5 bg-white/5 rounded">MongoDB</span>
-                <span className="px-2 py-0.5 bg-white/5 rounded">SQL</span>
-                <span className="px-2 py-0.5 bg-white/5 rounded">Beanie</span>
+                <span className="badge badge-tech">Python</span>
+                <span className="badge badge-tech">Pydantic</span>
+                <span className="badge badge-tech">FastAPI</span>
+                <span className="badge badge-tech">MongoDB</span>
+                <span className="badge badge-tech">SQL</span>
+                <span className="badge badge-tech">Beanie</span>
               </div>
               <div className="text-xs opacity-40 mt-1 mb-0.5">frontend</div>
               <div className="flex flex-wrap gap-1.5 text-xs">
-                <span className="px-2 py-0.5 bg-white/5 rounded">JavaScript</span>
-                <span className="px-2 py-0.5 bg-white/5 rounded">React</span>
-                <span className="px-2 py-0.5 bg-white/5 rounded">shadcn</span>
-                <span className="px-2 py-0.5 bg-white/5 rounded">Tailwind</span>
+                <span className="badge badge-tech">JavaScript</span>
+                <span className="badge badge-tech">React</span>
+                <span className="badge badge-tech">shadcn</span>
+                <span className="badge badge-tech">Tailwind</span>
               </div>
               <div className="text-xs opacity-40 mt-1 mb-0.5">AI frameworks</div>
               <div className="flex flex-wrap gap-1.5 text-xs">
-                <span className="px-2 py-0.5 bg-white/5 rounded">Pydantic-AI</span>
-                <span className="px-2 py-0.5 bg-white/5 rounded">LangChain</span>
-                <span className="px-2 py-0.5 bg-white/5 rounded">Temporal</span>
-                <span className="px-2 py-0.5 bg-white/5 rounded">OpenAI</span>
-                <span className="px-2 py-0.5 bg-white/5 rounded">Anthropic</span>
+                <span className="badge badge-ai">Pydantic-AI</span>
+                <span className="badge badge-ai">LangChain</span>
+                <span className="badge badge-ai">Temporal</span>
+                <span className="badge badge-ai">OpenAI</span>
+                <span className="badge badge-ai">Anthropic</span>
               </div>
               <div className="text-xs opacity-40 mt-1 mb-0.5">Voice AI</div>
               <div className="flex flex-wrap gap-1.5 text-xs">
-                <span className="px-2 py-0.5 bg-white/5 rounded">Vapi</span>
-                <span className="px-2 py-0.5 bg-white/5 rounded">Retell</span>
-                <span className="px-2 py-0.5 bg-white/5 rounded">ElevenLabs</span>
-                <span className="px-2 py-0.5 bg-white/5 rounded">Cartesia</span>
-                <span className="px-2 py-0.5 bg-white/5 rounded">Deepgram</span>
+                <span className="badge badge-ai">Vapi</span>
+                <span className="badge badge-ai">Retell</span>
+                <span className="badge badge-ai">ElevenLabs</span>
+                <span className="badge badge-ai">Cartesia</span>
+                <span className="badge badge-ai">Deepgram</span>
               </div>
               <div className="text-xs opacity-40 mt-1 mb-0.5">IDE</div>
               <div className="flex flex-wrap gap-1.5 text-xs">
-                <span className="px-2 py-0.5 bg-white/5 rounded">Cursor</span>
-                <span className="px-2 py-0.5 bg-white/5 rounded">Claude-Code</span>
-                <span className="px-2 py-0.5 bg-white/5 rounded">VSCode</span>
+                <span className="badge badge-tech">Cursor</span>
+                <span className="badge badge-tech">Claude-Code</span>
+                <span className="badge badge-tech">VSCode</span>
               </div>
             </div>
           </ParticleCard>

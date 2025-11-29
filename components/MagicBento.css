@@ -3,11 +3,11 @@
   --sat: 85%;
   --white: hsl(0, 0%, 100%);
   
-  /* Imperial Blue - Primary */
-  --primary: #1756e8;
-  --primary-glow: rgba(23, 86, 232, 0.2);
-  --primary-border: rgba(23, 86, 232, 0.8);
-  --primary-subtle: rgba(23, 86, 232, 0.1);
+  /* Deep Space Blue - Primary */
+  --primary: #0b9bf4;
+  --primary-glow: rgba(11, 155, 244, 0.2);
+  --primary-border: rgba(11, 155, 244, 0.8);
+  --primary-subtle: rgba(11, 155, 244, 0.1);
   
   /* Magenta Bloom - Accent */
   --accent: #d62954;
@@ -72,6 +72,27 @@
   --glow-y: 50%;
   --glow-intensity: 0;
   --glow-radius: 200px;
+}
+
+.magic-bento-card.bento-techstack-card {
+  background: #ffb700 !important; /* Amber Flame 500 */
+  border: none !important;
+}
+
+.magic-bento-card.bento-techstack-card * {
+  color: #332500 !important; /* Amber Flame 900 - dark text for visibility */
+}
+
+.magic-bento-card.bento-techstack-card .opacity-50,
+.magic-bento-card.bento-techstack-card .opacity-40 {
+  opacity: 1 !important; /* Override Tailwind opacity */
+  color: #664900 !important; /* Slightly lighter for labels */
+}
+
+.magic-bento-card.bento-techstack-card .badge {
+  background-color: rgba(51, 37, 0, 0.4) !important;
+  border: 1px solid rgba(51, 37, 0, 0.6) !important;
+  color: #332500 !important;
 }
 
 .magic-bento-card:hover {
@@ -189,8 +210,28 @@
     gap: 0.5em;
   }
 
-  .bento-techstack-card .text-xs {
-    font-size: 10px;
+  .bento-techstack-card * {
+    color: #332500 !important; /* Amber Flame 900 - dark text for visibility */
+  }
+  
+  .bento-techstack-card .opacity-50,
+  .bento-techstack-card .opacity-40 {
+    opacity: 1 !important; /* Override Tailwind opacity */
+  }
+  
+  .magic-bento-card.bento-techstack-card * {
+    color: #332500 !important;
+  }
+  
+  .magic-bento-card.bento-techstack-card .opacity-50,
+  .magic-bento-card.bento-techstack-card .opacity-40 {
+    opacity: 1 !important;
+  }
+  
+  .magic-bento-card.bento-techstack-card .badge {
+    background-color: rgba(51, 37, 0, 0.4) !important;
+    border: 1px solid rgba(51, 37, 0, 0.6) !important;
+    color: #332500 !important;
   }
 
   .bento-techstack-card .flex.flex-wrap {
@@ -426,7 +467,7 @@
   transform: translateX(3px);
 }
 
-/* Border glow effect */
+/* Border glow effect - Using Blue Spruce for design cards */
 .magic-bento-card--border-glow::after {
   content: '';
   position: absolute;
@@ -434,8 +475,8 @@
   padding: 6px;
   background: radial-gradient(
     var(--glow-radius) circle at var(--glow-x) var(--glow-y),
-    rgba(23, 86, 232, calc(var(--glow-intensity) * 0.8)) 0%,
-    rgba(23, 86, 232, calc(var(--glow-intensity) * 0.4)) 30%,
+    rgba(37, 218, 194, calc(var(--glow-intensity) * 0.8)) 0%,
+    rgba(37, 218, 194, calc(var(--glow-intensity) * 0.4)) 30%,
     transparent 60%
   );
   border-radius: inherit;
@@ -474,7 +515,7 @@
   left: -2px;
   right: -2px;
   bottom: -2px;
-  background: rgba(23, 86, 232, 0.2);
+  background: rgba(11, 155, 244, 0.2);
   border-radius: 50%;
   z-index: -1;
 }

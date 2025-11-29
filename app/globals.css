@@ -135,6 +135,20 @@
   --color-accent-pink-hover: #e04468;
   --color-accent-pink-border: rgba(216, 49, 91, 0.6);
   
+  /* Primary Colors - Using Deep Space Blue */
+  --color-primary: var(--color-deep-space-blue-500);
+  --color-primary-glow: rgba(11, 155, 244, 0.2);
+  --color-primary-border: rgba(11, 155, 244, 0.8);
+  --color-primary-subtle: rgba(11, 155, 244, 0.1);
+  
+  /* Design Colors - Using Blue Spruce */
+  --color-design-primary: var(--color-blue-spruce-500);
+  --color-design-glow: rgba(37, 218, 194, 0.2);
+  
+  /* Projects Colors - Using Deep Space Blue */
+  --color-projects-primary: var(--color-deep-space-blue-500);
+  --color-projects-glow: rgba(11, 155, 244, 0.2);
+  
   /* Brick Ember Color Palette */
   --color-brick-ember-50: #ffe5e5;
   --color-brick-ember-100: #ffcccc;
@@ -325,6 +339,36 @@
   color: var(--color-text-white);
 }
 
+.badge.badge-tech {
+  background-color: rgba(11, 155, 244, 0.25) !important;
+  border: 1px solid rgba(11, 155, 244, 0.4) !important;
+  color: #6dc3f8 !important; /* deep-space-blue-300 */
+}
+
+.badge.badge-ai {
+  background-color: rgba(51, 37, 0, 0.3) !important; /* Dark background for visibility on amber */
+  border: 1px solid rgba(51, 37, 0, 0.5) !important;
+  color: #332500 !important; /* amber-flame-900 - dark text */
+}
+
+.bento-techstack-card .badge.badge-ai {
+  background-color: rgba(51, 37, 0, 0.4) !important;
+  border: 1px solid rgba(51, 37, 0, 0.6) !important;
+  color: #332500 !important;
+}
+
+.bento-techstack-card .badge.badge-tech {
+  background-color: rgba(51, 37, 0, 0.4) !important;
+  border: 1px solid rgba(51, 37, 0, 0.6) !important;
+  color: #332500 !important;
+}
+
+.badge.badge-design {
+  background-color: rgba(37, 218, 194, 0.25) !important;
+  border: 1px solid rgba(37, 218, 194, 0.4) !important;
+  color: #7ce9da !important; /* blue-spruce-300 */
+}
+
 .badge-group {
   display: flex;
   flex-wrap: wrap;
@@ -390,6 +434,11 @@
   align-items: center;
   justify-content: center;
   background-color: var(--color-background-card-dark);
+  transition: box-shadow 0.3s ease;
+}
+
+.project-image-container:hover {
+  box-shadow: 0 0 20px rgba(11, 155, 244, 0.3);
 }
 
 .project-content {
@@ -426,6 +475,7 @@
 
 .design-image:hover {
   transform: scale(1.05);
+  filter: drop-shadow(0 0 8px rgba(37, 218, 194, 0.4));
 }
 
 /* ============================================
