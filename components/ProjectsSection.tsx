@@ -3,11 +3,27 @@
 import { useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { ParticleCard, GlobalSpotlight, useMobileDetection } from "./MagicBento"
+import { ParticleCard, useMobileDetection } from "./MagicBento"
 import PageNavigation from "./PageNavigation"
 import "./MagicBento.css"
 
-const GLOW_COLOR = "11, 155, 244" // Deep Space Blue for tech/projects
+// Metro UI Colors
+const METRO = {
+  blue: '#0078D4',
+  darkBlue: '#0063B1',
+  teal: '#008272',
+  green: '#107C10',
+  purple: '#5C2D91',
+  magenta: '#B4009E',
+  dark: '#1F1F1F',
+}
+
+// Assign colors to project cards
+const projectColors = [
+  METRO.blue, METRO.teal, METRO.purple, METRO.green, 
+  METRO.darkBlue, METRO.magenta, METRO.blue, METRO.teal,
+  METRO.purple, METRO.green, METRO.darkBlue
+]
 
 const other_projects = [
   {
@@ -95,46 +111,45 @@ interface Project {
   link?: string
 }
 
-const ProjectCard = ({ project, isMobile }: { project: Project; isMobile: boolean }) => (
+const ProjectCard = ({ project, isMobile, color }: { project: Project; isMobile: boolean; color: string }) => (
   <ParticleCard
     className="magic-bento-card project-card-square"
-    style={{ backgroundColor: '#1c1a17' } as React.CSSProperties}
-    disableAnimations={isMobile}
+    style={{ backgroundColor: color } as React.CSSProperties}
+    disableAnimations={true}
     particleCount={0}
-    glowColor={GLOW_COLOR}
     enableTilt={false}
-    clickEffect={true}
+    clickEffect={false}
     enableMagnetism={false}
   >
-    <div className="flex flex-col h-full">
-      <div className="mb-3 rounded-sm relative h-[120px] flex items-center justify-center bg-[#0a0806]">
+    <div className="flex flex-col h-full justify-end">
+      <div className="mb-2 relative h-[80px] flex items-center justify-center bg-black/20 rounded-none">
         <Image 
           src={project.image} 
           alt={project.name}
-          width={200}
-          height={200}
+          width={160}
+          height={160}
           className="object-contain max-w-full max-h-full"
-          sizes="(max-width: 599px) 100px, (max-width: 1023px) 140px, 180px"
+          sizes="(max-width: 599px) 80px, (max-width: 1023px) 100px, 140px"
         />
       </div>
-      <div className="flex flex-col gap-2 flex-1 min-h-0">
-        <h3 className="text-sm font-normal">{project.name}</h3>
-        <p className="text-xs opacity-60 leading-relaxed line-clamp-2 flex-shrink-0">{project.description}</p>
-        <div className="flex gap-3 text-xs mt-auto">
+      <div className="flex flex-col gap-1 flex-1 min-h-0 justify-end">
+        <h3 className="text-sm font-semibold">{project.name}</h3>
+        <p className="text-xs opacity-75 leading-snug line-clamp-2 flex-shrink-0">{project.description}</p>
+        <div className="flex gap-3 text-xs mt-1">
           <Link 
             href={project.github} 
             target="_blank" 
-            className="project-card-link"
+            className="project-card-link font-medium"
           >
-            github ↗
+            github
           </Link>
           {project.link && (
             <Link 
               href={project.link} 
               target="_blank" 
-              className="project-card-link"
+              className="project-card-link font-medium"
             >
-              demo ↗
+              demo
             </Link>
           )}
         </div>
@@ -159,18 +174,12 @@ const ProjectsSection = ({ onNavigate }: ProjectsSectionProps) => {
   ]
 
   return (
-    <div className="min-h-screen bg-[#141210] flex flex-col items-center">
-      <GlobalSpotlight
-        gridRef={gridRef}
-        disableAnimations={isMobile}
-        enabled={true}
-        spotlightRadius={350}
-        glowColor={GLOW_COLOR}
-      />
+    <div className="min-h-screen bg-black flex flex-col items-center">
+      {/* Spotlight disabled for Metro style */}
 
-      <div className="w-full max-w-6xl mx-auto px-4 md:px-6 py-4 md:py-6">
+      <div className="w-full max-w-6xl mx-auto px-0 py-0">
         {/* Header */}
-        <div className="mb-8 flex items-center justify-end">
+        <div className="mb-1 px-4 py-4 flex items-center justify-end">
           {onNavigate && (
             <PageNavigation currentPage="projects" onNavigate={onNavigate} />
           )}
@@ -179,7 +188,12 @@ const ProjectsSection = ({ onNavigate }: ProjectsSectionProps) => {
         {/* Projects Grid */}
         <div className="projects-bento-grid bento-section" ref={gridRef}>
           {allProjects.map((project, idx) => (
-            <ProjectCard key={idx} project={project} isMobile={isMobile} />
+            <ProjectCard 
+              key={idx} 
+              project={project} 
+              isMobile={isMobile} 
+              color={projectColors[idx % projectColors.length]}
+            />
           ))}
         </div>
       </div>

@@ -1,61 +1,52 @@
 "use client"
 
-import { useRef, useState, useEffect } from "react"
-import LetterGlitch from "../components/LetterGlitch"
+import { useState, useEffect } from "react"
 import dynamic from "next/dynamic"
+import { MoveUpRight, Blocks, FolderCode, LayoutTemplate, AudioWaveform, LocateFixed, Globe, Monitor, ArrowRightFromLine } from "lucide-react"
+import { MetroTile, METRO } from "../components/MetroTile"
+import { useBrowserInfo } from "../components/useBrowserInfo"
+import "../components/MetroGrid.css"
 
 const ASCIIText = dynamic(() => import("../components/ASCIIText"), { ssr: false })
 import ProjectsSection from "../components/ProjectsSection"
 import DesignSection from "../components/DesignSection"
 import FaceTracker from "../components/FaceTracker"
-import BrowserInfo from "../components/BrowserInfo"
-import { ParticleCard, GlobalSpotlight, BentoCardGrid, BentoSlot, useMobileDetection } from "../components/MagicBento"
-import "../components/MagicBento.css"
-
-const GLOW_COLOR = "11, 155, 244" // Deep Space Blue
 
 export default function ResumePage() {
   const [currentView, setCurrentView] = useState<"home" | "projects" | "design">("home")
   const [currentTime, setCurrentTime] = useState<string>("")
   const [isTransitioning, setIsTransitioning] = useState(false)
-  const gridRef = useRef<HTMLDivElement>(null)
-  const isMobile = useMobileDetection()
+  const { data: browserData, loading: browserLoading } = useBrowserInfo()
 
   const handleViewChange = (newView: "home" | "projects" | "design") => {
     if (newView === currentView) return
-    
     setIsTransitioning(true)
     setTimeout(() => {
       setCurrentView(newView)
-      setTimeout(() => {
-        setIsTransitioning(false)
-      }, 100)
+      setTimeout(() => setIsTransitioning(false), 100)
     }, 300)
   }
 
   useEffect(() => {
     const updateTime = () => {
       const now = new Date()
-      const mstTime = now.toLocaleTimeString('en-US', {
+      setCurrentTime(now.toLocaleTimeString('en-US', {
         timeZone: 'America/Denver',
         hour: '2-digit',
         minute: '2-digit',
         second: '2-digit',
         hour12: true
-      })
-      setCurrentTime(mstTime)
+      }))
     }
-
     updateTime()
     const interval = setInterval(updateTime, 1000)
-
     return () => clearInterval(interval)
   }, [])
 
   if (currentView !== "home") {
     return (
-      <div className="min-h-screen bg-[#141210] text-white">
-        <div className={`min-h-screen overflow-y-auto bg-[#141210] transition-opacity duration-300 ease-in-out ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+      <div className="min-h-screen bg-black text-white">
+        <div className={`min-h-screen overflow-y-auto transition-opacity duration-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
           {currentView === "projects" && <ProjectsSection onNavigate={handleViewChange} />}
           {currentView === "design" && <DesignSection onNavigate={handleViewChange} />}
         </div>
@@ -64,272 +55,151 @@ export default function ResumePage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#141210] text-white p-4 md:p-6">
-      <GlobalSpotlight
-        gridRef={gridRef}
-        disableAnimations={isMobile}
-        enabled={true}
-        spotlightRadius={350}
-        glowColor={GLOW_COLOR}
-      />
+    <div className="min-h-screen bg-black text-white">
+      <div className={`transition-opacity duration-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+        <div className="metro-grid">
+          {/* Name */}
+          <MetroTile color="#DCE1DE" area="name" className="text-[#1F2421]">
+            <h1 className="text-lg font-semibold">SHUBHAM MAZUMDER</h1>
+            <p className="text-xs opacity-85">Product Engineer</p>
+          </MetroTile>
 
-      <div className={`max-w-6xl mx-auto relative transition-opacity duration-300 ease-in-out ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
-        <BentoCardGrid gridRef={gridRef}>
-          {/* Profile Image - using BentoSlot (no card border) */}
-          <BentoSlot area="profile">
-            <div className="bento-slot__image">
-              <FaceTracker basePath="/faces/" />
-            </div>
-          </BentoSlot>
-
-          {/* Name & Title */}
-          <ParticleCard
-            className="magic-bento-card"
-            style={{ backgroundColor: '#ffe5ff', gridArea: 'name' } as React.CSSProperties}
-            disableAnimations={isMobile}
-            particleCount={0}
-            glowColor={GLOW_COLOR}
-            enableTilt={!isMobile}
-            clickEffect={true}
-            enableMagnetism={true}
-          >
-            <div className="flex-1 flex flex-col justify-center" style={{ color: '#141210' }}>
-              <h2 className="text-2xl font-normal mb-1" style={{ color: '#141210' }}>SHUBHAM MAZUMDER</h2>
-              <p className="text-sm opacity-90 mb-2" style={{ color: '#141210' }}>Product Engineer</p>
-              <p className="text-xs opacity-70" style={{ color: '#141210' }}>
-                currently building AI CSRs and agentic workflows for the trades at Sameday AI.
-              </p>
-            </div>
-          </ParticleCard>
+          {/* Work */}
+          <MetroTile color={METRO.teal} area="work" className="relative">
+            <Blocks className="absolute top-3 right-3 w-6 h-6 opacity-60" />
+            <p className="text-xs opacity-85">
+              Building AI CSRs and agentic workflows at Sameday AI
+            </p>
+          </MetroTile>
 
           {/* LinkedIn */}
-          <ParticleCard
-            className="magic-bento-card cursor-pointer bento-link-card"
-            style={{ backgroundColor: '#1c1a17', gridArea: 'linkedin' } as React.CSSProperties}
-            disableAnimations={isMobile}
-            particleCount={0}
-            glowColor={GLOW_COLOR}
-            enableTilt={!isMobile}
-            clickEffect={true}
-            enableMagnetism={true}
-          >
-            <a 
-              href="https://www.linkedin.com/in/mazumders/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex-1 flex items-center justify-center text-lg"
-            >
-              linkedin ↗
-            </a>
-          </ParticleCard>
+          <MetroTile color={METRO.deepSpaceBlue} area="linkedin" href="https://www.linkedin.com/in/mazumders/" className="relative">
+            <span className="text-base font-semibold">linkedin</span>
+            <MoveUpRight className="absolute bottom-3 right-3 w-4 h-4 opacity-60" />
+          </MetroTile>
 
           {/* Email */}
-          <ParticleCard
-            className="magic-bento-card cursor-pointer bento-link-card"
-            style={{ backgroundColor: '#1c1a17', gridArea: 'email' } as React.CSSProperties}
-            disableAnimations={isMobile}
-            particleCount={0}
-            glowColor={GLOW_COLOR}
-            enableTilt={!isMobile}
-            clickEffect={true}
-            enableMagnetism={true}
-          >
-            <a 
-              href="mailto:shubham.mazumder@gmail.com" 
-              className="flex-1 flex items-center justify-center text-lg"
-            >
-              @email ↗
-            </a>
-          </ParticleCard>
+          <MetroTile color={METRO.deepSpaceBlue} area="email" href="mailto:shubham.mazumder@gmail.com" className="relative">
+            <span className="text-base font-semibold">email</span>
+            <MoveUpRight className="absolute bottom-3 right-3 w-4 h-4 opacity-60" />
+          </MetroTile>
 
           {/* GitHub */}
-          <ParticleCard
-            className="magic-bento-card cursor-pointer bento-link-card"
-            style={{ backgroundColor: '#1c1a17', gridArea: 'github' } as React.CSSProperties}
-            disableAnimations={isMobile}
-            particleCount={0}
-            glowColor={GLOW_COLOR}
-            enableTilt={!isMobile}
-            clickEffect={true}
-            enableMagnetism={true}
-          >
-            <a 
-              href="https://github.com/cystema" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex-1 flex items-center justify-center text-lg"
-            >
-              github ↗
-            </a>
-          </ParticleCard>
+          <MetroTile color={METRO.deepSpaceBlue} area="github" href="https://github.com/cystema" className="relative">
+            <span className="text-base font-semibold">github</span>
+            <MoveUpRight className="absolute bottom-3 right-3 w-4 h-4 opacity-60" />
+          </MetroTile>
+
+          {/* Profile */}
+          <div className="metro-profile" style={{ gridArea: 'profile', backgroundColor: METRO.teal }}>
+            <FaceTracker basePath="/faces/" />
+          </div>
 
           {/* Projects */}
-          <ParticleCard
-            className="magic-bento-card cursor-pointer bento-nav-card"
-            style={{ backgroundColor: '#1c1a17', gridArea: 'projects' } as React.CSSProperties}
-            disableAnimations={isMobile}
-            particleCount={0}
-            glowColor={GLOW_COLOR}
-            enableTilt={!isMobile}
-            clickEffect={true}
-            enableMagnetism={true}
-          >
-            <button 
-              onClick={() => handleViewChange("projects")}
-              className="flex-1 flex items-center justify-center text-xl transition-all duration-300 w-full hover:scale-105"
-            >
-              projects
-            </button>
-          </ParticleCard>
-
-          {/* Tech Stack */}
-          <ParticleCard
-            className="magic-bento-card bento-techstack-card"
-            style={{ gridArea: 'techstack' } as React.CSSProperties}
-            disableAnimations={isMobile}
-            particleCount={0}
-            glowColor={GLOW_COLOR}
-            enableTilt={!isMobile}
-            clickEffect={true}
-            enableMagnetism={true}
-          >
-            <div className="flex-1 flex flex-col justify-center gap-2">
-              <div className="text-xs opacity-50 mb-1">tech stack</div>
-              <div className="text-xs opacity-40 mt-1 mb-0.5">backend</div>
-              <div className="flex flex-wrap gap-1.5 text-xs">
-                <span className="badge badge-tech">Python</span>
-                <span className="badge badge-tech">Pydantic</span>
-                <span className="badge badge-tech">FastAPI</span>
-                <span className="badge badge-tech">MongoDB</span>
-                <span className="badge badge-tech">SQL</span>
-                <span className="badge badge-tech">Beanie</span>
-              </div>
-              <div className="text-xs opacity-40 mt-1 mb-0.5">frontend</div>
-              <div className="flex flex-wrap gap-1.5 text-xs">
-                <span className="badge badge-tech">JavaScript</span>
-                <span className="badge badge-tech">React</span>
-                <span className="badge badge-tech">shadcn</span>
-                <span className="badge badge-tech">Tailwind</span>
-              </div>
-              <div className="text-xs opacity-40 mt-1 mb-0.5">AI frameworks</div>
-              <div className="flex flex-wrap gap-1.5 text-xs">
-                <span className="badge badge-ai">Pydantic-AI</span>
-                <span className="badge badge-ai">LangChain</span>
-                <span className="badge badge-ai">Temporal</span>
-                <span className="badge badge-ai">OpenAI</span>
-                <span className="badge badge-ai">Anthropic</span>
-              </div>
-              <div className="text-xs opacity-40 mt-1 mb-0.5">Voice AI</div>
-              <div className="flex flex-wrap gap-1.5 text-xs">
-                <span className="badge badge-ai">Vapi</span>
-                <span className="badge badge-ai">Retell</span>
-                <span className="badge badge-ai">ElevenLabs</span>
-                <span className="badge badge-ai">Cartesia</span>
-                <span className="badge badge-ai">Deepgram</span>
-              </div>
-              <div className="text-xs opacity-40 mt-1 mb-0.5">IDE</div>
-              <div className="flex flex-wrap gap-1.5 text-xs">
-                <span className="badge badge-tech">Cursor</span>
-                <span className="badge badge-tech">Claude-Code</span>
-                <span className="badge badge-tech">VSCode</span>
-              </div>
-            </div>
-          </ParticleCard>
-
-          {/* Location */}
-          <ParticleCard
-            className="magic-bento-card bento-square-card"
-            style={{ backgroundColor: '#1c1a17', gridArea: 'location' } as React.CSSProperties}
-            disableAnimations={isMobile}
-            particleCount={0}
-            glowColor={GLOW_COLOR}
-            enableTilt={false}
-            clickEffect={false}
-            enableMagnetism={false}
-          >
-            <div className="flex-1 flex flex-col justify-center items-center text-center">
-              <span className="text-2xl mb-1">📍</span>
-              <span className="text-sm">Salt Lake City</span>
-              <span className="text-xs opacity-50 mb-1">MST</span>
-              <span className="text-lg font-mono">{currentTime}</span>
-            </div>
-          </ParticleCard>
+          <MetroTile color={METRO.red} area="projects" onClick={() => handleViewChange("projects")} className="relative">
+            <span className="text-lg font-semibold">projects</span>
+            <ArrowRightFromLine className="absolute bottom-3 right-3 w-4 h-4 opacity-60" />
+          </MetroTile>
 
           {/* Design */}
-          <ParticleCard
-            className="magic-bento-card cursor-pointer bento-nav-card"
-            style={{ backgroundColor: '#1c1a17', gridArea: 'design' } as React.CSSProperties}
-            disableAnimations={isMobile}
-            particleCount={0}
-            glowColor={GLOW_COLOR}
-            enableTilt={!isMobile}
-            clickEffect={true}
-            enableMagnetism={true}
-          >
-            <button 
-              onClick={() => handleViewChange("design")}
-              className="flex-1 flex items-center justify-center text-xl transition-all duration-300 w-full hover:scale-105"
-            >
-              design
-            </button>
-          </ParticleCard>
+          <MetroTile color={METRO.red} area="design" onClick={() => handleViewChange("design")} className="relative">
+            <span className="text-lg font-semibold">design</span>
+            <ArrowRightFromLine className="absolute bottom-3 right-3 w-4 h-4 opacity-60" />
+          </MetroTile>
 
-          {/* LetterGlitch Background */}
-          <ParticleCard
-            className="magic-bento-card bento-square-card"
-            style={{ backgroundColor: '#1c1a17', padding: 0, gridArea: 'glitch' } as React.CSSProperties}
-            disableAnimations={isMobile}
-            particleCount={0}
-            glowColor={GLOW_COLOR}
-            enableTilt={false}
-            clickEffect={false}
-            enableMagnetism={false}
-          >
-            <div className="w-full h-full">
-              <LetterGlitch
-                glitchSpeed={50}
-                centerVignette={true}
-                outerVignette={false}
-                smooth={true}
-              />
+          {/* Backend */}
+          <MetroTile color={METRO.green} area="backend" className="relative">
+            <FolderCode className="absolute top-3 right-3 w-6 h-6 opacity-60" />
+            <div className="flex flex-wrap gap-1">
+              <span className="metro-badge">Python</span>
+              <span className="metro-badge">FastAPI</span>
+              <span className="metro-badge">MongoDB</span>
             </div>
-          </ParticleCard>
+          </MetroTile>
 
-          {/* Browser Info */}
-          <ParticleCard
-            className="magic-bento-card bento-browser-card"
-            style={{ backgroundColor: '#1c1a17', gridArea: 'browser' } as React.CSSProperties}
-            disableAnimations={isMobile}
-            particleCount={0}
-            glowColor={GLOW_COLOR}
-            enableTilt={false}
-            clickEffect={false}
-            enableMagnetism={false}
-          >
-            <BrowserInfo />
-          </ParticleCard>
-
-          {/* ASCII Text Effect */}
-          <ParticleCard
-            className="magic-bento-card"
-            style={{ backgroundColor: '#1c1a17', padding: 0, gridArea: 'ascii', minHeight: '150px' } as React.CSSProperties}
-            disableAnimations={isMobile}
-            particleCount={0}
-            glowColor={GLOW_COLOR}
-            enableTilt={false}
-            clickEffect={false}
-            enableMagnetism={false}
-          >
-            <div className="w-full h-full relative" style={{ minHeight: '150px' }}>
-              <ASCIIText
-                text="Hello!"
-                enableWaves={true}
-                asciiFontSize={8}
-                textFontSize={150}
-              />
+          {/* Frontend */}
+          <MetroTile color={METRO.lightGreen} area="frontend" className="relative">
+            <LayoutTemplate className="absolute top-3 right-3 w-6 h-6 opacity-60" />
+            <div className="flex flex-wrap gap-1">
+              <span className="metro-badge">React</span>
+              <span className="metro-badge">TypeScript</span>
+              <span className="metro-badge">Tailwind</span>
             </div>
-          </ParticleCard>
-        </BentoCardGrid>
+          </MetroTile>
+
+          {/* AI */}
+          <MetroTile color={METRO.darkGreen} area="ai" className="relative">
+            <LayoutTemplate className="absolute top-3 right-3 w-6 h-6 opacity-60" />
+            <div className="flex flex-wrap gap-1">
+              <span className="metro-badge">LangChain</span>
+              <span className="metro-badge">OpenAI</span>
+              <span className="metro-badge">Claude</span>
+            </div>
+          </MetroTile>
+
+          {/* Voice */}
+          <MetroTile color={METRO.purple} area="voice" className="relative">
+            <AudioWaveform className="absolute top-3 right-3 w-6 h-6 opacity-60" />
+            <div className="flex flex-wrap gap-1">
+              <span className="metro-badge">Vapi</span>
+              <span className="metro-badge">ElevenLabs</span>
+              <span className="metro-badge">Deepgram</span>
+            </div>
+          </MetroTile>
+
+          {/* Your Location */}
+          <MetroTile color={METRO.yellow} area="yourloc" className="metro-browser relative">
+            <LocateFixed className="absolute top-3 right-3 w-6 h-6 opacity-60" />
+            <div className="text-[10px] font-semibold opacity-60 mb-1">Your Location</div>
+            {browserLoading ? (
+              <span className="text-xs opacity-50">loading...</span>
+            ) : (
+              <>
+                <span className="text-sm font-semibold">{browserData?.city}</span>
+                <span className="text-xs opacity-70">{browserData?.country}</span>
+              </>
+            )}
+          </MetroTile>
+
+          {/* Your IP */}
+          <MetroTile color={METRO.yellow} area="yourip" className="metro-browser relative">
+            <Globe className="absolute top-3 right-3 w-6 h-6 opacity-60" />
+            <div className="text-[10px] font-semibold opacity-60 mb-1">Your IP</div>
+            {browserLoading ? (
+              <span className="text-xs opacity-50">loading...</span>
+            ) : (
+              <span className="text-xs font-semibold font-mono">{browserData?.ip}</span>
+            )}
+          </MetroTile>
+
+          {/* Your Device */}
+          <MetroTile color={METRO.yellow} area="yourdev" className="metro-browser relative">
+            <Monitor className="absolute top-3 right-3 w-6 h-6 opacity-60" />
+            <div className="text-[10px] font-semibold opacity-60 mb-1">Your Device</div>
+            {browserLoading ? (
+              <span className="text-xs opacity-50">loading...</span>
+            ) : (
+              <>
+                <span className="text-xs font-semibold">{browserData?.browser}</span>
+                <span className="text-[10px] opacity-70">{browserData?.os}</span>
+              </>
+            )}
+          </MetroTile>
+
+          {/* ASCII */}
+          <div style={{ gridArea: 'ascii', backgroundColor: METRO.dark, padding: 0 }} className="relative">
+            <ASCIIText text="Hi!" enableWaves={true} asciiFontSize={6} textFontSize={80} />
+          </div>
+
+          {/* Shubham's Location */}
+          <MetroTile color={METRO.orange} area="myloc" className="relative">
+            <LocateFixed className="absolute top-3 right-3 w-6 h-6 opacity-60" />
+            <div className="text-[10px] font-semibold opacity-70 mb-1">Shubham&apos;s Location</div>
+            <span className="text-sm font-semibold">Salt Lake City</span>
+            <span className="text-xs opacity-70">MST</span>
+            <span className="text-sm font-semibold">{currentTime}</span>
+          </MetroTile>
+        </div>
       </div>
     </div>
   )

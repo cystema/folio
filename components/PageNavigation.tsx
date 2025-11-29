@@ -11,6 +11,13 @@ import {
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
 
+// Metro UI Colors
+const METRO = {
+  blue: '#0078D4',
+  magenta: '#B4009E',
+  dark: '#1F1F1F',
+}
+
 interface PageNavigationProps {
   currentPage: "projects" | "design"
   onNavigate: (page: "home" | "projects" | "design") => void
@@ -21,13 +28,13 @@ export default function PageNavigation({ currentPage, onNavigate }: PageNavigati
 
   return (
     <NavigationMenu viewport={isMobile}>
-      <NavigationMenuList className="flex-wrap">
+      <NavigationMenuList className="flex-wrap gap-1">
         <NavigationMenuItem>
           <NavigationMenuLink 
             asChild
             className={cn(
               navigationMenuTriggerStyle(),
-              "bg-black/80 text-white border border-white/20 hover:bg-black/90 hover:text-white hover:border-white/30"
+              "bg-[#1F1F1F] text-white border-none rounded-none hover:opacity-80 font-semibold"
             )}
           >
             <button onClick={() => onNavigate("home")}>
@@ -41,8 +48,8 @@ export default function PageNavigation({ currentPage, onNavigate }: PageNavigati
             className={cn(
               navigationMenuTriggerStyle(),
               currentPage === "projects" 
-                ? "bg-[#D8315B]/80 text-white border border-[#D8315B]/60 hover:bg-[#D8315B]/90" 
-                : "bg-black/80 text-white border border-white/20 hover:bg-black/90 hover:text-white hover:border-white/30"
+                ? "bg-[#B4009E] text-white border-none rounded-none hover:opacity-80 font-semibold" 
+                : "bg-[#1F1F1F] text-white border-none rounded-none hover:opacity-80 font-semibold"
             )}
           >
             <button onClick={() => onNavigate("projects")}>
@@ -56,8 +63,8 @@ export default function PageNavigation({ currentPage, onNavigate }: PageNavigati
             className={cn(
               navigationMenuTriggerStyle(),
               currentPage === "design" 
-                ? "bg-[#D8315B]/80 text-white border border-[#D8315B]/60 hover:bg-[#D8315B]/90" 
-                : "bg-black/80 text-white border border-white/20 hover:bg-black/90 hover:text-white hover:border-white/30"
+                ? "bg-[#B4009E] text-white border-none rounded-none hover:opacity-80 font-semibold" 
+                : "bg-[#1F1F1F] text-white border-none rounded-none hover:opacity-80 font-semibold"
             )}
           >
             <button onClick={() => onNavigate("design")}>
