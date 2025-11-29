@@ -229,14 +229,14 @@ export default function ResumePage() {
 
           {/* Location */}
           <ParticleCard
-            className="magic-bento-card magic-bento-card--border-glow bento-square-card"
-            style={{ backgroundColor: '#1c1a17', '--glow-color': GLOW_COLOR, gridArea: 'location' } as React.CSSProperties}
+            className="magic-bento-card bento-square-card"
+            style={{ backgroundColor: '#1c1a17', gridArea: 'location' } as React.CSSProperties}
             disableAnimations={isMobile}
-            particleCount={4}
+            particleCount={0}
             glowColor={GLOW_COLOR}
-            enableTilt={!isMobile}
-            clickEffect={true}
-            enableMagnetism={true}
+            enableTilt={false}
+            clickEffect={false}
+            enableMagnetism={false}
           >
             <div className="flex-1 flex flex-col justify-center items-center text-center">
               <span className="text-2xl mb-1">📍</span>
@@ -266,10 +266,10 @@ export default function ResumePage() {
 
           {/* LetterGlitch Background */}
           <ParticleCard
-            className="magic-bento-card magic-bento-card--border-glow bento-square-card"
-            style={{ backgroundColor: '#1c1a17', '--glow-color': GLOW_COLOR, padding: 0, gridArea: 'glitch' } as React.CSSProperties}
+            className="magic-bento-card bento-square-card"
+            style={{ backgroundColor: '#1c1a17', padding: 0, gridArea: 'glitch' } as React.CSSProperties}
             disableAnimations={isMobile}
-            particleCount={4}
+            particleCount={0}
             glowColor={GLOW_COLOR}
             enableTilt={false}
             clickEffect={false}
@@ -287,24 +287,24 @@ export default function ResumePage() {
 
           {/* Browser Info */}
           <ParticleCard
-            className="magic-bento-card magic-bento-card--border-glow"
-            style={{ backgroundColor: '#1c1a17', '--glow-color': GLOW_COLOR, gridArea: 'browser' } as React.CSSProperties}
+            className="magic-bento-card"
+            style={{ backgroundColor: '#1c1a17', gridArea: 'browser' } as React.CSSProperties}
             disableAnimations={isMobile}
-            particleCount={4}
+            particleCount={0}
             glowColor={GLOW_COLOR}
-            enableTilt={!isMobile}
-            clickEffect={true}
-            enableMagnetism={true}
+            enableTilt={false}
+            clickEffect={false}
+            enableMagnetism={false}
           >
             <BrowserInfo />
           </ParticleCard>
 
           {/* ASCII Text Effect */}
           <ParticleCard
-            className="magic-bento-card magic-bento-card--border-glow"
-            style={{ backgroundColor: '#1c1a17', '--glow-color': GLOW_COLOR, padding: 0, gridArea: 'ascii', minHeight: '150px' } as React.CSSProperties}
+            className="magic-bento-card"
+            style={{ backgroundColor: '#1c1a17', padding: 0, gridArea: 'ascii', minHeight: '150px' } as React.CSSProperties}
             disableAnimations={isMobile}
-            particleCount={4}
+            particleCount={0}
             glowColor={GLOW_COLOR}
             enableTilt={false}
             clickEffect={false}

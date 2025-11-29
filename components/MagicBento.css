@@ -199,13 +199,12 @@
 @media (min-width: 1024px) {
   .card-grid {
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: minmax(80px, auto) minmax(140px, auto) minmax(100px, auto) minmax(80px, auto) minmax(120px, auto);
+    grid-template-rows: minmax(80px, auto) minmax(180px, auto) minmax(180px, auto) minmax(120px, auto);
     grid-template-areas:
       "name       linkedin   email      github"
-      "currently  profile    profile    techstack"
-      "currently  projects   design     techstack"
-      "browser    browser    browser    browser"
-      "ascii      ascii      location   glitch";
+      "techstack  profile    profile    projects"
+      "techstack  profile    profile    design"
+      "browser    ascii      location   glitch";
     gap: 0.5em;
   }
   
