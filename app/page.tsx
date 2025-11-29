@@ -233,7 +233,7 @@ export default function ResumePage() {
           {/* Design */}
           <ParticleCard
             className="magic-bento-card magic-bento-card--border-glow cursor-pointer bento-nav-card"
-            style={{ backgroundColor: '#1c1a17', '--glow-color': GLOW_COLOR, gridArea: 'design' } as React.CSSProperties}
+            style={{ backgroundColor: '#1c1a17', gridArea: 'design' } as React.CSSProperties}
             disableAnimations={isMobile}
             particleCount={6}
             glowColor={GLOW_COLOR}
@@ -245,7 +245,7 @@ export default function ResumePage() {
               onClick={() => setCurrentView("design")}
               className="flex-1 flex items-center justify-center text-xl hover:text-blue-400 transition-colors w-full"
             >
-              design →
+              design
             </button>
           </ParticleCard>
 
