@@ -2,6 +2,7 @@
 
 import { useRef } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { ParticleCard, GlobalSpotlight, useMobileDetection } from "./MagicBento"
 import "./MagicBento.css"
 
@@ -20,13 +21,6 @@ const other_projects = [
     image: "/project_section/plushcv.png",
     github: "https://github.com/cystema/plushcv",
     link: "https://www.overleaf.com/latex/templates/plushcv/jybpnsftmdkf",
-  },
-  {
-    name: "Academic Portfolio",
-    description: "Academic Portfolio in Jekyll, built for a friend.",
-    image: "/project_section/anupamportfolio.png",
-    github: "https://github.com/cystema/anupam-portfolio",
-    link: "https://cystema.github.io/anupam-portfolio/",
   },
 ]
 
@@ -73,12 +67,6 @@ const conversational_ai_projects = [
     image: "/project_section/rag_langchain.png",
     github: "https://github.com/cystema/rag-with-langchain",
   },
-  {
-    name: "Rasa Chatbot",
-    description: "A simple chatbot built with Rasa and Flask.",
-    image: "/project_section/rasa.png",
-    github: "https://github.com/cystema/rasa-project",
-  },
 ]
 
 const web_projects = [
@@ -88,12 +76,6 @@ const web_projects = [
     image: "/project_section/wordle.png",
     github: "https://github.com/cystema/wordle",
     link: "https://wordle.shubh.ink/",
-  },
-  {
-    name: "GPT-Copy",
-    description: "A Firefox Plugin to copy ChatGPT output with one click.",
-    image: "/project_section/chatgptcopy.png",
-    github: "https://github.com/cystema/chatgpt-copy",
   },
   {
     name: "NoShorts",
@@ -114,49 +96,69 @@ interface Project {
 
 const ProjectCard = ({ project, isMobile }: { project: Project; isMobile: boolean }) => (
   <ParticleCard
-    className="magic-bento-card magic-bento-card--border-glow"
-    style={{ backgroundColor: '#060010', '--glow-color': GLOW_COLOR } as React.CSSProperties}
+    className="magic-bento-card project-card-square"
+    style={{ backgroundColor: '#1c1a17' } as React.CSSProperties}
     disableAnimations={isMobile}
-    particleCount={4}
+    particleCount={0}
     glowColor={GLOW_COLOR}
-    enableTilt={!isMobile}
+    enableTilt={false}
     clickEffect={true}
     enableMagnetism={false}
   >
-    <div className="magic-bento-card__header">
-      <div className="magic-bento-card__label text-xs opacity-50">project</div>
-    </div>
-    <div className="magic-bento-card__content">
-      <h3 className="text-base font-normal mb-2">{project.name}</h3>
-      <p className="text-xs opacity-60 leading-relaxed mb-4">{project.description}</p>
-      <div className="flex gap-3 text-xs">
-        <Link 
-          href={project.github} 
-          target="_blank" 
-          className="hover:text-purple-400 transition-colors"
-        >
-          github ↗
-        </Link>
-        {project.link && (
+    <div className="flex flex-col h-full">
+      <div className="mb-3 rounded-sm relative h-[120px] flex items-center justify-center bg-[#0a0806]">
+        <Image 
+          src={project.image} 
+          alt={project.name}
+          width={200}
+          height={200}
+          className="object-contain max-w-full max-h-full"
+          sizes="(max-width: 599px) 100px, (max-width: 1023px) 140px, 180px"
+        />
+      </div>
+      <div className="flex flex-col gap-2 flex-1 min-h-0">
+        <h3 className="text-sm font-normal">{project.name}</h3>
+        <p className="text-xs opacity-60 leading-relaxed line-clamp-2 flex-shrink-0">{project.description}</p>
+        <div className="flex gap-3 text-xs mt-auto">
           <Link 
-            href={project.link} 
+            href={project.github} 
             target="_blank" 
-            className="hover:text-purple-400 transition-colors"
+            className="hover:text-blue-400 transition-colors"
           >
-            demo ↗
+            github ↗
           </Link>
-        )}
+          {project.link && (
+            <Link 
+              href={project.link} 
+              target="_blank" 
+              className="hover:text-blue-400 transition-colors"
+            >
+              demo ↗
+            </Link>
+          )}
+        </div>
       </div>
     </div>
   </ParticleCard>
 )
 
-const ProjectsSection = () => {
+interface ProjectsSectionProps {
+  onBack?: () => void
+}
+
+const ProjectsSection = ({ onBack }: ProjectsSectionProps) => {
   const gridRef = useRef<HTMLDivElement>(null)
   const isMobile = useMobileDetection()
 
+  // Combine all projects into one array
+  const allProjects = [
+    ...conversational_ai_projects,
+    ...web_projects,
+    ...other_projects
+  ]
+
   return (
-    <div className="p-4 md:p-6 bg-[#060010] min-h-full">
+    <div className="min-h-screen bg-[#141210] flex flex-col items-center">
       <GlobalSpotlight
         gridRef={gridRef}
         disableAnimations={isMobile}
@@ -165,40 +167,28 @@ const ProjectsSection = () => {
         glowColor={GLOW_COLOR}
       />
 
-      <div className="max-w-6xl mx-auto">
+      <div className="w-full max-w-6xl mx-auto px-4 md:px-6 py-4 md:py-6">
         {/* Header */}
-        <div className="mb-8 px-3">
+        <div className="mb-8 flex items-center gap-4">
+          {onBack && (
+            <button
+              onClick={onBack}
+              className="flex items-center space-x-2 px-4 py-2 bg-black/80 text-white border border-white/20 rounded-none backdrop-blur-sm transition-all duration-300 hover:opacity-70 hover:scale-105"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M19 12H5M12 19l-7-7 7-7" />
+              </svg>
+              <span>back</span>
+            </button>
+          )}
           <h1 className="text-lg font-normal text-white">PROJECTS</h1>
         </div>
 
-        {/* Conversational AI Section */}
-        <div className="mb-8">
-          <h2 className="text-xs font-normal mb-4 opacity-50 text-white px-3">CONVERSATIONAL AI</h2>
-          <div className="card-grid bento-section" ref={gridRef} style={{ maxWidth: '100%' }}>
-            {conversational_ai_projects.map((project, idx) => (
-              <ProjectCard key={idx} project={project} isMobile={isMobile} />
-            ))}
-          </div>
-        </div>
-
-        {/* Web Projects Section */}
-        <div className="mb-8">
-          <h2 className="text-xs font-normal mb-4 opacity-50 text-white px-3">WEB PROJECTS</h2>
-          <div className="card-grid bento-section" style={{ maxWidth: '100%' }}>
-            {web_projects.map((project, idx) => (
-              <ProjectCard key={idx} project={project} isMobile={isMobile} />
-            ))}
-          </div>
-        </div>
-
-        {/* Other Projects Section */}
-        <div className="mb-8">
-          <h2 className="text-xs font-normal mb-4 opacity-50 text-white px-3">OTHER</h2>
-          <div className="card-grid bento-section" style={{ maxWidth: '100%' }}>
-            {other_projects.map((project, idx) => (
-              <ProjectCard key={idx} project={project} isMobile={isMobile} />
-            ))}
-          </div>
+        {/* Projects Grid */}
+        <div className="projects-bento-grid bento-section" ref={gridRef}>
+          {allProjects.map((project, idx) => (
+            <ProjectCard key={idx} project={project} isMobile={isMobile} />
+          ))}
         </div>
       </div>
     </div>

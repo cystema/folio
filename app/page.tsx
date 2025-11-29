@@ -30,7 +30,7 @@ export default function ResumePage() {
       setTimeout(() => {
         setIsTransitioning(false)
       }, 50)
-    }, 200)
+    }, 150)
   }
 
   useEffect(() => {
@@ -54,43 +54,17 @@ export default function ResumePage() {
 
   if (currentView !== "home") {
     return (
-      <div className={`min-h-screen bg-[#141210] text-white transition-opacity duration-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
-        <div className="flex flex-col md:flex-row h-screen">
-          {/* Left side - LetterGlitch */}
-          <div className="w-full md:w-1/2 h-1/2 md:h-full relative transition-transform duration-500 ease-in-out">
-            <LetterGlitch
-              glitchSpeed={50}
-              centerVignette={true}
-              outerVignette={false}
-              smooth={true}
-            />
-            <div className="absolute inset-0 bg-black/50" />
-          </div>
-          
-          {/* Right side - Content */}
-          <div className={`w-full md:w-1/2 h-1/2 md:h-full overflow-y-auto bg-[#141210] transition-transform duration-500 ease-in-out ${isTransitioning ? 'translate-x-4 opacity-0' : 'translate-x-0 opacity-100'}`}>
-            <div className="transition-all duration-300">
-              {currentView === "projects" && <ProjectsSection />}
-              {currentView === "design" && <DesignSection />}
-            </div>
-          </div>
+      <div className={`min-h-screen bg-[#141210] text-white transition-opacity duration-200 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+        <div className={`min-h-screen overflow-y-auto bg-[#141210] transition-opacity duration-200 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+          {currentView === "projects" && <ProjectsSection onBack={() => handleViewChange("home")} />}
+          {currentView === "design" && <DesignSection />}
         </div>
-        
-        <button
-          onClick={() => handleViewChange("home")}
-          className="fixed bottom-6 left-6 z-30 flex items-center space-x-2 px-4 py-2 bg-black/80 text-white border border-white/20 rounded-none backdrop-blur-sm transition-all duration-300 hover:opacity-70 hover:scale-105"
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M19 12H5M12 19l-7-7 7-7" />
-          </svg>
-          <span>back</span>
-        </button>
       </div>
     )
   }
 
   return (
-    <div className={`min-h-screen bg-[#141210] text-white p-4 md:p-6 transition-opacity duration-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+    <div className={`min-h-screen bg-[#141210] text-white p-4 md:p-6 transition-opacity duration-200 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
       <GlobalSpotlight
         gridRef={gridRef}
         disableAnimations={isMobile}
@@ -99,7 +73,7 @@ export default function ResumePage() {
         glowColor={GLOW_COLOR}
       />
 
-      <div className={`max-w-6xl mx-auto relative transition-transform duration-500 ease-in-out ${isTransitioning ? 'scale-95 opacity-0' : 'scale-100 opacity-100'}`}>
+      <div className="max-w-6xl mx-auto relative">
         <BentoCardGrid gridRef={gridRef}>
           {/* Profile Image - using BentoSlot (no card border) */}
           <BentoSlot area="profile">
