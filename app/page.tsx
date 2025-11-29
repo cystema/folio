@@ -117,7 +117,7 @@ export default function ResumePage() {
               href="https://www.linkedin.com/in/mazumders/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex-1 flex items-center justify-center text-lg hover:text-blue-400 transition-colors"
+              className="flex-1 flex items-center justify-center text-lg"
             >
               linkedin ↗
             </a>
@@ -136,7 +136,7 @@ export default function ResumePage() {
           >
             <a 
               href="mailto:shubham.mazumder@gmail.com" 
-              className="flex-1 flex items-center justify-center text-lg hover:text-blue-400 transition-colors"
+              className="flex-1 flex items-center justify-center text-lg"
             >
               @email ↗
             </a>
@@ -157,7 +157,7 @@ export default function ResumePage() {
               href="https://github.com/cystema" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex-1 flex items-center justify-center text-lg hover:text-blue-400 transition-colors"
+              className="flex-1 flex items-center justify-center text-lg"
             >
               github ↗
             </a>
@@ -176,7 +176,7 @@ export default function ResumePage() {
           >
             <button 
               onClick={() => handleViewChange("projects")}
-              className="flex-1 flex items-center justify-center text-xl hover:text-blue-400 transition-all duration-300 w-full hover:scale-105"
+              className="flex-1 flex items-center justify-center text-xl transition-all duration-300 w-full hover:scale-105"
             >
               projects
             </button>
@@ -268,7 +268,7 @@ export default function ResumePage() {
           >
             <button 
               onClick={() => handleViewChange("design")}
-              className="flex-1 flex items-center justify-center text-xl hover:text-blue-400 transition-all duration-300 w-full hover:scale-105"
+              className="flex-1 flex items-center justify-center text-xl transition-all duration-300 w-full hover:scale-105"
             >
               design
             </button>

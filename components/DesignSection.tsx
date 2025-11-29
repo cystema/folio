@@ -6,7 +6,7 @@ import { ParticleCard, GlobalSpotlight, useMobileDetection } from "./MagicBento"
 import PageNavigation from "./PageNavigation"
 import "./MagicBento.css"
 
-const GLOW_COLOR = "132, 0, 255"
+const GLOW_COLOR = "216, 49, 91" // Pink/Rose to match navigation
 
 const logo_designs = [
   {

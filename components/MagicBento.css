@@ -341,6 +341,35 @@
   text-transform: lowercase;
   position: relative;
   z-index: 2;
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.3s ease;
+}
+
+.bento-link-card a:hover {
+  color: white;
+}
+
+/* Hover effect for navigation and link cards */
+.bento-nav-card button,
+.bento-nav-card a {
+  position: relative;
+  z-index: 2;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.bento-nav-card button:hover,
+.bento-nav-card a:hover {
+  color: white;
+}
+
+.project-card-link {
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.3s ease;
+}
+
+.project-card-link:hover {
   color: white;
 }
 
@@ -378,13 +407,6 @@
   box-shadow: 0 8px 30px rgba(216, 49, 91, 0.3);
 }
 
-.bento-nav-card button,
-.bento-nav-card a {
-  position: relative;
-  z-index: 2;
-  color: white;
-  font-weight: 500;
-}
 
 .bento-nav-card::before {
   content: '→';

@@ -7,7 +7,7 @@ import { ParticleCard, GlobalSpotlight, useMobileDetection } from "./MagicBento"
 import PageNavigation from "./PageNavigation"
 import "./MagicBento.css"
 
-const GLOW_COLOR = "132, 0, 255"
+const GLOW_COLOR = "216, 49, 91" // Pink/Rose to match navigation
 
 const other_projects = [
   {
@@ -124,7 +124,7 @@ const ProjectCard = ({ project, isMobile }: { project: Project; isMobile: boolea
           <Link 
             href={project.github} 
             target="_blank" 
-            className="hover:text-blue-400 transition-colors"
+            className="project-card-link"
           >
             github ↗
           </Link>
@@ -132,7 +132,7 @@ const ProjectCard = ({ project, isMobile }: { project: Project; isMobile: boolea
             <Link 
               href={project.link} 
               target="_blank" 
-              className="hover:text-blue-400 transition-colors"
+              className="project-card-link"
             >
               demo ↗
             </Link>
