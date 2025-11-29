@@ -1,10 +1,13 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 // Grid configuration (must match your generation parameters)
 const P_MIN = -15;
 const P_MAX = 15;
 const STEP = 3;
 const SIZE = 256;
+
+// Cache for preloaded images
+const imageCache = new Map();
 
 /**
  * Converts normalized coordinates [-1, 1] to grid coordinates
@@ -38,8 +41,50 @@ function gridToFilename(px, py) {
 export function useGazeTracking(containerRef, basePath = '/faces/') {
   // Start with center gaze as default
   const [currentImage, setCurrentImage] = useState(`${basePath}gaze_px0p0_py0p0_${SIZE}.webp`);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const preloadedRef = useRef(false);
+
+  // Preload all gaze images on mount
+  useEffect(() => {
+    if (preloadedRef.current) return;
+    preloadedRef.current = true;
+
+    const totalImages = Math.pow((P_MAX - P_MIN) / STEP + 1, 2);
+    let loadedCount = 0;
+
+    for (let px = P_MIN; px <= P_MAX; px += STEP) {
+      for (let py = P_MIN; py <= P_MAX; py += STEP) {
+        const filename = gridToFilename(px, py);
+        const imagePath = `${basePath}${filename}`;
+        
+        // Skip if already cached
+        if (imageCache.has(imagePath)) {
+          loadedCount++;
+          if (loadedCount === totalImages) {
+            setIsLoading(false);
+          }
+          continue;
+        }
+
+        const img = new Image();
+        img.onload = () => {
+          imageCache.set(imagePath, img);
+          loadedCount++;
+          if (loadedCount === totalImages) {
+            setIsLoading(false);
+          }
+        };
+        img.onerror = () => {
+          loadedCount++;
+          if (loadedCount === totalImages) {
+            setIsLoading(false);
+          }
+        };
+        img.src = imagePath;
+      }
+    }
+  }, [basePath]);
 
   const updateGaze = useCallback((clientX, clientY) => {
     if (!containerRef.current) return;
