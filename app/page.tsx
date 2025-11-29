@@ -1,7 +1,6 @@
 "use client"
 
-import FaultyTerminal from "../components/FaultyTerminal"
-import NoisePattern from "../components/NoisePattern"
+import LetterGlitch from "../components/LetterGlitch"
 import ProjectsSection from "../components/ProjectsSection"
 import DesignSection from "../components/DesignSection"
 import FaceTracker from "../components/FaceTracker"
@@ -112,16 +111,16 @@ export default function ResumePage() {
                 rel="noopener noreferrer"
                 className="hover:opacity-70 transition-opacity"
               >
-                LinkedIn
+                linkedin
               </a>
               <a href="mailto:shubham.mazumder@gmail.com" className="hover:opacity-70 transition-opacity">
-                Email
+                email
               </a>
               <button onClick={handleProjectsClick} className="hover:opacity-70 transition-opacity">
-                Projects
+                projects
               </button>
               <button onClick={handleDesignClick} className="hover:opacity-70 transition-opacity">
-                Design
+                design
               </button>
             </div>
           </div>
@@ -130,27 +129,12 @@ export default function ResumePage() {
         {currentView !== "home" && (
           <>
             <div className="absolute inset-0 z-0">
-              <div style={{ width: "100%", height: "100%", position: "relative" }}>
-                <FaultyTerminal
-                  scale={1.5}
-                  gridMul={[2, 1]}
-                  digitSize={1.2}
-                  timeScale={1}
-                  pause={false}
-                  scanlineIntensity={1}
-                  glitchAmount={1}
-                  flickerAmount={1}
-                  noiseAmp={1}
-                  chromaticAberration={0}
-                  dither={0}
-                  curvature={0}
-                  tint="#00ff41"
-                  mouseReact={true}
-                  mouseStrength={0.5}
-                  pageLoadAnimation={false}
-                  brightness={1}
-                />
-              </div>
+              <LetterGlitch
+                glitchSpeed={50}
+                centerVignette={true}
+                outerVignette={false}
+                smooth={true}
+              />
             </div>
             <div
               className={`absolute inset-0 z-10 transition-opacity duration-500 ${isDarkMode ? "bg-black/60" : "bg-white/60"}`}
@@ -168,7 +152,12 @@ export default function ResumePage() {
           className={`transition-opacity duration-300 ${currentView === "home" ? "opacity-100" : "opacity-0 pointer-events-none absolute inset-0"}`}
         >
           <div className="h-full">
-            <NoisePattern isDarkMode={isDarkMode} />
+            <LetterGlitch
+              glitchSpeed={50}
+              centerVignette={true}
+              outerVignette={false}
+              smooth={true}
+            />
           </div>
         </div>
 
