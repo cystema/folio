@@ -8,6 +8,7 @@ const ASCIIText = dynamic(() => import("../components/ASCIIText"), { ssr: false 
 import ProjectsSection from "../components/ProjectsSection"
 import DesignSection from "../components/DesignSection"
 import FaceTracker from "../components/FaceTracker"
+import BrowserInfo from "../components/BrowserInfo"
 import { ParticleCard, GlobalSpotlight, BentoCardGrid, BentoSlot, useMobileDetection } from "../components/MagicBento"
 import "../components/MagicBento.css"
 
@@ -185,6 +186,7 @@ export default function ResumePage() {
           >
             <div className="flex-1 flex flex-col justify-center gap-2">
               <div className="text-xs opacity-50 mb-1">tech stack</div>
+              <div className="text-xs opacity-40 mt-1 mb-0.5">backend</div>
               <div className="flex flex-wrap gap-1.5 text-xs">
                 <span className="px-2 py-0.5 bg-white/5 rounded">Python</span>
                 <span className="px-2 py-0.5 bg-white/5 rounded">Pydantic</span>
@@ -192,6 +194,9 @@ export default function ResumePage() {
                 <span className="px-2 py-0.5 bg-white/5 rounded">MongoDB</span>
                 <span className="px-2 py-0.5 bg-white/5 rounded">SQL</span>
                 <span className="px-2 py-0.5 bg-white/5 rounded">Beanie</span>
+              </div>
+              <div className="text-xs opacity-40 mt-1 mb-0.5">frontend</div>
+              <div className="flex flex-wrap gap-1.5 text-xs">
                 <span className="px-2 py-0.5 bg-white/5 rounded">JavaScript</span>
                 <span className="px-2 py-0.5 bg-white/5 rounded">React</span>
                 <span className="px-2 py-0.5 bg-white/5 rounded">shadcn</span>
@@ -278,6 +283,20 @@ export default function ResumePage() {
                 smooth={true}
               />
             </div>
+          </ParticleCard>
+
+          {/* Browser Info */}
+          <ParticleCard
+            className="magic-bento-card magic-bento-card--border-glow"
+            style={{ backgroundColor: '#1c1a17', '--glow-color': GLOW_COLOR, gridArea: 'browser' } as React.CSSProperties}
+            disableAnimations={isMobile}
+            particleCount={4}
+            glowColor={GLOW_COLOR}
+            enableTilt={!isMobile}
+            clickEffect={true}
+            enableMagnetism={true}
+          >
+            <BrowserInfo />
           </ParticleCard>
 
           {/* ASCII Text Effect */}

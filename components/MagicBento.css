@@ -148,7 +148,7 @@
       "techstack"
       "projects"
       "design"
-      "call"
+      "browser"
       "ascii"
       "location"
       "glitch";
@@ -181,7 +181,7 @@
       "profile    profile"
       "currently  techstack"
       "projects   design"
-      "call       call"
+      "browser    browser"
       "ascii      ascii"
       "location   glitch";
   }
@@ -204,7 +204,7 @@
       "name       linkedin   email      github"
       "currently  profile    profile    techstack"
       "currently  projects   design     techstack"
-      "call       call       call       call"
+      "browser    browser    browser    browser"
       "ascii      ascii      location   glitch";
     gap: 0.5em;
   }
