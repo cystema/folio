@@ -183,14 +183,41 @@ export default function ResumePage() {
             clickEffect={true}
             enableMagnetism={true}
           >
-            <div className="flex-1 flex flex-col justify-center">
-              <div className="text-xs opacity-50 mb-2">tech stack</div>
+            <div className="flex-1 flex flex-col justify-center gap-2">
+              <div className="text-xs opacity-50 mb-1">tech stack</div>
               <div className="flex flex-wrap gap-1.5 text-xs">
-                <span className="px-2 py-0.5 bg-white/5 rounded">React</span>
-                <span className="px-2 py-0.5 bg-white/5 rounded">TypeScript</span>
                 <span className="px-2 py-0.5 bg-white/5 rounded">Python</span>
-                <span className="px-2 py-0.5 bg-white/5 rounded">Node</span>
-                <span className="px-2 py-0.5 bg-white/5 rounded">AI/ML</span>
+                <span className="px-2 py-0.5 bg-white/5 rounded">Pydantic</span>
+                <span className="px-2 py-0.5 bg-white/5 rounded">FastAPI</span>
+                <span className="px-2 py-0.5 bg-white/5 rounded">MongoDB</span>
+                <span className="px-2 py-0.5 bg-white/5 rounded">SQL</span>
+                <span className="px-2 py-0.5 bg-white/5 rounded">Beanie</span>
+                <span className="px-2 py-0.5 bg-white/5 rounded">JavaScript</span>
+                <span className="px-2 py-0.5 bg-white/5 rounded">React</span>
+                <span className="px-2 py-0.5 bg-white/5 rounded">shadcn</span>
+                <span className="px-2 py-0.5 bg-white/5 rounded">Tailwind</span>
+              </div>
+              <div className="text-xs opacity-40 mt-1 mb-0.5">AI frameworks</div>
+              <div className="flex flex-wrap gap-1.5 text-xs">
+                <span className="px-2 py-0.5 bg-white/5 rounded">Pydantic-AI</span>
+                <span className="px-2 py-0.5 bg-white/5 rounded">LangChain</span>
+                <span className="px-2 py-0.5 bg-white/5 rounded">Temporal</span>
+                <span className="px-2 py-0.5 bg-white/5 rounded">OpenAI</span>
+                <span className="px-2 py-0.5 bg-white/5 rounded">Anthropic</span>
+              </div>
+              <div className="text-xs opacity-40 mt-1 mb-0.5">Voice AI</div>
+              <div className="flex flex-wrap gap-1.5 text-xs">
+                <span className="px-2 py-0.5 bg-white/5 rounded">Vapi</span>
+                <span className="px-2 py-0.5 bg-white/5 rounded">Retell</span>
+                <span className="px-2 py-0.5 bg-white/5 rounded">ElevenLabs</span>
+                <span className="px-2 py-0.5 bg-white/5 rounded">Cartesia</span>
+                <span className="px-2 py-0.5 bg-white/5 rounded">Deepgram</span>
+              </div>
+              <div className="text-xs opacity-40 mt-1 mb-0.5">IDE</div>
+              <div className="flex flex-wrap gap-1.5 text-xs">
+                <span className="px-2 py-0.5 bg-white/5 rounded">Cursor</span>
+                <span className="px-2 py-0.5 bg-white/5 rounded">Claude-Code</span>
+                <span className="px-2 py-0.5 bg-white/5 rounded">VSCode</span>
               </div>
             </div>
           </ParticleCard>

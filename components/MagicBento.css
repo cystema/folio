@@ -309,13 +309,14 @@
 .bento-nav-card::before {
   content: '→';
   position: absolute;
-  bottom: 12px;
-  right: 12px;
-  font-size: 14px;
+  bottom: 16px;
+  right: 16px;
+  font-size: 32px;
   opacity: 0.5;
   color: white;
   transition: all 0.3s ease;
   z-index: 2;
+  font-weight: 300;
 }
 
 .bento-nav-card:hover::before {
