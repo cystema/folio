@@ -106,7 +106,7 @@ export default function ResumePage() {
               rel="noopener noreferrer"
               className="flex-1 flex items-center justify-center text-lg hover:text-blue-400 transition-colors"
             >
-              in ↗
+              linkedin ↗
             </a>
           </ParticleCard>
 
@@ -125,7 +125,7 @@ export default function ResumePage() {
               href="mailto:shubham.mazumder@gmail.com" 
               className="flex-1 flex items-center justify-center text-lg hover:text-blue-400 transition-colors"
             >
-              @ ↗
+              @email ↗
             </a>
           </ParticleCard>
 
@@ -146,13 +146,13 @@ export default function ResumePage() {
               rel="noopener noreferrer"
               className="flex-1 flex items-center justify-center text-lg hover:text-blue-400 transition-colors"
             >
-              gh ↗
+              github ↗
             </a>
           </ParticleCard>
 
           {/* Projects */}
           <ParticleCard
-            className="magic-bento-card magic-bento-card--border-glow cursor-pointer bento-nav-card"
+            className="magic-bento-card cursor-pointer bento-nav-card"
             style={{ backgroundColor: '#1c1a17', '--glow-color': GLOW_COLOR, gridArea: 'projects' } as React.CSSProperties}
             disableAnimations={isMobile}
             particleCount={6}
@@ -165,13 +165,13 @@ export default function ResumePage() {
               onClick={() => setCurrentView("projects")}
               className="flex-1 flex items-center justify-center text-xl hover:text-blue-400 transition-colors w-full"
             >
-              projects →
+              projects
             </button>
           </ParticleCard>
 
           {/* Currently (Left side - spans 2 rows) */}
           <ParticleCard
-            className="magic-bento-card magic-bento-card--border-glow"
+            className="magic-bento-card"
             style={{ backgroundColor: '#1c1a17', '--glow-color': GLOW_COLOR, gridArea: 'currently' } as React.CSSProperties}
             disableAnimations={isMobile}
             particleCount={6}
@@ -180,17 +180,12 @@ export default function ResumePage() {
             clickEffect={true}
             enableMagnetism={true}
           >
-            <div className="magic-bento-card__header">
-              <div className="magic-bento-card__label">currently</div>
-            </div>
+
             <div className="magic-bento-card__content">
               <p className="text-sm leading-relaxed">
-                building AI-powered scheduling at Sameday. previously research in NLP & computer vision.
+                currently building AI-powered CSRs at Sameday.
               </p>
-              <div className="flex items-center gap-2 text-xs opacity-50 mt-4">
-                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                <span>open to opportunities</span>
-              </div>
+
             </div>
           </ParticleCard>
 
@@ -230,31 +225,9 @@ export default function ResumePage() {
           >
             <div className="flex-1 flex flex-col justify-center items-center text-center">
               <span className="text-2xl mb-1">📍</span>
-              <span className="text-sm">San Francisco</span>
-              <span className="text-xs opacity-50">PST</span>
+              <span className="text-sm">Salt Lake City</span>
+              <span className="text-xs opacity-50">MST</span>
             </div>
-          </ParticleCard>
-
-          {/* Book a Call */}
-          <ParticleCard
-            className="magic-bento-card magic-bento-card--border-glow cursor-pointer"
-            style={{ backgroundColor: '#1c1a17', '--glow-color': GLOW_COLOR, gridArea: 'call' } as React.CSSProperties}
-            disableAnimations={isMobile}
-            particleCount={4}
-            glowColor={GLOW_COLOR}
-            enableTilt={!isMobile}
-            clickEffect={true}
-            enableMagnetism={true}
-          >
-            <a 
-              href="https://cal.com" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex-1 flex flex-col justify-center items-center text-center hover:text-blue-400 transition-colors"
-            >
-              <span className="text-2xl mb-1">📞</span>
-              <span className="text-sm">book a call</span>
-            </a>
           </ParticleCard>
 
           {/* Design */}
