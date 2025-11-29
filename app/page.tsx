@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { useRef, useState, useEffect } from "react"
 import LetterGlitch from "../components/LetterGlitch"
 import dynamic from "next/dynamic"
 
@@ -16,8 +16,28 @@ const GLOW_COLOR = "23, 86, 232" // Imperial Blue
 
 export default function ResumePage() {
   const [currentView, setCurrentView] = useState<"home" | "projects" | "design">("home")
+  const [currentTime, setCurrentTime] = useState<string>("")
   const gridRef = useRef<HTMLDivElement>(null)
   const isMobile = useMobileDetection()
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date()
+      const mstTime = now.toLocaleTimeString('en-US', {
+        timeZone: 'America/Denver',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+      })
+      setCurrentTime(mstTime)
+    }
+
+    updateTime()
+    const interval = setInterval(updateTime, 1000)
+
+    return () => clearInterval(interval)
+  }, [])
 
   if (currentView !== "home") {
     return (
@@ -76,9 +96,9 @@ export default function ResumePage() {
           {/* Name & Title */}
           <ParticleCard
             className="magic-bento-card"
-            style={{ backgroundColor: '#ffe5ff', '--glow-color': GLOW_COLOR, gridArea: 'name' } as React.CSSProperties}
+            style={{ backgroundColor: '#ffe5ff', gridArea: 'name' } as React.CSSProperties}
             disableAnimations={isMobile}
-            particleCount={6}
+            particleCount={0}
             glowColor={GLOW_COLOR}
             enableTilt={!isMobile}
             clickEffect={true}
@@ -95,10 +115,10 @@ export default function ResumePage() {
 
           {/* LinkedIn */}
           <ParticleCard
-            className="magic-bento-card magic-bento-card--border-glow cursor-pointer bento-link-card"
-            style={{ backgroundColor: '#1c1a17', '--glow-color': GLOW_COLOR, gridArea: 'linkedin' } as React.CSSProperties}
+            className="magic-bento-card cursor-pointer bento-link-card"
+            style={{ backgroundColor: '#1c1a17', gridArea: 'linkedin' } as React.CSSProperties}
             disableAnimations={isMobile}
-            particleCount={4}
+            particleCount={0}
             glowColor={GLOW_COLOR}
             enableTilt={!isMobile}
             clickEffect={true}
@@ -116,10 +136,10 @@ export default function ResumePage() {
 
           {/* Email */}
           <ParticleCard
-            className="magic-bento-card magic-bento-card--border-glow cursor-pointer bento-link-card"
-            style={{ backgroundColor: '#1c1a17', '--glow-color': GLOW_COLOR, gridArea: 'email' } as React.CSSProperties}
+            className="magic-bento-card cursor-pointer bento-link-card"
+            style={{ backgroundColor: '#1c1a17', gridArea: 'email' } as React.CSSProperties}
             disableAnimations={isMobile}
-            particleCount={4}
+            particleCount={0}
             glowColor={GLOW_COLOR}
             enableTilt={!isMobile}
             clickEffect={true}
@@ -135,10 +155,10 @@ export default function ResumePage() {
 
           {/* GitHub */}
           <ParticleCard
-            className="magic-bento-card magic-bento-card--border-glow cursor-pointer bento-link-card"
-            style={{ backgroundColor: '#1c1a17', '--glow-color': GLOW_COLOR, gridArea: 'github' } as React.CSSProperties}
+            className="magic-bento-card cursor-pointer bento-link-card"
+            style={{ backgroundColor: '#1c1a17', gridArea: 'github' } as React.CSSProperties}
             disableAnimations={isMobile}
-            particleCount={4}
+            particleCount={0}
             glowColor={GLOW_COLOR}
             enableTilt={!isMobile}
             clickEffect={true}
@@ -157,9 +177,9 @@ export default function ResumePage() {
           {/* Projects */}
           <ParticleCard
             className="magic-bento-card cursor-pointer bento-nav-card"
-            style={{ backgroundColor: '#1c1a17', '--glow-color': GLOW_COLOR, gridArea: 'projects' } as React.CSSProperties}
+            style={{ backgroundColor: '#1c1a17', gridArea: 'projects' } as React.CSSProperties}
             disableAnimations={isMobile}
-            particleCount={6}
+            particleCount={0}
             glowColor={GLOW_COLOR}
             enableTilt={!isMobile}
             clickEffect={true}
@@ -175,10 +195,10 @@ export default function ResumePage() {
 
           {/* Tech Stack */}
           <ParticleCard
-            className="magic-bento-card magic-bento-card--border-glow"
-            style={{ backgroundColor: '#1c1a17', '--glow-color': GLOW_COLOR, gridArea: 'techstack' } as React.CSSProperties}
+            className="magic-bento-card"
+            style={{ backgroundColor: '#1c1a17', gridArea: 'techstack' } as React.CSSProperties}
             disableAnimations={isMobile}
-            particleCount={4}
+            particleCount={0}
             glowColor={GLOW_COLOR}
             enableTilt={!isMobile}
             clickEffect={true}
@@ -241,16 +261,17 @@ export default function ResumePage() {
             <div className="flex-1 flex flex-col justify-center items-center text-center">
               <span className="text-2xl mb-1">📍</span>
               <span className="text-sm">Salt Lake City</span>
-              <span className="text-xs opacity-50">MST</span>
+              <span className="text-xs opacity-50 mb-1">MST</span>
+              <span className="text-lg font-mono">{currentTime}</span>
             </div>
           </ParticleCard>
 
           {/* Design */}
           <ParticleCard
-            className="magic-bento-card magic-bento-card--border-glow cursor-pointer bento-nav-card"
+            className="magic-bento-card cursor-pointer bento-nav-card"
             style={{ backgroundColor: '#1c1a17', gridArea: 'design' } as React.CSSProperties}
             disableAnimations={isMobile}
-            particleCount={6}
+            particleCount={0}
             glowColor={GLOW_COLOR}
             enableTilt={!isMobile}
             clickEffect={true}

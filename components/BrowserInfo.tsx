@@ -100,7 +100,7 @@ export default function BrowserInfo() {
 
   return (
     <div className="flex-1 flex flex-col justify-center gap-2 text-xs">
-      <div className="text-xs opacity-50 mb-1">browser info</div>
+      <div className="text-xs opacity-50 mb-1">your browser info</div>
       
       <div className="space-y-1.5">
         <div className="flex justify-between items-center">
