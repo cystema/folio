@@ -1,134 +1,263 @@
 "use client"
 
+import { useRef, useState } from "react"
 import LetterGlitch from "../components/LetterGlitch"
 import ProjectsSection from "../components/ProjectsSection"
 import DesignSection from "../components/DesignSection"
 import FaceTracker from "../components/FaceTracker"
-import { useState } from "react"
+import { ParticleCard, GlobalSpotlight, BentoCardGrid, useMobileDetection } from "../components/MagicBento"
+import "../components/MagicBento.css"
+
+const GLOW_COLOR = "132, 0, 255"
 
 export default function ResumePage() {
-  const [isDarkMode, setIsDarkMode] = useState(true)
   const [currentView, setCurrentView] = useState<"home" | "projects" | "design">("home")
+  const gridRef = useRef<HTMLDivElement>(null)
+  const isMobile = useMobileDetection()
 
-  const handleProjectsClick = () => {
-    setCurrentView("projects")
-  }
-
-  const handleDesignClick = () => {
-    setCurrentView("design")
-  }
-
-  const handleBackClick = () => {
-    setCurrentView("home")
+  if (currentView !== "home") {
+    return (
+      <div className="min-h-screen bg-[#060010] text-white">
+        <div className="flex h-screen">
+          {/* Left side - LetterGlitch */}
+          <div className="w-1/2 h-full relative">
+            <LetterGlitch
+              glitchSpeed={50}
+              centerVignette={true}
+              outerVignette={false}
+              smooth={true}
+            />
+            <div className="absolute inset-0 bg-black/50" />
+          </div>
+          
+          {/* Right side - Content */}
+          <div className="w-1/2 h-full overflow-y-auto bg-[#060010]">
+            {currentView === "projects" && <ProjectsSection />}
+            {currentView === "design" && <DesignSection />}
+          </div>
+        </div>
+        
+        <button
+          onClick={() => setCurrentView("home")}
+          className="fixed bottom-6 left-6 z-30 flex items-center space-x-2 px-4 py-2 bg-black/80 text-white border border-white/20 rounded-none backdrop-blur-sm transition-all duration-300 hover:opacity-70"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+          <span>back</span>
+        </button>
+      </div>
+    )
   }
 
   return (
-    <div className="relative min-h-screen overflow-hidden flex">
-      <div
-        className={`w-1/2 p-8 font-mono relative z-10 transition-all duration-500 ease-in-out ${
-          currentView !== "home" ? "fixed left-0 top-0 h-screen overflow-hidden" : ""
-        } ${isDarkMode ? "bg-black text-white" : "bg-white text-black"}`}
-      >
-        {/* Theme toggle button in top right of left panel */}
-        <button
-          onClick={() => setIsDarkMode(!isDarkMode)}
-          className={`absolute top-8 right-8 p-2 rounded-full transition-colors ${
-            isDarkMode ? "hover:bg-white/10" : "hover:bg-black/10"
-          }`}
-          aria-label="Toggle theme"
-        >
-          {isDarkMode ? (
-            // Sun icon for light mode
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="12" cy="12" r="5" />
-              <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
-            </svg>
-          ) : (
-            // Moon icon for dark mode
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-            </svg>
-          )}
-        </button>
+    <div className="min-h-screen bg-[#060010] text-white p-4 md:p-6">
+      <GlobalSpotlight
+        gridRef={gridRef}
+        disableAnimations={isMobile}
+        enabled={true}
+        spotlightRadius={350}
+        glowColor={GLOW_COLOR}
+      />
 
-        <div
-          className={`transition-opacity duration-300 ${currentView === "home" ? "opacity-100" : "opacity-0 pointer-events-none"}`}
-        >
-          {/* Header with Face Tracker */}
-          <div className="mb-12">
-            <div className="flex items-center gap-6">
-              <div>
-                <h2 className="text-lg font-normal">SHUBHAM MAZUMDER</h2>
-                <h3 className="text-lg font-normal opacity-70">Product Engineer</h3>
-              </div>
-              <div className="h-12 w-12 min-h-12 min-w-12 max-h-12 max-w-12 overflow-hidden flex-shrink-0 border border-current/20">
+      <div className="max-w-6xl mx-auto">
+        <BentoCardGrid gridRef={gridRef}>
+          {/* Card 1: Face Tracker */}
+          <ParticleCard
+            className="magic-bento-card magic-bento-card--border-glow"
+            style={{ backgroundColor: '#060010', '--glow-color': GLOW_COLOR } as React.CSSProperties}
+            disableAnimations={isMobile}
+            particleCount={8}
+            glowColor={GLOW_COLOR}
+            enableTilt={!isMobile}
+            clickEffect={true}
+            enableMagnetism={false}
+          >
+            <div className="flex-1 flex items-center justify-center">
+              <div className="w-32 h-32 overflow-hidden">
                 <FaceTracker basePath="/faces/" />
               </div>
             </div>
-          </div>
+          </ParticleCard>
 
-          {/* Experience Section */}
-          <div className="mb-12">
-            <h3 className="text-sm font-normal mb-4 opacity-60">EXPERIENCE</h3>
-            <div className="space-y-3">
-              <div className="flex items-baseline border-b border-current/10 pb-2">
-                <div className="flex-1 min-w-0">
-                  <span className="block font-medium">Sameday AI (YC '23)</span>
-                  <span className="block text-sm opacity-70">Product Engineer</span>
+          {/* Card 2: Name & Title */}
+          <ParticleCard
+            className="magic-bento-card magic-bento-card--border-glow"
+            style={{ backgroundColor: '#060010', '--glow-color': GLOW_COLOR } as React.CSSProperties}
+            disableAnimations={isMobile}
+            particleCount={6}
+            glowColor={GLOW_COLOR}
+            enableTilt={!isMobile}
+            clickEffect={true}
+            enableMagnetism={true}
+          >
+            <div className="flex-1 flex flex-col justify-center">
+              <h2 className="text-2xl font-normal mb-1">SHUBHAM MAZUMDER</h2>
+              <p className="text-sm opacity-70">product engineer</p>
+            </div>
+          </ParticleCard>
+
+          {/* Card 3: Experience (Large) */}
+          <ParticleCard
+            className="magic-bento-card magic-bento-card--border-glow"
+            style={{ backgroundColor: '#060010', '--glow-color': GLOW_COLOR } as React.CSSProperties}
+            disableAnimations={isMobile}
+            particleCount={12}
+            glowColor={GLOW_COLOR}
+            enableTilt={!isMobile}
+            clickEffect={true}
+            enableMagnetism={false}
+          >
+            <div className="magic-bento-card__header">
+              <div className="magic-bento-card__label">experience</div>
+            </div>
+            <div className="magic-bento-card__content space-y-3 text-sm">
+              <div className="flex justify-between items-baseline border-b border-white/10 pb-2">
+                <div>
+                  <span className="block">Sameday AI (YC '23)</span>
+                  <span className="text-xs opacity-50">product engineer</span>
                 </div>
-                <span className="text-sm opacity-70 ml-4 flex-shrink-0">2025 → Present</span>
+                <span className="text-xs opacity-50">2025 →</span>
               </div>
-              <div className="flex items-baseline border-b border-current/10 pb-2">
-                <div className="flex-1 min-w-0">
-                  <span className="block font-medium">BulkMagic</span>
-                  <span className="block text-sm opacity-70">Intern</span>
+              <div className="flex justify-between items-baseline border-b border-white/10 pb-2">
+                <div>
+                  <span className="block">BulkMagic</span>
+                  <span className="text-xs opacity-50">intern</span>
                 </div>
-                <span className="text-sm opacity-70 ml-4 flex-shrink-0">2024 → 2024</span>
+                <span className="text-xs opacity-50">2024</span>
               </div>
-              <div className="flex items-baseline border-b border-current/10 pb-2">
-                <div className="flex-1 min-w-0">
-                  <span className="block font-medium">University of Utah</span>
-                  <span className="block text-sm opacity-70">Research Assistant</span>
+              <div className="flex justify-between items-baseline border-b border-white/10 pb-2">
+                <div>
+                  <span className="block">University of Utah</span>
+                  <span className="text-xs opacity-50">research assistant</span>
                 </div>
-                <span className="text-sm opacity-70 ml-4 flex-shrink-0">2021 → 2024</span>
+                <span className="text-xs opacity-50">2021-24</span>
               </div>
-              <div className="flex items-baseline border-b border-current/10 pb-2">
-                <div className="flex-1 min-w-0">
-                  <span className="block font-medium">Cognizant</span>
-                  <span className="block text-sm opacity-70">Software Engineer</span>
+              <div className="flex justify-between items-baseline">
+                <div>
+                  <span className="block">Cognizant</span>
+                  <span className="text-xs opacity-50">software engineer</span>
                 </div>
-                <span className="text-sm opacity-70 ml-4 flex-shrink-0">2016 → 2019</span>
+                <span className="text-xs opacity-50">2016-19</span>
               </div>
             </div>
-          </div>
+          </ParticleCard>
 
-          {/* Footer Links Section */}
-          <div className="absolute bottom-8 left-8">
-            <div className="flex space-x-4 text-lg font-mono">
-              <a
-                href="https://www.linkedin.com/in/mazumders/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:opacity-70 transition-opacity"
-              >
-                linkedin
-              </a>
-              <a href="mailto:shubham.mazumder@gmail.com" className="hover:opacity-70 transition-opacity">
-                email
-              </a>
-              <button onClick={handleProjectsClick} className="hover:opacity-70 transition-opacity">
-                projects
-              </button>
-              <button onClick={handleDesignClick} className="hover:opacity-70 transition-opacity">
-                design
-              </button>
+          {/* Card 4: LinkedIn */}
+          <ParticleCard
+            className="magic-bento-card magic-bento-card--border-glow cursor-pointer"
+            style={{ backgroundColor: '#060010', '--glow-color': GLOW_COLOR } as React.CSSProperties}
+            disableAnimations={isMobile}
+            particleCount={6}
+            glowColor={GLOW_COLOR}
+            enableTilt={!isMobile}
+            clickEffect={true}
+            enableMagnetism={true}
+          >
+            <a 
+              href="https://www.linkedin.com/in/mazumders/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex-1 flex items-center justify-center text-xl hover:text-purple-400 transition-colors"
+            >
+              linkedin ↗
+            </a>
+          </ParticleCard>
+
+          {/* Card 5: Email */}
+          <ParticleCard
+            className="magic-bento-card magic-bento-card--border-glow cursor-pointer"
+            style={{ backgroundColor: '#060010', '--glow-color': GLOW_COLOR } as React.CSSProperties}
+            disableAnimations={isMobile}
+            particleCount={6}
+            glowColor={GLOW_COLOR}
+            enableTilt={!isMobile}
+            clickEffect={true}
+            enableMagnetism={true}
+          >
+            <a 
+              href="mailto:shubham.mazumder@gmail.com" 
+              className="flex-1 flex items-center justify-center text-xl hover:text-purple-400 transition-colors"
+            >
+              email ↗
+            </a>
+          </ParticleCard>
+
+          {/* Card 6: Projects */}
+          <ParticleCard
+            className="magic-bento-card magic-bento-card--border-glow cursor-pointer"
+            style={{ backgroundColor: '#060010', '--glow-color': GLOW_COLOR } as React.CSSProperties}
+            disableAnimations={isMobile}
+            particleCount={6}
+            glowColor={GLOW_COLOR}
+            enableTilt={!isMobile}
+            clickEffect={true}
+            enableMagnetism={true}
+          >
+            <button 
+              onClick={() => setCurrentView("projects")}
+              className="flex-1 flex items-center justify-center text-xl hover:text-purple-400 transition-colors w-full"
+            >
+              projects →
+            </button>
+          </ParticleCard>
+
+          {/* Card 7: Design */}
+          <ParticleCard
+            className="magic-bento-card magic-bento-card--border-glow cursor-pointer"
+            style={{ backgroundColor: '#060010', '--glow-color': GLOW_COLOR } as React.CSSProperties}
+            disableAnimations={isMobile}
+            particleCount={6}
+            glowColor={GLOW_COLOR}
+            enableTilt={!isMobile}
+            clickEffect={true}
+            enableMagnetism={true}
+          >
+            <button 
+              onClick={() => setCurrentView("design")}
+              className="flex-1 flex items-center justify-center text-xl hover:text-purple-400 transition-colors w-full"
+            >
+              design →
+            </button>
+          </ParticleCard>
+
+          {/* Card 8: Currently */}
+          <ParticleCard
+            className="magic-bento-card magic-bento-card--border-glow"
+            style={{ backgroundColor: '#060010', '--glow-color': GLOW_COLOR } as React.CSSProperties}
+            disableAnimations={isMobile}
+            particleCount={6}
+            glowColor={GLOW_COLOR}
+            enableTilt={!isMobile}
+            clickEffect={true}
+            enableMagnetism={true}
+          >
+            <div className="magic-bento-card__header">
+              <div className="magic-bento-card__label">currently</div>
             </div>
-          </div>
-        </div>
+            <div className="magic-bento-card__content">
+              <p className="text-sm leading-relaxed">
+                building AI-powered scheduling at Sameday. previously research in NLP & computer vision.
+              </p>
+              <div className="flex items-center gap-2 text-xs opacity-50 mt-4">
+                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                <span>open to opportunities</span>
+              </div>
+            </div>
+          </ParticleCard>
 
-        {currentView !== "home" && (
-          <>
-            <div className="absolute inset-0 z-0">
+          {/* Card 9: LetterGlitch Background */}
+          <ParticleCard
+            className="magic-bento-card magic-bento-card--border-glow"
+            style={{ backgroundColor: '#060010', '--glow-color': GLOW_COLOR, padding: 0 } as React.CSSProperties}
+            disableAnimations={isMobile}
+            particleCount={4}
+            glowColor={GLOW_COLOR}
+            enableTilt={false}
+            clickEffect={false}
+            enableMagnetism={false}
+          >
+            <div className="w-full h-full">
               <LetterGlitch
                 glitchSpeed={50}
                 centerVignette={true}
@@ -136,65 +265,9 @@ export default function ResumePage() {
                 smooth={true}
               />
             </div>
-            <div
-              className={`absolute inset-0 z-10 transition-opacity duration-500 ${isDarkMode ? "bg-black/60" : "bg-white/60"}`}
-            ></div>
-          </>
-        )}
+          </ParticleCard>
+        </BentoCardGrid>
       </div>
-
-      <div
-        className={`transition-all duration-500 ease-in-out ${
-          currentView !== "home" ? "fixed right-0 top-0 w-1/2 h-screen overflow-hidden" : "w-1/2 h-screen"
-        } relative`}
-      >
-        <div
-          className={`transition-opacity duration-300 ${currentView === "home" ? "opacity-100" : "opacity-0 pointer-events-none absolute inset-0"}`}
-        >
-          <div className="h-full">
-            <LetterGlitch
-              glitchSpeed={50}
-              centerVignette={true}
-              outerVignette={false}
-              smooth={true}
-            />
-          </div>
-        </div>
-
-        <div
-          className={`transition-opacity duration-300 ${currentView === "projects" ? "opacity-100" : "opacity-0 pointer-events-none"} ${
-            currentView === "projects" ? "absolute inset-0 overflow-y-auto" : "absolute inset-0"
-          }`}
-        >
-          <div className={`w-full min-h-full ${isDarkMode ? "bg-black" : "bg-white"}`}>
-            <ProjectsSection />
-          </div>
-        </div>
-
-        <div
-          className={`transition-opacity duration-300 ${currentView === "design" ? "opacity-100" : "opacity-0 pointer-events-none"} ${
-            currentView === "design" ? "absolute inset-0 overflow-y-auto" : "absolute inset-0"
-          }`}
-        >
-          <div className={`w-full min-h-full ${isDarkMode ? "bg-black" : "bg-white"}`}>
-            <DesignSection />
-          </div>
-        </div>
-      </div>
-
-      {(currentView === "projects" || currentView === "design") && (
-        <button
-          onClick={handleBackClick}
-          className={`fixed bottom-8 left-8 z-30 flex items-center space-x-2 px-4 py-2 rounded-full backdrop-blur-sm border transition-all duration-300 hover:opacity-70 animate-in fade-in slide-in-from-bottom-4 font-mono ${
-            isDarkMode ? "bg-black/80 text-white border-white/20" : "bg-white/80 text-black border-black/20"
-          }`}
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M19 12H5M12 19l-7-7 7-7" />
-          </svg>
-          <span>Back</span>
-        </button>
-      )}
     </div>
   )
 }
