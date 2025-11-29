@@ -108,7 +108,7 @@ export default function ResumePage() {
           </MetroTile>
 
           {/* Backend */}
-          <MetroTile color={METRO.green} area="backend" className="relative">
+          <MetroTile color={METRO.darkGreen} area="backend" className="relative">
             <FolderCode className="absolute top-3 right-3 w-6 h-6 opacity-60" />
             <div className="flex flex-wrap gap-1">
               <span className="metro-badge">Python</span>
@@ -118,7 +118,7 @@ export default function ResumePage() {
           </MetroTile>
 
           {/* Frontend */}
-          <MetroTile color={METRO.lightGreen} area="frontend" className="relative">
+          <MetroTile color={METRO.darkGreen} area="frontend" className="relative">
             <LayoutTemplate className="absolute top-3 right-3 w-6 h-6 opacity-60" />
             <div className="flex flex-wrap gap-1">
               <span className="metro-badge">React</span>
@@ -138,7 +138,7 @@ export default function ResumePage() {
           </MetroTile>
 
           {/* Voice */}
-          <MetroTile color={METRO.purple} area="voice" className="relative">
+          <MetroTile color={METRO.darkGreen} area="voice" className="relative">
             <AudioWaveform className="absolute top-3 right-3 w-6 h-6 opacity-60" />
             <div className="flex flex-wrap gap-1">
               <span className="metro-badge">Vapi</span>
@@ -187,12 +187,12 @@ export default function ResumePage() {
           </MetroTile>
 
           {/* ASCII */}
-          <div style={{ gridArea: 'ascii', backgroundColor: METRO.dark, padding: 0 }} className="relative">
+          <div style={{ gridArea: 'ascii', backgroundColor: '#92140C', padding: 0 }} className="relative">
             <ASCIIText text="Hi!" enableWaves={true} asciiFontSize={6} textFontSize={80} />
           </div>
 
           {/* Shubham's Location */}
-          <MetroTile color={METRO.orange} area="myloc" className="relative">
+          <MetroTile color="#49A078" area="myloc" className="relative">
             <LocateFixed className="absolute top-3 right-3 w-6 h-6 opacity-60" />
             <div className="text-[10px] font-semibold opacity-70 mb-1">Shubham&apos;s Location</div>
             <span className="text-sm font-semibold">Salt Lake City</span>
