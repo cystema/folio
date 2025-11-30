@@ -58,7 +58,7 @@ const DesignSection = ({ onNavigate }: DesignSectionProps) => {
   return (
     <div className="min-h-screen bg-white text-black">
       <Navbar currentPage="design" onNavigate={onNavigate} />
-      <div className="pt-20 pb-20">
+      <div className="pt-20">
         <div className="max-w-7xl mx-auto px-6 py-12">
           {/* Bold Title */}
           <h1 className="text-4xl md:text-5xl font-bold mb-12 text-black">
@@ -72,6 +72,19 @@ const DesignSection = ({ onNavigate }: DesignSectionProps) => {
             ))}
           </div>
         </div>
+
+        {/* Image Section */}
+        <section className="w-full mt-12">
+          <div className="w-full h-[60vh] md:h-[70vh] relative overflow-hidden">
+            <Image
+              src="/pictures/showcase/IMG_5282.jpg"
+              alt="Showcase"
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
+        </section>
       </div>
     </div>
   )

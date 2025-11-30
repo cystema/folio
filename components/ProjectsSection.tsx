@@ -1,6 +1,7 @@
 "use client"
 
 import { useRef } from "react"
+import Image from "next/image"
 import Link from "next/link"
 import Navbar from "./Navbar"
 import { METRO } from "./MetroTile"
@@ -165,7 +166,7 @@ const ProjectsSection = ({ onNavigate }: ProjectsSectionProps) => {
   return (
     <div className="min-h-screen bg-white text-black">
       <Navbar currentPage="projects" onNavigate={onNavigate} />
-      <div className="pt-20 pb-20">
+      <div className="pt-20">
         <div className="max-w-7xl mx-auto px-6 py-12">
           {/* Bold Title */}
           <h1 className="text-4xl md:text-5xl font-bold mb-12 text-black">
@@ -187,6 +188,19 @@ const ProjectsSection = ({ onNavigate }: ProjectsSectionProps) => {
             })}
           </div>
         </div>
+
+        {/* Image Section */}
+        <section className="w-full mt-12">
+          <div className="w-full h-[60vh] md:h-[70vh] relative overflow-hidden">
+            <Image
+              src="/pictures/showcase/IMG_5565.jpg"
+              alt="Showcase"
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
+        </section>
       </div>
     </div>
   )
