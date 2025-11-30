@@ -66,7 +66,7 @@ export default function ResumePage() {
             {/* Right Column - Description */}
             <div className="flex items-start">
               <p className="text-lg md:text-xl leading-relaxed text-gray-700">
-                Shubham Mazumder blends creativity with technical expertise to design and build digital products that are not only functional but also delightful to use. With a strong foundation in full-stack development and a sharp eye for design, he transforms ideas into products that scale seamlessly from concept to launch.
+                Shubham Mazumder architects and builds production-grade AI systems that process millions of interactions with precision and reliability. As a founding engineer, he designs event-sourced microservices, integrates advanced AI models, and crafts full-stack applications that scale to handle enterprise workloads. From eliminating AI hallucinations to reducing system failures, he combines deep technical expertise with a focus on solving real problems at scale.
               </p>
             </div>
           </div>
