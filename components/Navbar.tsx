@@ -204,8 +204,7 @@ export default function Navbar({ currentPage, onNavigate, onOpenCommand }: Navba
             onClick={onOpenCommand}
             className="h-9 px-4 bg-white text-black hover:bg-gray-100 border border-gray-200"
           >
-            <Command className="h-4 w-4 mr-2" />
-            <span className="text-sm font-medium">Command</span>
+            <span className="text-sm font-medium">Press</span>
             <kbd className={cn(
               "ml-2 pointer-events-none inline-flex h-5 items-center gap-1 rounded border px-1.5 font-mono text-[10px] font-medium opacity-100 select-none",
               isLightMode
