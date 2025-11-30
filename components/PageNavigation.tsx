@@ -19,7 +19,7 @@ const METRO = {
 }
 
 interface PageNavigationProps {
-  currentPage: "projects" | "design"
+  currentPage: "home" | "projects" | "design"
   onNavigate: (page: "home" | "projects" | "design") => void
 }
 
@@ -34,7 +34,9 @@ export default function PageNavigation({ currentPage, onNavigate }: PageNavigati
             asChild
             className={cn(
               navigationMenuTriggerStyle(),
-              "bg-[#1F1F1F] text-white border-none rounded-none hover:opacity-80 font-semibold"
+              currentPage === "home" 
+                ? "bg-[#B4009E] text-white border-none rounded-none hover:opacity-80 font-semibold" 
+                : "bg-[#1F1F1F] text-white border-none rounded-none hover:opacity-80 font-semibold"
             )}
           >
             <button onClick={() => onNavigate("home")}>

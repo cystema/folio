@@ -2,7 +2,7 @@
 
 import { useRef } from "react"
 import Link from "next/link"
-import PageNavigation from "./PageNavigation"
+import Navbar from "./Navbar"
 import { METRO } from "./MetroTile"
 import "./ProjectsGrid.css"
 import { 
@@ -152,7 +152,7 @@ const ProjectTile = ({ project, color, Icon }: { project: Project; color: string
 )
 
 interface ProjectsSectionProps {
-  onNavigate?: (page: "home" | "projects" | "design") => void
+  onNavigate?: (page: "home" | "projects" | "design" | "tools") => void
 }
 
 const ProjectsSection = ({ onNavigate }: ProjectsSectionProps) => {
@@ -167,13 +167,8 @@ const ProjectsSection = ({ onNavigate }: ProjectsSectionProps) => {
 
   return (
     <div className="min-h-screen bg-black flex flex-col items-center">
-      <div className="w-full max-w-4xl mx-auto px-0 py-0">
-        {/* Header */}
-        <div className="mb-1 px-4 py-4 flex items-center justify-end">
-          {onNavigate && (
-            <PageNavigation currentPage="projects" onNavigate={onNavigate} />
-          )}
-        </div>
+      <Navbar currentPage="projects" onNavigate={onNavigate} />
+      <div className="w-full max-w-4xl mx-auto px-0 py-0 pt-20">
 
         {/* Projects Grid */}
         <div className="projects-grid" ref={gridRef}>

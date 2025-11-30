@@ -2,7 +2,7 @@
 
 import { useRef } from "react"
 import Image from "next/image"
-import PageNavigation from "./PageNavigation"
+import Navbar from "./Navbar"
 import { METRO } from "./MetroTile"
 import "./DesignGrid.css"
 
@@ -52,7 +52,7 @@ const DesignTile = ({ design }: { design: Design }) => (
 )
 
 interface DesignSectionProps {
-  onNavigate?: (page: "home" | "projects" | "design") => void
+  onNavigate?: (page: "home" | "projects" | "design" | "tools") => void
 }
 
 const DesignSection = ({ onNavigate }: DesignSectionProps) => {
@@ -60,13 +60,8 @@ const DesignSection = ({ onNavigate }: DesignSectionProps) => {
 
   return (
     <div className="min-h-screen bg-black flex flex-col items-center">
-      <div className="w-full max-w-4xl mx-auto px-0 py-0">
-        {/* Header */}
-        <div className="mb-1 px-4 py-4 flex items-center justify-end">
-          {onNavigate && (
-            <PageNavigation currentPage="design" onNavigate={onNavigate} />
-          )}
-        </div>
+      <Navbar currentPage="design" onNavigate={onNavigate} />
+      <div className="w-full max-w-4xl mx-auto px-0 py-0 pt-20">
 
         {/* Design Grid */}
         <div className="design-grid" ref={gridRef}>

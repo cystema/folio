@@ -116,7 +116,6 @@
     font-optical-sizing: auto;
     font-variation-settings: "wdth" 100;
     @apply bg-background text-foreground;
-    background-color: #000000;
   }
 }
 

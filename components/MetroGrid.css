@@ -29,32 +29,32 @@
   }
 }
 
-/* Tablet: 4 columns */
+/* Tablet: 5 columns */
 @media (min-width: 600px) and (max-width: 1023px) {
   .metro-grid {
-    grid-template-columns: repeat(4, 140px);
+    grid-template-columns: repeat(5, 140px);
     grid-auto-rows: 140px;
     grid-template-areas:
-      "name       name       linkedin   email"
-      "work       github     profile    projects"
-      "backend    frontend   ai         design"
-      "voice      yourloc    yourip     yourdev"
-      "networkspeed cpucores devicememory myloc";
+      "name       name       linkedin   email      github"
+      "work       profile    projects   design     ."
+      "backend    frontend   ai         voice      ."
+      "yourloc    yourip     yourdev    networkspeed cpucores"
+      "devicememory myloc    .          .          .";
     justify-content: center;
   }
 }
 
-/* Desktop: 4 columns - larger tiles */
+/* Desktop: 5 columns - larger tiles */
 @media (min-width: 1024px) {
   .metro-grid {
-    grid-template-columns: repeat(4, 180px);
+    grid-template-columns: repeat(5, 180px);
     grid-auto-rows: 180px;
     grid-template-areas:
-      "name       name       linkedin   email"
-      "work       github     profile    projects"
-      "backend    frontend   ai         design"
-      "voice      yourloc    yourip     yourdev"
-      "networkspeed cpucores devicememory myloc";
+      "name       name       linkedin   email      github"
+      "work       profile    projects   design     ."
+      "backend    frontend   ai         voice      ."
+      "yourloc    yourip     yourdev    networkspeed cpucores"
+      "devicememory myloc    .          .          .";
     justify-content: center;
   }
 }
@@ -62,7 +62,7 @@
 /* Large Desktop: even larger tiles */
 @media (min-width: 1400px) {
   .metro-grid {
-    grid-template-columns: repeat(4, 200px);
+    grid-template-columns: repeat(5, 200px);
     grid-auto-rows: 200px;
   }
 }

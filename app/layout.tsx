@@ -6,13 +6,13 @@ import "./globals.css"
 
 export const metadata: Metadata = {
   title: {
-    default: "Shubham Mazumder - Product Engineer",
+    default: "Shubham Mazumder - Founding Product Engineer",
     template: "%s | Shubham Mazumder"
   },
-  description: "Product Engineer building AI CSRs and agentic workflows. Specialized in conversational AI, full-stack development, and research.",
+  description: "Founding Product Engineer building AI CSRs and agentic workflows. Specialized in conversational AI, full-stack development, and research.",
   keywords: [
     "Shubham Mazumder",
-    "Product Engineer",
+    "Founding Product Engineer",
     "AI Engineer",
     "Full Stack Developer",
     "Conversational AI",
@@ -39,22 +39,22 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: '/',
-    title: 'Shubham Mazumder - Product Engineer',
-    description: 'Product Engineer building AI CSRs and agentic workflows. Specialized in conversational AI, full-stack development, and research.',
+    title: 'Shubham Mazumder - Founding Product Engineer',
+    description: 'Founding Product Engineer building AI CSRs and agentic workflows. Specialized in conversational AI, full-stack development, and research.',
     siteName: 'Shubham Mazumder Portfolio',
     images: [
       {
         url: '/icon.svg',
         width: 1200,
         height: 630,
-        alt: 'Shubham Mazumder - Product Engineer',
+        alt: 'Shubham Mazumder - Founding Product Engineer',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Shubham Mazumder - Product Engineer',
-    description: 'Product Engineer building AI CSRs and agentic workflows. Specialized in conversational AI, full-stack development, and research.',
+    title: 'Shubham Mazumder - Founding Product Engineer',
+    description: 'Founding Product Engineer building AI CSRs and agentic workflows. Specialized in conversational AI, full-stack development, and research.',
     images: ['/icon.svg'],
   },
   robots: {
