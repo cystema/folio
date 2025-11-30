@@ -118,22 +118,19 @@ interface Project {
 }
 
 const ProjectTile = ({ project, color, Icon }: { project: Project; color: string; Icon: React.ComponentType<{ size?: number; className?: string }> }) => (
-  <div
-    className="project-tile flex flex-col justify-between p-3 transition-opacity hover:opacity-85 active:opacity-70"
-    style={{ backgroundColor: color }}
-  >
+  <div className="project-tile flex flex-col justify-between p-3 bg-white border border-gray-200 hover:border-gray-300 transition-colors rounded-lg">
     <div className="flex justify-between items-start">
-      <span className="text-white text-xs font-semibold uppercase tracking-wide opacity-70">Project</span>
-      <Icon size={28} className="text-white opacity-80" />
+      <span className="text-gray-500 text-xs font-semibold uppercase tracking-wide">Project</span>
+      <Icon size={28} className="text-gray-700" />
     </div>
     <div className="flex flex-col gap-1">
-      <h3 className="text-white text-sm font-bold leading-tight">{project.name}</h3>
-      <p className="text-white text-[10px] opacity-70 leading-snug line-clamp-2">{project.description}</p>
+      <h3 className="text-black text-sm font-semibold leading-tight">{project.name}</h3>
+      <p className="text-gray-600 text-[10px] leading-snug line-clamp-2">{project.description}</p>
       <div className="flex gap-3 text-[10px] mt-1">
         <Link 
           href={project.github} 
           target="_blank" 
-          className="text-white opacity-80 hover:opacity-100 font-medium flex items-center gap-1"
+          className="text-gray-700 hover:text-black font-medium flex items-center gap-1"
         >
           GitHub <ArrowRightFromLine size={10} />
         </Link>
@@ -141,7 +138,7 @@ const ProjectTile = ({ project, color, Icon }: { project: Project; color: string
           <Link 
             href={project.link} 
             target="_blank" 
-            className="text-white opacity-80 hover:opacity-100 font-medium flex items-center gap-1"
+            className="text-gray-700 hover:text-black font-medium flex items-center gap-1"
           >
             Demo <ArrowRightFromLine size={10} />
           </Link>
@@ -166,23 +163,29 @@ const ProjectsSection = ({ onNavigate }: ProjectsSectionProps) => {
   ]
 
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center">
+    <div className="min-h-screen bg-white text-black">
       <Navbar currentPage="projects" onNavigate={onNavigate} />
-      <div className="w-full max-w-4xl mx-auto px-0 py-0 pt-20">
+      <div className="pt-20 pb-20">
+        <div className="max-w-7xl mx-auto px-6 py-12">
+          {/* Bold Title */}
+          <h1 className="text-4xl md:text-5xl font-bold mb-12 text-black">
+            Projects
+          </h1>
 
-        {/* Projects Grid */}
-        <div className="projects-grid" ref={gridRef}>
-          {allProjects.map((project, idx) => {
-            const Icon = projectIcons[idx % projectIcons.length]
-            return (
-              <ProjectTile 
-                key={idx} 
-                project={project} 
-                color={projectColors[idx % projectColors.length]}
-                Icon={Icon}
-              />
-            )
-          })}
+          {/* Projects Grid */}
+          <div className="projects-grid" ref={gridRef}>
+            {allProjects.map((project, idx) => {
+              const Icon = projectIcons[idx % projectIcons.length]
+              return (
+                <ProjectTile 
+                  key={idx} 
+                  project={project} 
+                  color={projectColors[idx % projectColors.length]}
+                  Icon={Icon}
+                />
+              )
+            })}
+          </div>
         </div>
       </div>
     </div>

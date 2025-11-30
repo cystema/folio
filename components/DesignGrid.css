@@ -2,10 +2,10 @@
 
 .design-grid {
   display: grid;
-  gap: 4px;
+  gap: 1rem;
   margin: 0 auto;
-  padding: 8px;
-  background: #000;
+  padding: 0;
+  background: transparent;
 }
 
 /* Mobile: 1 column */
@@ -52,6 +52,6 @@
 /* Text info at the bottom */
 .design-tile__info {
   padding: 12px 14px;
-  background: rgba(0, 0, 0, 0.3);
+  background: white;
 }
 

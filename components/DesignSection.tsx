@@ -29,12 +29,9 @@ interface Design {
 }
 
 const DesignTile = ({ design }: { design: Design }) => (
-  <div
-    className="design-tile transition-opacity hover:opacity-90 active:opacity-80"
-    style={{ backgroundColor: design.color }}
-  >
+  <div className="design-tile bg-white border border-gray-200 hover:border-gray-300 transition-colors rounded-lg overflow-hidden">
     {/* Image takes up most of the tile */}
-    <div className="design-tile__image">
+    <div className="design-tile__image bg-gray-50">
       <Image
         src={design.image}
         alt={design.name}
@@ -43,10 +40,10 @@ const DesignTile = ({ design }: { design: Design }) => (
         sizes="(max-width: 599px) 280px, (max-width: 1023px) 320px, 380px"
       />
     </div>
-    {/* Text overlay at the bottom */}
+    {/* Text info at the bottom */}
     <div className="design-tile__info">
-      <h3 className="text-white text-base font-bold">{design.name}</h3>
-      <p className="text-white text-xs opacity-70 leading-snug">{design.description}</p>
+      <h3 className="text-black text-base font-semibold">{design.name}</h3>
+      <p className="text-gray-600 text-xs leading-snug">{design.description}</p>
     </div>
   </div>
 )
@@ -59,15 +56,21 @@ const DesignSection = ({ onNavigate }: DesignSectionProps) => {
   const gridRef = useRef<HTMLDivElement>(null)
 
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center">
+    <div className="min-h-screen bg-white text-black">
       <Navbar currentPage="design" onNavigate={onNavigate} />
-      <div className="w-full max-w-4xl mx-auto px-0 py-0 pt-20">
+      <div className="pt-20 pb-20">
+        <div className="max-w-7xl mx-auto px-6 py-12">
+          {/* Bold Title */}
+          <h1 className="text-4xl md:text-5xl font-bold mb-12 text-black">
+            Design
+          </h1>
 
-        {/* Design Grid */}
-        <div className="design-grid" ref={gridRef}>
-          {logo_designs.map((design, idx) => (
-            <DesignTile key={idx} design={design} />
-          ))}
+          {/* Design Grid */}
+          <div className="design-grid" ref={gridRef}>
+            {logo_designs.map((design, idx) => (
+              <DesignTile key={idx} design={design} />
+            ))}
+          </div>
         </div>
       </div>
     </div>
