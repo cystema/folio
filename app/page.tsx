@@ -7,10 +7,12 @@ import FaceTracker from "../components/FaceTracker"
 import ProjectsSection from "../components/ProjectsSection"
 import DesignSection from "../components/DesignSection"
 import ToolsStackSection from "../components/ToolsStackSection"
+import { CommandPalette } from "../components/CommandPalette"
 
 export default function ResumePage() {
   const [currentView, setCurrentView] = useState<"home" | "projects" | "design" | "tools">("home")
   const [currentTime, setCurrentTime] = useState<string>("")
+  const [commandOpen, setCommandOpen] = useState(false)
 
   useEffect(() => {
     const updateTime = () => {
@@ -30,18 +32,32 @@ export default function ResumePage() {
 
   if (currentView !== "home") {
     return (
-      <div className="min-h-screen bg-black text-white">
-        {currentView === "projects" && <ProjectsSection onNavigate={setCurrentView} />}
-        {currentView === "design" && <DesignSection onNavigate={setCurrentView} />}
-        {currentView === "tools" && <ToolsStackSection onNavigate={setCurrentView} />}
-      </div>
+      <>
+        <CommandPalette 
+          currentPage={currentView} 
+          onNavigate={setCurrentView}
+          open={commandOpen}
+          onOpenChange={setCommandOpen}
+        />
+        <div className="min-h-screen bg-black text-white">
+          {currentView === "projects" && <ProjectsSection onNavigate={setCurrentView} onOpenCommand={() => setCommandOpen(true)} />}
+          {currentView === "design" && <DesignSection onNavigate={setCurrentView} onOpenCommand={() => setCommandOpen(true)} />}
+          {currentView === "tools" && <ToolsStackSection onNavigate={setCurrentView} onOpenCommand={() => setCommandOpen(true)} />}
+        </div>
+      </>
     )
   }
 
   return (
     <div className="min-h-screen bg-white text-black">
+      <CommandPalette 
+        currentPage={currentView} 
+        onNavigate={setCurrentView}
+        open={commandOpen}
+        onOpenChange={setCommandOpen}
+      />
       {/* Fixed Header */}
-      <Navbar currentPage="home" onNavigate={setCurrentView} />
+      <Navbar currentPage="home" onNavigate={setCurrentView} onOpenCommand={() => setCommandOpen(true)} />
 
       {/* Main Content */}
       <main className="pt-20">

@@ -50,14 +50,15 @@ const DesignTile = ({ design }: { design: Design }) => (
 
 interface DesignSectionProps {
   onNavigate?: (page: "home" | "projects" | "design" | "tools") => void
+  onOpenCommand?: () => void
 }
 
-const DesignSection = ({ onNavigate }: DesignSectionProps) => {
+const DesignSection = ({ onNavigate, onOpenCommand }: DesignSectionProps) => {
   const gridRef = useRef<HTMLDivElement>(null)
 
   return (
     <div className="min-h-screen bg-white text-black">
-      <Navbar currentPage="design" onNavigate={onNavigate} />
+      <Navbar currentPage="design" onNavigate={onNavigate} onOpenCommand={onOpenCommand} />
       <div className="pt-20">
         <div className="max-w-7xl mx-auto px-6 py-12">
           {/* Bold Title */}

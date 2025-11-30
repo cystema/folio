@@ -53,12 +53,13 @@ const tools: Tool[] = [
 
 interface ToolsStackSectionProps {
   onNavigate?: (page: "home" | "projects" | "design" | "tools") => void
+  onOpenCommand?: () => void
 }
 
-export default function ToolsStackSection({ onNavigate }: ToolsStackSectionProps) {
+export default function ToolsStackSection({ onNavigate, onOpenCommand }: ToolsStackSectionProps) {
   return (
     <div className="min-h-screen bg-white text-black">
-      <Navbar currentPage="tools" onNavigate={onNavigate || (() => {})} />
+      <Navbar currentPage="tools" onNavigate={onNavigate || (() => {})} onOpenCommand={onOpenCommand} />
       <div className="pt-20">
         <div className="max-w-7xl mx-auto px-6 py-12">
           {/* Bold Title */}

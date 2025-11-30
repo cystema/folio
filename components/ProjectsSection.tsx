@@ -151,9 +151,10 @@ const ProjectTile = ({ project, color, Icon }: { project: Project; color: string
 
 interface ProjectsSectionProps {
   onNavigate?: (page: "home" | "projects" | "design" | "tools") => void
+  onOpenCommand?: () => void
 }
 
-const ProjectsSection = ({ onNavigate }: ProjectsSectionProps) => {
+const ProjectsSection = ({ onNavigate, onOpenCommand }: ProjectsSectionProps) => {
   const gridRef = useRef<HTMLDivElement>(null)
 
   // Combine all projects into one array
@@ -165,7 +166,7 @@ const ProjectsSection = ({ onNavigate }: ProjectsSectionProps) => {
 
   return (
     <div className="min-h-screen bg-white text-black">
-      <Navbar currentPage="projects" onNavigate={onNavigate} />
+      <Navbar currentPage="projects" onNavigate={onNavigate} onOpenCommand={onOpenCommand} />
       <div className="pt-20">
         <div className="max-w-7xl mx-auto px-6 py-12">
           {/* Bold Title */}

@@ -13,11 +13,12 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
-import { Github, Linkedin, Mail } from "lucide-react"
+import { Github, Linkedin, Mail, Command } from "lucide-react"
 
 interface NavbarProps {
   currentPage: "home" | "projects" | "design" | "tools"
   onNavigate: (page: "home" | "projects" | "design" | "tools") => void
+  onOpenCommand?: () => void
 }
 
 // Navigation links array
@@ -28,7 +29,7 @@ const navigationLinks = [
   { id: "tools" as const, label: "Tools" },
 ]
 
-export default function Navbar({ currentPage, onNavigate }: NavbarProps) {
+export default function Navbar({ currentPage, onNavigate, onOpenCommand }: NavbarProps) {
   const isLightMode = currentPage === "home"
   
   return (
@@ -197,6 +198,22 @@ export default function Navbar({ currentPage, onNavigate }: NavbarProps) {
               <Mail className="h-4 w-4" />
               <span className="text-sm font-medium">Email</span>
             </a>
+          </Button>
+          <Button
+            variant="default"
+            onClick={onOpenCommand}
+            className="h-9 px-4 bg-white text-black hover:bg-gray-100 border border-gray-200"
+          >
+            <Command className="h-4 w-4 mr-2" />
+            <span className="text-sm font-medium">Command</span>
+            <kbd className={cn(
+              "ml-2 pointer-events-none inline-flex h-5 items-center gap-1 rounded border px-1.5 font-mono text-[10px] font-medium opacity-100 select-none",
+              isLightMode
+                ? "bg-gray-100 text-gray-600 border-gray-300"
+                : "bg-white/10 text-white/70 border-white/20"
+            )}>
+              <span className="text-xs">⌘</span>K
+            </kbd>
           </Button>
         </div>
       </div>
