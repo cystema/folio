@@ -65,15 +65,18 @@ export default function Navbar({ currentPage, onNavigate }: NavbarProps) {
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    className="-translate-y-[7px] origin-center transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-x-0 group-aria-expanded:translate-y-0 group-aria-expanded:rotate-[315deg]"
+                    className="-translate-y-[7px] origin-center transition-all duration-300 group-aria-expanded:translate-x-0 group-aria-expanded:translate-y-0 group-aria-expanded:rotate-[315deg]"
+                    style={{ transitionTimingFunction: 'cubic-bezier(.5,.85,.25,1.1)' }}
                     d="M4 12L20 12"
                   />
                   <path
-                    className="origin-center transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.8)] group-aria-expanded:rotate-45"
+                    className="origin-center transition-all duration-300 group-aria-expanded:rotate-45"
+                    style={{ transitionTimingFunction: 'cubic-bezier(.5,.85,.25,1.8)' }}
                     d="M4 12H20"
                   />
                   <path
-                    className="origin-center translate-y-[7px] transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-y-0 group-aria-expanded:rotate-[135deg]"
+                    className="origin-center translate-y-[7px] transition-all duration-300 group-aria-expanded:translate-y-0 group-aria-expanded:rotate-[135deg]"
+                    style={{ transitionTimingFunction: 'cubic-bezier(.5,.85,.25,1.1)' }}
                     d="M4 12H20"
                   />
                 </svg>

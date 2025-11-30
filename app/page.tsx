@@ -50,12 +50,14 @@ export default function ResumePage() {
           <div className="grid md:grid-cols-2 gap-12 md:gap-16">
             {/* Left Column - FaceTracker & Title */}
             <div>
-              <div className="w-[128px] h-[128px] mb-6">
-                <FaceTracker basePath="/faces/" />
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-[128px] h-[128px] flex-shrink-0">
+                  <FaceTracker basePath="/faces/" />
+                </div>
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
+                  Founding Product Engineer
+                </h1>
               </div>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight">
-                Founding Product Engineer
-              </h1>
               <p className="text-lg text-gray-600">
                 {currentTime} MST
               </p>
