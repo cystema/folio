@@ -12,7 +12,8 @@ interface MetroTileProps {
 }
 
 export function MetroTile({ color, area, children, className = "", onClick, href }: MetroTileProps) {
-  const baseClasses = "flex flex-col justify-end p-3 transition-opacity hover:opacity-85 active:opacity-70"
+  const interactiveClasses = "flex flex-col justify-end p-3 transition-opacity hover:opacity-85 active:opacity-70"
+  const staticClasses = "flex flex-col justify-end p-3"
   
   if (href) {
     return (
@@ -20,7 +21,7 @@ export function MetroTile({ color, area, children, className = "", onClick, href
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className={`${baseClasses} ${className}`}
+        className={`${interactiveClasses} ${className}`}
         style={{ backgroundColor: color, gridArea: area }}
       >
         {children}
@@ -32,7 +33,7 @@ export function MetroTile({ color, area, children, className = "", onClick, href
     return (
       <button
         onClick={onClick}
-        className={`${baseClasses} ${className} w-full text-left`}
+        className={`${interactiveClasses} ${className} w-full text-left`}
         style={{ backgroundColor: color, gridArea: area }}
       >
         {children}
@@ -42,7 +43,7 @@ export function MetroTile({ color, area, children, className = "", onClick, href
   
   return (
     <div
-      className={`${baseClasses} ${className}`}
+      className={`${staticClasses} ${className}`}
       style={{ backgroundColor: color, gridArea: area }}
     >
       {children}
