@@ -30,7 +30,7 @@ const navigationLinks = [
 ]
 
 export default function Navbar({ currentPage, onNavigate, onOpenCommand }: NavbarProps) {
-  const isLightMode = currentPage === "home"
+  const isLightMode = true
   
   return (
     <header className={cn(
