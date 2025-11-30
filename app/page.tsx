@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import Navbar from "../components/Navbar"
+import FaceTracker from "../components/FaceTracker"
 import ProjectsSection from "../components/ProjectsSection"
 import DesignSection from "../components/DesignSection"
 import ToolsStackSection from "../components/ToolsStackSection"
@@ -47,9 +48,12 @@ export default function ResumePage() {
         {/* Top Section - Two Column Layout */}
         <section className="max-w-7xl mx-auto px-6 md:px-8 py-12 md:py-16">
           <div className="grid md:grid-cols-2 gap-12 md:gap-16">
-            {/* Left Column - Title & Time */}
+            {/* Left Column - FaceTracker & Title */}
             <div>
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4 leading-tight">
+              <div className="w-[128px] h-[128px] mb-6">
+                <FaceTracker basePath="/faces/" />
+              </div>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight">
                 Founding Product Engineer
               </h1>
               <p className="text-lg text-gray-600">
