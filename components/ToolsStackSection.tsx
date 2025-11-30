@@ -4,15 +4,9 @@ import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import Navbar from "./Navbar"
 import { 
-  Code,
-  Database,
-  Cloud,
-  Terminal,
   FileCode,
-  Zap,
   Globe,
-  BrainCircuit,
-  AudioWaveform
+  BrainCircuit
 } from "lucide-react"
 
 interface Tool {
@@ -32,7 +26,7 @@ const tools: Tool[] = [
   { name: "React", category: "JAVASCRIPT LIBRARY", logo: "/logos/react.svg" },
   { name: "TypeScript", category: "PROGRAMMING LANGUAGE", logo: "/logos/js.svg", icon: FileCode },
   { name: "shadcn/ui", category: "UI LIBRARY", logo: "/logos/shadcn.svg" },
-  { name: "Tailwind CSS", category: "CSS FRAMEWORK", icon: Zap },
+  { name: "Tailwind CSS", category: "CSS FRAMEWORK", logo: "/logos/tailwind.svg" },
   { name: "Next.js", category: "FULL STACK FRAMEWORK", icon: Globe },
   
   // AI
@@ -54,8 +48,7 @@ const tools: Tool[] = [
   { name: "Docker", category: "CONTAINER PLATFORM", logo: "/logos/docker.svg" },
   { name: "n8n", category: "AUTOMATION PLATFORM", logo: "/logos/n8n.svg" },
   { name: "Insomnia", category: "API TOOL", logo: "/logos/insomnia.svg" },
-  { name: "GitHub", category: "VERSION CONTROL", icon: Terminal },
-  { name: "Vercel", category: "HOSTING PLATFORM", icon: Cloud },
+  { name: "Git", category: "VERSION CONTROL", logo: "/logos/git.svg" },
 ]
 
 interface ToolsStackSectionProps {
