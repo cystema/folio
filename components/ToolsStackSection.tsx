@@ -20,34 +20,33 @@ interface Tool {
   name: string
   category: string
   icon: React.ComponentType<{ className?: string }>
-  proficiency?: number
 }
 
 const tools: Tool[] = [
   // Backend
-  { name: "Python", category: "PROGRAMMING LANGUAGE", icon: Code, proficiency: 90 },
-  { name: "FastAPI", category: "BACKEND FRAMEWORK", icon: FolderCode, proficiency: 85 },
-  { name: "MongoDB", category: "DATABASE", icon: Database, proficiency: 80 },
+  { name: "Python", category: "PROGRAMMING LANGUAGE", icon: Code },
+  { name: "FastAPI", category: "BACKEND FRAMEWORK", icon: FolderCode },
+  { name: "MongoDB", category: "DATABASE", icon: Database },
   
   // Frontend
-  { name: "React", category: "JAVASCRIPT LIBRARY", icon: LayoutTemplate, proficiency: 95 },
-  { name: "TypeScript", category: "PROGRAMMING LANGUAGE", icon: FileCode, proficiency: 85 },
-  { name: "Tailwind CSS", category: "CSS FRAMEWORK", icon: Zap, proficiency: 90 },
-  { name: "Next.js", category: "FULL STACK FRAMEWORK", icon: Globe, proficiency: 90 },
+  { name: "React", category: "JAVASCRIPT LIBRARY", icon: LayoutTemplate },
+  { name: "TypeScript", category: "PROGRAMMING LANGUAGE", icon: FileCode },
+  { name: "Tailwind CSS", category: "CSS FRAMEWORK", icon: Zap },
+  { name: "Next.js", category: "FULL STACK FRAMEWORK", icon: Globe },
   
   // AI
-  { name: "LangChain", category: "AI FRAMEWORK", icon: BrainCircuit, proficiency: 85 },
-  { name: "OpenAI", category: "AI PLATFORM", icon: BrainCircuit, proficiency: 90 },
-  { name: "Claude", category: "AI PLATFORM", icon: BrainCircuit, proficiency: 85 },
+  { name: "LangChain", category: "AI FRAMEWORK", icon: BrainCircuit },
+  { name: "OpenAI", category: "AI PLATFORM", icon: BrainCircuit },
+  { name: "Claude", category: "AI PLATFORM", icon: BrainCircuit },
   
   // Voice
-  { name: "Vapi", category: "VOICE AI", icon: AudioWaveform, proficiency: 80 },
-  { name: "ElevenLabs", category: "VOICE AI", icon: AudioWaveform, proficiency: 75 },
-  { name: "Deepgram", category: "VOICE AI", icon: AudioWaveform, proficiency: 75 },
+  { name: "Vapi", category: "VOICE AI", icon: AudioWaveform },
+  { name: "ElevenLabs", category: "VOICE AI", icon: AudioWaveform },
+  { name: "Deepgram", category: "VOICE AI", icon: AudioWaveform },
   
   // DevOps/Tools
-  { name: "GitHub", category: "VERSION CONTROL", icon: Terminal, proficiency: 95 },
-  { name: "Vercel", category: "HOSTING PLATFORM", icon: Cloud, proficiency: 80 },
+  { name: "GitHub", category: "VERSION CONTROL", icon: Terminal },
+  { name: "Vercel", category: "HOSTING PLATFORM", icon: Cloud },
 ]
 
 interface ToolsStackSectionProps {
@@ -75,25 +74,18 @@ export default function ToolsStackSection({ onNavigate }: ToolsStackSectionProps
                   className="bg-white border border-gray-200 hover:border-gray-300 transition-colors rounded-lg"
                 >
                   <CardContent className="p-6">
-                    <div className="flex items-center justify-between gap-4">
-                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
-                          <Icon className="w-6 h-6 text-gray-700" />
-                        </div>
-                        <div>
-                          <h3 className="text-lg font-semibold text-black mb-1">
-                            {tool.name}
-                          </h3>
-                          <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">
-                            {tool.category}
-                          </p>
-                        </div>
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
+                        <Icon className="w-6 h-6 text-gray-700" />
                       </div>
-                      {tool.proficiency && (
-                        <div className="text-lg font-semibold text-black">
-                          {tool.proficiency}%
-                        </div>
-                      )}
+                      <div>
+                        <h3 className="text-lg font-semibold text-black mb-1">
+                          {tool.name}
+                        </h3>
+                        <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">
+                          {tool.category}
+                        </p>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
