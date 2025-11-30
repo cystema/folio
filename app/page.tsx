@@ -54,8 +54,8 @@ export default function ResumePage() {
                 <div className="w-[128px] h-[128px] flex-shrink-0">
                   <FaceTracker basePath="/faces/" />
                 </div>
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
-                  Founding Product Engineer
+                <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-tight">
+                  Founding Product Engineer <span className="text-gray-500 font-normal">at</span> Sameday AI
                 </h1>
               </div>
               <p className="text-lg text-gray-600">

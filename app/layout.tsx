@@ -6,7 +6,7 @@ import "./globals.css"
 
 export const metadata: Metadata = {
   title: {
-    default: "Shubham Mazumder - Founding Product Engineer",
+    default: "Shubham Mazumder - Founding Product Engineer at Sameday AI",
     template: "%s | Shubham Mazumder"
   },
   description: "Founding Product Engineer building AI CSRs and agentic workflows. Specialized in conversational AI, full-stack development, and research.",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: '/',
-    title: 'Shubham Mazumder - Founding Product Engineer',
+    title: 'Shubham Mazumder - Founding Product Engineer at Sameday AI',
     description: 'Founding Product Engineer building AI CSRs and agentic workflows. Specialized in conversational AI, full-stack development, and research.',
     siteName: 'Shubham Mazumder Portfolio',
     images: [
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Shubham Mazumder - Founding Product Engineer',
+    title: 'Shubham Mazumder - Founding Product Engineer at Sameday AI',
     description: 'Founding Product Engineer building AI CSRs and agentic workflows. Specialized in conversational AI, full-stack development, and research.',
     images: ['/icon.svg'],
   },
