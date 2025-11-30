@@ -23,8 +23,7 @@
       "voice      yourloc"
       "yourip     yourdev"
       "networkspeed cpucores"
-      "devicememory myloc"
-      "ascii      ascii";
+      "devicememory myloc";
     justify-content: center;
     max-width: 300px;
   }
@@ -40,8 +39,7 @@
       "work       github     profile    projects"
       "backend    frontend   ai         design"
       "voice      yourloc    yourip     yourdev"
-      "networkspeed cpucores devicememory myloc"
-      "ascii      ascii      ascii      ascii";
+      "networkspeed cpucores devicememory myloc";
     justify-content: center;
   }
 }
@@ -56,8 +54,7 @@
       "work       github     profile    projects"
       "backend    frontend   ai         design"
       "voice      yourloc    yourip     yourdev"
-      "networkspeed cpucores devicememory myloc"
-      "ascii      ascii      ascii      ascii";
+      "networkspeed cpucores devicememory myloc";
     justify-content: center;
   }
 }

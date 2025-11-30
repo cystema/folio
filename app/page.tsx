@@ -1,13 +1,10 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import dynamic from "next/dynamic"
 import { MoveUpRight, Blocks, FolderCode, LayoutTemplate, AudioWaveform, LocateFixed, Globe, Monitor, ArrowRightFromLine, Wifi, Cpu, HardDrive, BrainCircuit } from "lucide-react"
 import { MetroTile, METRO } from "../components/MetroTile"
 import { useBrowserInfo } from "../components/useBrowserInfo"
 import "../components/MetroGrid.css"
-
-const ASCIIText = dynamic(() => import("../components/ASCIIText"), { ssr: false })
 import ProjectsSection from "../components/ProjectsSection"
 import DesignSection from "../components/DesignSection"
 import FaceTracker from "../components/FaceTracker"
@@ -218,11 +215,6 @@ export default function ResumePage() {
               <span className="text-xs font-semibold">{browserData?.deviceMemory ? `${browserData.deviceMemory} GB` : 'N/A'}</span>
             )}
           </MetroTile>
-
-          {/* ASCII */}
-          <div style={{ gridArea: 'ascii', backgroundColor: '#92140C', padding: 0 }} className="relative">
-            <ASCIIText text="Hello World!" enableWaves={true} asciiFontSize={6} textFontSize={80} />
-          </div>
 
           {/* Shubham's Location */}
           <MetroTile color="#49A078" area="myloc" className="relative">
