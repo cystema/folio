@@ -1,50 +1,59 @@
 "use client"
 
+import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import Navbar from "./Navbar"
 import { 
-  FolderCode, 
-  LayoutTemplate, 
-  BrainCircuit, 
-  AudioWaveform,
   Code,
   Database,
   Cloud,
   Terminal,
   FileCode,
   Zap,
-  Globe
+  Globe,
+  BrainCircuit,
+  AudioWaveform
 } from "lucide-react"
 
 interface Tool {
   name: string
   category: string
-  icon: React.ComponentType<{ className?: string }>
+  logo?: string
+  icon?: React.ComponentType<{ className?: string }>
 }
 
 const tools: Tool[] = [
   // Backend
-  { name: "Python", category: "PROGRAMMING LANGUAGE", icon: Code },
-  { name: "FastAPI", category: "BACKEND FRAMEWORK", icon: FolderCode },
-  { name: "MongoDB", category: "DATABASE", icon: Database },
+  { name: "Python", category: "PROGRAMMING LANGUAGE", logo: "/logos/python.svg" },
+  { name: "FastAPI", category: "BACKEND FRAMEWORK", logo: "/logos/FastAPI.svg" },
+  { name: "MongoDB", category: "DATABASE", logo: "/logos/mongodb.svg" },
   
   // Frontend
-  { name: "React", category: "JAVASCRIPT LIBRARY", icon: LayoutTemplate },
-  { name: "TypeScript", category: "PROGRAMMING LANGUAGE", icon: FileCode },
+  { name: "React", category: "JAVASCRIPT LIBRARY", logo: "/logos/react.svg" },
+  { name: "TypeScript", category: "PROGRAMMING LANGUAGE", logo: "/logos/js.svg", icon: FileCode },
+  { name: "shadcn/ui", category: "UI LIBRARY", logo: "/logos/shadcn.svg" },
   { name: "Tailwind CSS", category: "CSS FRAMEWORK", icon: Zap },
   { name: "Next.js", category: "FULL STACK FRAMEWORK", icon: Globe },
   
   // AI
-  { name: "LangChain", category: "AI FRAMEWORK", icon: BrainCircuit },
+  { name: "LangChain", category: "AI FRAMEWORK", logo: "/logos/langchain.svg" },
+  { name: "Pydantic AI", category: "AI FRAMEWORK", logo: "/logos/pydantic-ai.svg" },
+  { name: "Hugging Face", category: "AI PLATFORM", logo: "/logos/huggingface.svg" },
   { name: "OpenAI", category: "AI PLATFORM", icon: BrainCircuit },
-  { name: "Claude", category: "AI PLATFORM", icon: BrainCircuit },
+  { name: "Claude", category: "AI PLATFORM", logo: "/logos/claude.svg" },
+  { name: "Exa", category: "AI SEARCH", logo: "/logos/exa.svg" },
   
   // Voice
-  { name: "Vapi", category: "VOICE AI", icon: AudioWaveform },
-  { name: "ElevenLabs", category: "VOICE AI", icon: AudioWaveform },
-  { name: "Deepgram", category: "VOICE AI", icon: AudioWaveform },
+  { name: "Vapi", category: "VOICE AI", logo: "/logos/vapi.svg" },
+  { name: "ElevenLabs", category: "VOICE AI", logo: "/logos/11labs.svg" },
+  { name: "Deepgram", category: "VOICE AI", logo: "/logos/deepgram.svg" },
+  { name: "Retell", category: "VOICE AI", logo: "/logos/retell.svg" },
   
   // DevOps/Tools
+  { name: "AWS", category: "CLOUD PLATFORM", logo: "/logos/aws.svg" },
+  { name: "Docker", category: "CONTAINER PLATFORM", logo: "/logos/docker.svg" },
+  { name: "n8n", category: "AUTOMATION PLATFORM", logo: "/logos/n8n.svg" },
+  { name: "Insomnia", category: "API TOOL", logo: "/logos/insomnia.svg" },
   { name: "GitHub", category: "VERSION CONTROL", icon: Terminal },
   { name: "Vercel", category: "HOSTING PLATFORM", icon: Cloud },
 ]
@@ -75,8 +84,18 @@ export default function ToolsStackSection({ onNavigate }: ToolsStackSectionProps
                 >
                   <CardContent className="p-6">
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
-                        <Icon className="w-6 h-6 text-gray-700" />
+                      <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                        {tool.logo ? (
+                          <Image
+                            src={tool.logo}
+                            alt={tool.name}
+                            width={24}
+                            height={24}
+                            className="object-contain"
+                          />
+                        ) : Icon ? (
+                          <Icon className="w-6 h-6 text-gray-700" />
+                        ) : null}
                       </div>
                       <div>
                         <h3 className="text-lg font-semibold text-black mb-1">
