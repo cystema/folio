@@ -13,7 +13,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
-import { Github, Linkedin, Mail, Command } from "lucide-react"
+import { Github, Linkedin, Mail } from "lucide-react"
 
 interface NavbarProps {
   currentPage: "home" | "projects" | "design" | "tools"
