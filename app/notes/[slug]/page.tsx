@@ -10,6 +10,8 @@ type NotePageProps = {
   }
 }
 
+export const dynamicParams = false
+
 const longDateFormatter = new Intl.DateTimeFormat("en", {
   month: "long",
   day: "numeric",
@@ -35,9 +37,7 @@ export async function generateMetadata({
   const note = await getNoteBySlug(params.slug)
 
   if (!note) {
-    return {
-      title: "Note not found",
-    }
+    notFound()
   }
 
   return {
