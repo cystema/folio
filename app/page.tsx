@@ -33,8 +33,6 @@ export default async function HomePage() {
 
           <div className="archive-identity">
             <p className="archive-name">Shubham Mazumder</p>
-            <p className="archive-role">Product engineering</p>
-            <p className="archive-role">Production AI systems</p>
           </div>
 
           <nav className="archive-links" aria-label="Contact links">
@@ -56,7 +54,6 @@ export default async function HomePage() {
         </aside>
 
         <section className="archive-main" aria-labelledby="archive-title">
-          <p className="archive-label">Personal archive</p>
           <h1 id="archive-title">
             Founding engineer focused on the operational layer of AI products.
           </h1>
