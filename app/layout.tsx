@@ -20,20 +20,21 @@ const ibmPlexMono = IBM_Plex_Mono({
 
 const siteDescription =
   "Founding engineer focused on the operational layer of AI products."
+const shouldRenderAnalytics = process.env.VERCEL_ENV === "production"
 
 export const metadata: Metadata = {
   title: {
-    default: "Shubham Mazumder - Personal Archive",
+    default: "Shubham Mazumder",
     template: "%s | Shubham Mazumder",
   },
   description: siteDescription,
   keywords: [
     "Shubham Mazumder",
     "Founding Engineer",
-    "Production AI Systems",
+    "Operational AI Products",
     "Agentic Systems",
     "AI Infrastructure",
-    "Product Engineering",
+    "AI Reliability",
   ],
   authors: [{ name: "Shubham Mazumder" }],
   creator: "Shubham Mazumder",
@@ -59,9 +60,15 @@ export const metadata: Metadata = {
     siteName: "Shubham Mazumder",
     images: [
       {
-        url: "/icon.svg",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
+        alt: "Shubham Mazumder - Founding engineer focused on the operational layer of AI products.",
+      },
+      {
+        url: "/icon.svg",
+        width: 180,
+        height: 180,
         alt: "Shubham Mazumder",
       },
     ],
@@ -70,7 +77,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Shubham Mazumder",
     description: siteDescription,
-    images: ["/icon.svg"],
+    images: ["/opengraph-image"],
   },
   robots: {
     index: true,
@@ -97,7 +104,7 @@ export default function RootLayout({
     >
       <body>
         {children}
-        <Analytics />
+        {shouldRenderAnalytics ? <Analytics /> : null}
       </body>
     </html>
   )

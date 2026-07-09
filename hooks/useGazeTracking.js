@@ -9,6 +9,54 @@ const SIZE = 256;
 // Cache for preloaded images
 const imageCache = new Map();
 
+const centerImage = '/faces/gaze_px0p0_py0p0_256.webp';
+
+function canUseInteractiveGaze() {
+  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+    return false;
+  }
+
+  const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  return hasFinePointer && !prefersReducedMotion;
+}
+
+function runWhenIdle(callback) {
+  if (typeof window === 'undefined') {
+    return undefined;
+  }
+
+  if ('requestIdleCallback' in window) {
+    return window.requestIdleCallback(callback, { timeout: 1200 });
+  }
+
+  return window.setTimeout(callback, 160);
+}
+
+function cancelIdleWork(handle) {
+  if (handle === undefined || typeof window === 'undefined') {
+    return;
+  }
+
+  if ('cancelIdleCallback' in window) {
+    window.cancelIdleCallback(handle);
+    return;
+  }
+
+  window.clearTimeout(handle);
+}
+
+function preloadImage(imagePath) {
+  if (imageCache.has(imagePath)) {
+    return;
+  }
+
+  const img = new Image();
+  imageCache.set(imagePath, img);
+  img.src = imagePath;
+}
+
 /**
  * Converts normalized coordinates [-1, 1] to grid coordinates
  */
@@ -41,49 +89,25 @@ function gridToFilename(px, py) {
 export function useGazeTracking(containerRef, basePath = '/faces/') {
   // Start with center gaze as default
   const [currentImage, setCurrentImage] = useState(`${basePath}gaze_px0p0_py0p0_${SIZE}.webp`);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const preloadedRef = useRef(false);
+  const isLoading = false;
+  const error = null;
+  const currentImageRef = useRef(currentImage);
+  const frameRef = useRef(undefined);
+  const idleWorkRef = useRef(undefined);
 
-  // Preload all gaze images on mount
-  useEffect(() => {
-    if (preloadedRef.current) return;
-    preloadedRef.current = true;
-
-    const totalImages = Math.pow((P_MAX - P_MIN) / STEP + 1, 2);
-    let loadedCount = 0;
-
-    for (let px = P_MIN; px <= P_MAX; px += STEP) {
-      for (let py = P_MIN; py <= P_MAX; py += STEP) {
-        const filename = gridToFilename(px, py);
-        const imagePath = `${basePath}${filename}`;
-        
-        // Skip if already cached
-        if (imageCache.has(imagePath)) {
-          loadedCount++;
-          if (loadedCount === totalImages) {
-            setIsLoading(false);
+  const preloadNearbyImages = useCallback((px, py) => {
+    cancelIdleWork(idleWorkRef.current);
+    idleWorkRef.current = runWhenIdle(() => {
+      for (let x = px - STEP; x <= px + STEP; x += STEP) {
+        for (let y = py - STEP; y <= py + STEP; y += STEP) {
+          if (x < P_MIN || x > P_MAX || y < P_MIN || y > P_MAX) {
+            continue;
           }
-          continue;
+
+          preloadImage(`${basePath}${gridToFilename(x, y)}`);
         }
-
-        const img = new Image();
-        img.onload = () => {
-          imageCache.set(imagePath, img);
-          loadedCount++;
-          if (loadedCount === totalImages) {
-            setIsLoading(false);
-          }
-        };
-        img.onerror = () => {
-          loadedCount++;
-          if (loadedCount === totalImages) {
-            setIsLoading(false);
-          }
-        };
-        img.src = imagePath;
       }
-    }
+    });
   }, [basePath]);
 
   const updateGaze = useCallback((clientX, clientY) => {
@@ -117,28 +141,42 @@ export function useGazeTracking(containerRef, basePath = '/faces/') {
     // Generate filename
     const filename = gridToFilename(px, py);
     const imagePath = `${basePath}${filename}`;
-    
-    setCurrentImage(imagePath);
-  }, [basePath]);
 
-  const handleMouseMove = useCallback((e) => {
-    updateGaze(e.clientX, e.clientY);
-  }, [updateGaze]);
-
-  const handleTouchMove = useCallback((e) => {
-    if (e.touches.length > 0) {
-      const touch = e.touches[0];
-      updateGaze(touch.clientX, touch.clientY);
+    if (currentImageRef.current !== imagePath) {
+      currentImageRef.current = imagePath;
+      setCurrentImage(imagePath);
     }
+
+    preloadNearbyImages(px, py);
+  }, [basePath, containerRef, preloadNearbyImages]);
+
+  const handlePointerMove = useCallback((event) => {
+    if (frameRef.current !== undefined) {
+      window.cancelAnimationFrame(frameRef.current);
+    }
+
+    frameRef.current = window.requestAnimationFrame(() => {
+      frameRef.current = undefined;
+      updateGaze(event.clientX, event.clientY);
+    });
   }, [updateGaze]);
 
   useEffect(() => {
+    const centerPath = basePath === '/faces/' ? centerImage : `${basePath}gaze_px0p0_py0p0_${SIZE}.webp`;
+    preloadImage(centerPath);
+    preloadNearbyImages(0, 0);
+
+    return () => {
+      cancelIdleWork(idleWorkRef.current);
+    };
+  }, [basePath, preloadNearbyImages]);
+
+  useEffect(() => {
     const container = containerRef.current;
-    if (!container) return;
+    if (!container || !canUseInteractiveGaze()) return;
 
     // Listen globally on window so face follows cursor everywhere on the page
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    window.addEventListener('pointermove', handlePointerMove, { passive: true });
 
     // Set initial center gaze
     const rect = container.getBoundingClientRect();
@@ -147,13 +185,15 @@ export function useGazeTracking(containerRef, basePath = '/faces/') {
     updateGaze(centerX, centerY);
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('pointermove', handlePointerMove);
+
+      if (frameRef.current !== undefined) {
+        window.cancelAnimationFrame(frameRef.current);
+      }
     };
-  }, [handleMouseMove, handleTouchMove, updateGaze]);
+  }, [containerRef, handlePointerMove, updateGaze]);
 
   return { currentImage, isLoading, error };
 }
 
 export default useGazeTracking;
-

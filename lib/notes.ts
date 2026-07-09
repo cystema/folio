@@ -1,6 +1,5 @@
 import fs from "node:fs/promises"
 import path from "node:path"
-import matter from "gray-matter"
 
 const notesDirectory = path.join(process.cwd(), "content", "notes")
 const noteFileExtension = ".md"
@@ -29,6 +28,12 @@ type NoteFrontmatter = {
 
 type NoteQuery = {
   includeDrafts?: boolean
+}
+
+type ParsedNoteFile = {
+  data: NoteFrontmatter
+  content: string
+  matter?: string
 }
 
 function isMissingDirectoryError(error: unknown) {
@@ -84,6 +89,125 @@ function unquoteYamlString(value: string) {
   }
 
   return value
+}
+
+function stripYamlComment(value: string) {
+  let quote: string | undefined
+
+  for (let index = 0; index < value.length; index += 1) {
+    const char = value[index]
+
+    if (quote !== undefined) {
+      if (char === quote) {
+        quote = undefined
+      }
+
+      continue
+    }
+
+    if (char === '"' || char === "'") {
+      quote = char
+      continue
+    }
+
+    if (char === "#" && (index === 0 || /\s/.test(value[index - 1]))) {
+      return value.slice(0, index).trim()
+    }
+  }
+
+  return value.trim()
+}
+
+function parseYamlScalar(value: string): unknown {
+  const normalizedValue = stripYamlComment(value)
+
+  if (normalizedValue === "true") {
+    return true
+  }
+
+  if (normalizedValue === "false") {
+    return false
+  }
+
+  if (normalizedValue.startsWith("[") && normalizedValue.endsWith("]")) {
+    const listValue = normalizedValue.slice(1, -1).trim()
+
+    if (listValue.length === 0) {
+      return []
+    }
+
+    return listValue
+      .split(",")
+      .map((item) => unquoteYamlString(stripYamlComment(item).trim()))
+      .filter(Boolean)
+  }
+
+  return unquoteYamlString(normalizedValue)
+}
+
+function parseNoteFile(raw: string): ParsedNoteFile {
+  const normalizedRaw = raw.replace(/^\uFEFF/, "")
+  const lines = normalizedRaw.split(/\r?\n/)
+
+  if (lines[0]?.trim() !== "---") {
+    return {
+      data: {},
+      content: raw,
+    }
+  }
+
+  const closingIndex = lines.findIndex(
+    (line, index) => index > 0 && line.trim() === "---",
+  )
+
+  if (closingIndex === -1) {
+    throw new Error("Unclosed note frontmatter block")
+  }
+
+  const matterLines = lines.slice(1, closingIndex)
+  const data: Record<string, unknown> = {}
+
+  for (let index = 0; index < matterLines.length; index += 1) {
+    const line = matterLines[index]
+    const trimmedLine = line.trim()
+
+    if (trimmedLine.length === 0 || trimmedLine.startsWith("#")) {
+      continue
+    }
+
+    const match = line.match(/^([A-Za-z][A-Za-z0-9_-]*):(?:\s*(.*))?$/)
+
+    if (!match) {
+      throw new Error(`Invalid note frontmatter line: ${line}`)
+    }
+
+    const [, key, rawValue = ""] = match
+
+    if (rawValue.trim().length > 0) {
+      data[key] = parseYamlScalar(rawValue)
+      continue
+    }
+
+    const listItems: unknown[] = []
+
+    while (
+      index + 1 < matterLines.length &&
+      /^\s*-\s+/.test(matterLines[index + 1])
+    ) {
+      index += 1
+      listItems.push(
+        parseYamlScalar(matterLines[index].replace(/^\s*-\s+/, "")),
+      )
+    }
+
+    data[key] = listItems.length > 0 ? listItems : ""
+  }
+
+  return {
+    data: data as NoteFrontmatter,
+    content: lines.slice(closingIndex + 1).join("\n"),
+    matter: matterLines.join("\n"),
+  }
 }
 
 function getRawDateValue(rawMatter: string | undefined) {
@@ -247,7 +371,7 @@ export async function getAllNotes(query: NoteQuery = {}) {
   const notes = await Promise.all(
     files.map(async (fileName) => {
       const raw = await fs.readFile(path.join(notesDirectory, fileName), "utf8")
-      const parsed = matter(raw)
+      const parsed = parseNoteFile(raw)
       const data = parsed.data as NoteFrontmatter
       const published = asPublished(data.published, fileName)
 
