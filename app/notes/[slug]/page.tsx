@@ -66,13 +66,17 @@ export default async function NotePage({ params }: NotePageProps) {
 
   return (
     <main className="archive-page archive-page--narrow">
-      <Link href="/notes" className="archive-back-link">
-        Back to notes
-      </Link>
+      <div className="archive-topline">
+        <Link href="/notes" className="archive-back-link">
+          Back to notes
+        </Link>
+      </div>
 
-      <article>
-        <header>
-          <time dateTime={note.date}>{formatNoteDate(note.date)}</time>
+      <article className="note-article">
+        <header className="note-article__header">
+          <time dateTime={note.date} className="note-article__date">
+            {formatNoteDate(note.date)}
+          </time>
           <h1>{note.title}</h1>
           <p>{note.summary}</p>
         </header>

@@ -26,12 +26,16 @@ export default async function NotesPage() {
 
   return (
     <main className="archive-page archive-page--narrow">
-      <Link href="/" className="archive-back-link">
-        Back to archive
-      </Link>
+      <div className="archive-topline">
+        <Link href="/" className="archive-back-link">
+          Back to archive
+        </Link>
+      </div>
 
-      <section>
-        <h1 className="notes-page-title">Notes</h1>
+      <section className="notes-index" aria-labelledby="notes-heading">
+        <h1 id="notes-heading" className="notes-page-title">
+          Notes
+        </h1>
 
         {notes.length > 0 ? (
           <ul className="notes-list">
