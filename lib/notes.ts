@@ -3,6 +3,8 @@ import path from "node:path"
 import matter from "gray-matter"
 
 const notesDirectory = path.join(process.cwd(), "content", "notes")
+const noteSlugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
+const dateOnlyPattern = /^(\d{4})-(\d{2})-(\d{2})$/
 
 export type Note = {
   title: string
@@ -45,22 +47,85 @@ function asString(value: unknown, fieldName: string, fileName: string) {
   throw new Error(`Invalid ${fieldName} frontmatter in ${fileName}`)
 }
 
-function asDate(value: unknown, fileName: string) {
-  let parsed: Date
+function invalidDateError(fileName: string) {
+  return new Error(
+    `Invalid date frontmatter in ${fileName}; expected YYYY-MM-DD`,
+  )
+}
+
+function normalizeDateString(value: string, fileName: string) {
+  const match = value.match(dateOnlyPattern)
+
+  if (!match) {
+    throw invalidDateError(fileName)
+  }
+
+  const [, yearValue, monthValue, dayValue] = match
+  const year = Number(yearValue)
+  const month = Number(monthValue)
+  const day = Number(dayValue)
+  const parsed = new Date(Date.UTC(year, month - 1, day))
+  parsed.setUTCFullYear(year)
+
+  if (parsed.toISOString().slice(0, 10) !== value) {
+    throw invalidDateError(fileName)
+  }
+
+  return value
+}
+
+function unquoteYamlString(value: string) {
+  if (
+    (value.startsWith('"') && value.endsWith('"')) ||
+    (value.startsWith("'") && value.endsWith("'"))
+  ) {
+    return value.slice(1, -1)
+  }
+
+  return value
+}
+
+function getRawDateValue(rawMatter: string | undefined) {
+  if (rawMatter === undefined) {
+    return undefined
+  }
+
+  const dateLine = rawMatter
+    .split(/\r?\n/)
+    .find((line) => line.startsWith("date:"))
+
+  if (dateLine === undefined) {
+    return undefined
+  }
+
+  const rawValue = dateLine
+    .slice("date:".length)
+    .trim()
+    .replace(/\s+#.*$/, "")
+
+  return unquoteYamlString(rawValue)
+}
+
+function asDate(value: unknown, fileName: string, rawMatter?: string) {
+  const rawDate = getRawDateValue(rawMatter)
+
+  if (rawDate !== undefined) {
+    return normalizeDateString(rawDate, fileName)
+  }
 
   if (value instanceof Date) {
-    parsed = value
-  } else if (typeof value === "string" && value.trim().length > 0) {
-    parsed = new Date(value.trim())
-  } else {
-    throw new Error(`Invalid date frontmatter in ${fileName}`)
+    if (!Number.isFinite(value.getTime())) {
+      throw invalidDateError(fileName)
+    }
+
+    return value.toISOString().slice(0, 10)
   }
 
-  if (!Number.isFinite(parsed.getTime())) {
-    throw new Error(`Invalid date frontmatter in ${fileName}`)
+  if (typeof value === "string") {
+    return normalizeDateString(value, fileName)
   }
 
-  return parsed.toISOString().slice(0, 10)
+  throw invalidDateError(fileName)
 }
 
 function asPublished(value: unknown, fileName: string) {
@@ -91,10 +156,21 @@ function slugFromFileName(fileName: string) {
   return fileName.replace(/\.mdx$/, "")
 }
 
+function asSlug(value: string, fileName: string) {
+  if (noteSlugPattern.test(value)) {
+    return value
+  }
+
+  throw new Error(
+    `Invalid note slug ${JSON.stringify(value)} in ${fileName}; expected lowercase letters, digits, and hyphens`,
+  )
+}
+
 function getSlug(data: NoteFrontmatter, fileName: string) {
-  return typeof data.slug === "string" && data.slug.trim().length > 0
-    ? data.slug.trim()
-    : slugFromFileName(fileName)
+  return asSlug(
+    typeof data.slug === "string" ? data.slug : slugFromFileName(fileName),
+    fileName,
+  )
 }
 
 function normalizeNote(
@@ -102,13 +178,14 @@ function normalizeNote(
   data: NoteFrontmatter,
   content: string,
   published: boolean,
+  rawMatter?: string,
 ): Note {
   const slug = getSlug(data, fileName)
 
   return {
     title: asString(data.title, "title", fileName),
     slug,
-    date: asDate(data.date, fileName),
+    date: asDate(data.date, fileName, rawMatter),
     summary: asString(data.summary, "summary", fileName),
     published,
     tags: asTags(data.tags, fileName),
@@ -131,7 +208,14 @@ function validateUniqueSlugs(notes: Note[]) {
 
 function sortNotesByDateDescending(notes: Note[]) {
   return notes.sort((left, right) => {
-    return new Date(right.date).getTime() - new Date(left.date).getTime()
+    const dateOrder =
+      new Date(right.date).getTime() - new Date(left.date).getTime()
+
+    if (dateOrder !== 0) {
+      return dateOrder
+    }
+
+    return left.slug < right.slug ? -1 : left.slug > right.slug ? 1 : 0
   })
 }
 
@@ -163,7 +247,13 @@ export async function getAllNotes(query: NoteQuery = {}) {
         return undefined
       }
 
-      return normalizeNote(fileName, data, parsed.content, published)
+      return normalizeNote(
+        fileName,
+        data,
+        parsed.content,
+        published,
+        parsed.matter,
+      )
     }),
   )
 
