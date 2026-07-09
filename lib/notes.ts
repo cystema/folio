@@ -45,8 +45,34 @@ function asString(value: unknown, fieldName: string, fileName: string) {
   throw new Error(`Invalid ${fieldName} frontmatter in ${fileName}`)
 }
 
-function asBoolean(value: unknown) {
-  return typeof value === "boolean" ? value : false
+function asDate(value: unknown, fileName: string) {
+  let parsed: Date
+
+  if (value instanceof Date) {
+    parsed = value
+  } else if (typeof value === "string" && value.trim().length > 0) {
+    parsed = new Date(value.trim())
+  } else {
+    throw new Error(`Invalid date frontmatter in ${fileName}`)
+  }
+
+  if (!Number.isFinite(parsed.getTime())) {
+    throw new Error(`Invalid date frontmatter in ${fileName}`)
+  }
+
+  return parsed.toISOString().slice(0, 10)
+}
+
+function asPublished(value: unknown, fileName: string) {
+  if (value === undefined) {
+    return false
+  }
+
+  if (typeof value === "boolean") {
+    return value
+  }
+
+  throw new Error(`Invalid published frontmatter in ${fileName}`)
 }
 
 function asTags(value: unknown, fileName: string) {
@@ -65,22 +91,41 @@ function slugFromFileName(fileName: string) {
   return fileName.replace(/\.mdx$/, "")
 }
 
-function normalizeNote(fileName: string, raw: string): Note {
-  const parsed = matter(raw)
-  const data = parsed.data as NoteFrontmatter
-  const slug = typeof data.slug === "string" && data.slug.trim().length > 0
+function getSlug(data: NoteFrontmatter, fileName: string) {
+  return typeof data.slug === "string" && data.slug.trim().length > 0
     ? data.slug.trim()
     : slugFromFileName(fileName)
+}
+
+function normalizeNote(
+  fileName: string,
+  data: NoteFrontmatter,
+  content: string,
+  published: boolean,
+): Note {
+  const slug = getSlug(data, fileName)
 
   return {
     title: asString(data.title, "title", fileName),
     slug,
-    date: asString(data.date, "date", fileName),
+    date: asDate(data.date, fileName),
     summary: asString(data.summary, "summary", fileName),
-    published: asBoolean(data.published),
+    published,
     tags: asTags(data.tags, fileName),
-    content: parsed.content.trim(),
+    content: content.trim(),
     href: `/notes/${slug}`,
+  }
+}
+
+function validateUniqueSlugs(notes: Note[]) {
+  const slugs = new Set<string>()
+
+  for (const note of notes) {
+    if (slugs.has(note.slug)) {
+      throw new Error(`Duplicate note slug "${note.slug}"`)
+    }
+
+    slugs.add(note.slug)
   }
 }
 
@@ -92,8 +137,10 @@ function sortNotesByDateDescending(notes: Note[]) {
 
 async function readNoteFiles() {
   try {
-    const entries = await fs.readdir(notesDirectory)
-    return entries.filter((entry) => entry.endsWith(".mdx"))
+    const entries = await fs.readdir(notesDirectory, { withFileTypes: true })
+    return entries
+      .filter((entry) => entry.isFile() && entry.name.endsWith(".mdx"))
+      .map((entry) => entry.name)
   } catch (error) {
     if (isMissingDirectoryError(error)) {
       return []
@@ -108,15 +155,22 @@ export async function getAllNotes(query: NoteQuery = {}) {
   const notes = await Promise.all(
     files.map(async (fileName) => {
       const raw = await fs.readFile(path.join(notesDirectory, fileName), "utf8")
-      return normalizeNote(fileName, raw)
+      const parsed = matter(raw)
+      const data = parsed.data as NoteFrontmatter
+      const published = asPublished(data.published, fileName)
+
+      if (!query.includeDrafts && !published) {
+        return undefined
+      }
+
+      return normalizeNote(fileName, data, parsed.content, published)
     }),
   )
 
-  const filteredNotes = query.includeDrafts
-    ? notes
-    : notes.filter((note) => note.published)
+  const includedNotes = notes.filter((note): note is Note => note !== undefined)
+  validateUniqueSlugs(includedNotes)
 
-  return sortNotesByDateDescending(filteredNotes)
+  return sortNotesByDateDescending(includedNotes)
 }
 
 export async function getPublishedNotes() {
