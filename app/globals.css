@@ -185,6 +185,8 @@ select {
 .archive-links a,
 .archive-back-link,
 .field-notes__header a {
+  display: inline-flex;
+  align-items: center;
   color: var(--ink-muted);
   text-decoration: none;
   transition:
@@ -478,7 +480,14 @@ select {
   .archive-links {
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 10px 16px;
+    gap: 2px 16px;
+  }
+
+  .archive-links a,
+  .archive-back-link,
+  .field-notes__header a {
+    min-width: 44px;
+    min-height: 44px;
   }
 
   .archive-main h1 {
@@ -497,6 +506,15 @@ select {
 
   .archive-topline {
     margin-bottom: 42px;
+  }
+}
+
+@media (pointer: coarse) {
+  .archive-links a,
+  .archive-back-link,
+  .field-notes__header a {
+    min-width: 44px;
+    min-height: 44px;
   }
 }
 

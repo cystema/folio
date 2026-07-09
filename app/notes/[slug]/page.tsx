@@ -5,9 +5,9 @@ import { getNoteBySlug, getPublishedNotes } from "@/lib/notes"
 import { renderMarkdownContent } from "./renderMarkdownContent"
 
 type NotePageProps = {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 export const dynamicParams = false
@@ -34,7 +34,8 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: NotePageProps): Promise<Metadata> {
-  const note = await getNoteBySlug(params.slug)
+  const { slug } = await params
+  const note = await getNoteBySlug(slug)
 
   if (!note) {
     notFound()
@@ -58,7 +59,8 @@ export async function generateMetadata({
 }
 
 export default async function NotePage({ params }: NotePageProps) {
-  const note = await getNoteBySlug(params.slug)
+  const { slug } = await params
+  const note = await getNoteBySlug(slug)
 
   if (!note) {
     notFound()

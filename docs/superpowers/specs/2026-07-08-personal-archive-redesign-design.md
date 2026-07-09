@@ -1,4 +1,4 @@
-# Personal Archive Redesign Design
+# Archive Masthead Redesign Design
 
 ## Context
 
@@ -10,9 +10,9 @@ The saved design context is in `.impeccable.md`.
 
 ## Direction
 
-The site becomes a dark-only personal archive with notes infrastructure.
+The site becomes a dark-only archive masthead with notes infrastructure.
 
-The chosen visual direction is Personal Archive / Charcoal Paper:
+The chosen visual direction is Quiet Archive / Charcoal Paper:
 
 - Warm near-black background.
 - Parchment-toned foreground text.
@@ -66,7 +66,6 @@ Desktop layout:
 - Left rail:
   - Small FaceTracker signature, 64-80px.
   - Name: `Shubham Mazumder`.
-  - Role/domain labels: product engineering, production AI systems.
   - Links: Email, GitHub, LinkedIn, RSS.
 - Main column:
   - Thesis: `Founding engineer focused on the operational layer of AI products.`
@@ -88,7 +87,7 @@ Field Notes:
 
 ## Notes
 
-Notes are local content files under `content/notes/*.mdx`.
+Notes are local Markdown files under `content/notes/*.md`.
 
 Each note should support:
 
@@ -106,7 +105,7 @@ Each note should support:
 
 `/notes/[slug]` behavior:
 
-- Render MDX note content.
+- Render supported Markdown note content.
 - Only published notes should be routable in production.
 - Missing or unpublished notes should render a 404.
 
@@ -140,10 +139,10 @@ Color should communicate hierarchy through contrast and restraint, not through a
 
 Typography:
 
-- Use Fraunces for the masthead thesis and expressive editorial moments.
-- Use Instrument Sans for supporting copy, metadata, links, and interface text.
-- Do not use IBM Plex Mono as the primary type direction. If introduced later, limit it to small metadata accents only after review.
-- Load only the weights used: Fraunces 400 and 600; Instrument Sans 400, 500, and 600.
+- Use Instrument Sans for the masthead thesis, body copy, and primary page text.
+- Use IBM Plex Mono only for compact archive labels and links.
+- Do not use IBM Plex Mono as the primary type direction.
+- Load only the weights used: Instrument Sans 400, 500, and 600; IBM Plex Mono 400, 500, and 600.
 - Use `font-display: swap` via Next font loading.
 - Body text must be at least `1rem`.
 - Thesis: `clamp(1.65rem, 3vw, 2.5rem)`, `line-height: 1.12`, target max width `17ch`, acceptable range `16-18ch`.

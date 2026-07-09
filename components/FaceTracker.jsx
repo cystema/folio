@@ -1,6 +1,7 @@
 "use client"
 
-import React, { useRef } from "react";
+import Image from "next/image";
+import { useRef } from "react";
 import useGazeTracking from "../hooks/useGazeTracking";
 import "./FaceTracker.css";
 
@@ -19,10 +20,15 @@ export default function FaceTracker({
       aria-hidden="true"
     >
       {currentImage && !error && (
-        <img
+        <Image
           src={currentImage}
           alt=""
           className="face-image"
+          width={256}
+          height={256}
+          priority
+          sizes="108px"
+          unoptimized
         />
       )}
 

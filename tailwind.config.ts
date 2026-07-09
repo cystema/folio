@@ -1,14 +1,10 @@
 import type { Config } from 'tailwindcss'
 
-// all in fixtures is set to tailwind v3 as interims solutions
-
 const config: Config = {
   darkMode: ['class'],
   content: [
-    './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
     './app/**/*.{js,ts,jsx,tsx}',
-    '*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
@@ -93,6 +89,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [],
 }
 export default config
