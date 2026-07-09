@@ -1,27 +1,39 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Analytics } from "@vercel/analytics/next"
-import { Suspense } from "react"
+import { IBM_Plex_Mono, Instrument_Sans } from "next/font/google"
 import "./globals.css"
+
+const instrumentSans = Instrument_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-instrument-sans",
+  display: "swap",
+})
+
+const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-ibm-plex-mono",
+  display: "swap",
+})
+
+const siteDescription =
+  "Founding engineer focused on the operational layer of AI products."
 
 export const metadata: Metadata = {
   title: {
-    default: "Shubham Mazumder - Founding Product Engineer at Sameday AI",
-    template: "%s | Shubham Mazumder"
+    default: "Shubham Mazumder - Personal Archive",
+    template: "%s | Shubham Mazumder",
   },
-  description: "Founding Product Engineer building AI CSRs and agentic workflows. Specialized in conversational AI, full-stack development, and research.",
+  description: siteDescription,
   keywords: [
     "Shubham Mazumder",
-    "Founding Product Engineer",
-    "AI Engineer",
-    "Full Stack Developer",
-    "Conversational AI",
-    "LangChain",
-    "Python",
-    "React",
-    "Next.js",
-    "Sameday AI",
-    "Portfolio"
+    "Founding Engineer",
+    "Production AI Systems",
+    "Agentic Systems",
+    "AI Infrastructure",
+    "Product Engineering",
   ],
   authors: [{ name: "Shubham Mazumder" }],
   creator: "Shubham Mazumder",
@@ -31,31 +43,34 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://shubh.ink'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://shubh.ink"),
   alternates: {
-    canonical: '/',
+    canonical: "/",
+    types: {
+      "application/rss+xml": "/rss.xml",
+    },
   },
   openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: '/',
-    title: 'Shubham Mazumder - Founding Product Engineer at Sameday AI',
-    description: 'Founding Product Engineer building AI CSRs and agentic workflows. Specialized in conversational AI, full-stack development, and research.',
-    siteName: 'Shubham Mazumder Portfolio',
+    type: "website",
+    locale: "en_US",
+    url: "/",
+    title: "Shubham Mazumder",
+    description: siteDescription,
+    siteName: "Shubham Mazumder",
     images: [
       {
-        url: '/icon.svg',
+        url: "/icon.svg",
         width: 1200,
         height: 630,
-        alt: 'Shubham Mazumder - Founding Product Engineer',
+        alt: "Shubham Mazumder",
       },
     ],
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'Shubham Mazumder - Founding Product Engineer at Sameday AI',
-    description: 'Founding Product Engineer building AI CSRs and agentic workflows. Specialized in conversational AI, full-stack development, and research.',
-    images: ['/icon.svg'],
+    card: "summary_large_image",
+    title: "Shubham Mazumder",
+    description: siteDescription,
+    images: ["/icon.svg"],
   },
   robots: {
     index: true,
@@ -63,15 +78,10 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
-  },
-  verification: {
-    // Add your verification codes here when available
-    // google: 'your-google-verification-code',
-    // yandex: 'your-yandex-verification-code',
   },
 }
 
@@ -81,15 +91,12 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet" />
-      </head>
-      <body className="antialiased">
-        <Suspense fallback={null}>{children}</Suspense>
+    <html
+      lang="en"
+      className={`${instrumentSans.variable} ${ibmPlexMono.variable}`}
+    >
+      <body>
+        {children}
         <Analytics />
       </body>
     </html>
