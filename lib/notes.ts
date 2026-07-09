@@ -3,6 +3,7 @@ import path from "node:path"
 import matter from "gray-matter"
 
 const notesDirectory = path.join(process.cwd(), "content", "notes")
+const noteFileExtension = ".md"
 const noteSlugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 const dateOnlyPattern = /^(\d{4})-(\d{2})-(\d{2})$/
 
@@ -153,7 +154,7 @@ function asTags(value: unknown, fileName: string) {
 }
 
 function slugFromFileName(fileName: string) {
-  return fileName.replace(/\.mdx$/, "")
+  return fileName.slice(0, -noteFileExtension.length)
 }
 
 function asSlug(value: string, fileName: string) {
@@ -228,7 +229,9 @@ async function readNoteFiles() {
   try {
     const entries = await fs.readdir(notesDirectory, { withFileTypes: true })
     return entries
-      .filter((entry) => entry.isFile() && entry.name.endsWith(".mdx"))
+      .filter(
+        (entry) => entry.isFile() && entry.name.endsWith(noteFileExtension),
+      )
       .map((entry) => entry.name)
   } catch (error) {
     if (isMissingDirectoryError(error)) {

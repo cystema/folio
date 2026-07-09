@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { getNoteBySlug, getPublishedNotes } from "@/lib/notes"
-import { renderNoteContent } from "./renderNoteContent"
+import { renderMarkdownContent } from "./renderMarkdownContent"
 
 type NotePageProps = {
   params: {
@@ -81,9 +81,7 @@ export default async function NotePage({ params }: NotePageProps) {
           <p>{note.summary}</p>
         </header>
 
-        <div className="note-prose">
-          {renderNoteContent(note.content)}
-        </div>
+        <div className="note-prose">{renderMarkdownContent(note.content)}</div>
       </article>
     </main>
   )

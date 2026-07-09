@@ -69,7 +69,7 @@ function isBlockBoundary(line: string) {
   )
 }
 
-export function renderNoteContent(source: string) {
+export function renderMarkdownContent(source: string) {
   const lines = source.split(/\r?\n/)
   const blocks: ReactNode[] = []
   let index = 0
