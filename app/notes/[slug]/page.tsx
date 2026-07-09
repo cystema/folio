@@ -1,8 +1,8 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { MDXRemote } from "next-mdx-remote/rsc"
 import { getNoteBySlug, getPublishedNotes } from "@/lib/notes"
+import { renderNoteContent } from "./renderNoteContent"
 
 type NotePageProps = {
   params: {
@@ -82,7 +82,7 @@ export default async function NotePage({ params }: NotePageProps) {
         </header>
 
         <div className="note-prose">
-          <MDXRemote source={note.content} />
+          {renderNoteContent(note.content)}
         </div>
       </article>
     </main>
