@@ -167,10 +167,15 @@ function asSlug(value: string, fileName: string) {
 }
 
 function getSlug(data: NoteFrontmatter, fileName: string) {
-  return asSlug(
-    typeof data.slug === "string" ? data.slug : slugFromFileName(fileName),
-    fileName,
-  )
+  if (data.slug === undefined) {
+    return asSlug(slugFromFileName(fileName), fileName)
+  }
+
+  if (typeof data.slug === "string") {
+    return asSlug(data.slug, fileName)
+  }
+
+  throw new Error(`Invalid slug frontmatter in ${fileName}`)
 }
 
 function normalizeNote(
